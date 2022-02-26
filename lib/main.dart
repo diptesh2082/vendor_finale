@@ -1,6 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'Screens/home__screen.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+        statusBarColor: Color(0xffF4F4F4),
+        statusBarIconBrightness: Brightness.light),
+  );
   runApp(const MyApp());
 }
 
@@ -11,11 +19,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'PoppinsRegular',
       ),
-      home: const Text('Initial Commit'),
+      home: const HomeScreen(),
     );
   }
 }
