@@ -11,19 +11,29 @@ class HomeTab extends StatefulWidget {
 
 class _HomeTabState extends State<HomeTab> {
   var status = false;
-
+  final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.backgroundColor,
         appBar: AppBar(
-          toolbarHeight: kToolbarHeight + 65,
+          toolbarHeight: kToolbarHeight + 80,
           backgroundColor: Colors.transparent,
           primary: true,
           iconTheme: const IconThemeData(color: Colors.black),
           titleSpacing: 0,
           elevation: 0,
+          leading: IconButton(
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
+            },
+            icon: Image.asset(
+              "Assets/Images/menu.png",
+              scale: 1,
+              color: Colors.black,
+            ),
+          ),
           title: const Text(
             'Transformers Gym',
             style: TextStyle(
@@ -69,62 +79,82 @@ class _HomeTabState extends State<HomeTab> {
             preferredSize: const Size.fromHeight(0),
           ),
           actions: [
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 18,
-              ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+              height: 30, //set desired REAL HEIGHT
+              width: 60, //set desired REAL WIDTH
               child: Transform.scale(
+                transformHitTests: false,
                 scale: 0.8,
                 child: CupertinoSwitch(
                   value: status,
                   onChanged: (value) {
-                    setState(
-                      () {
-                        status = value;
-                      },
-                    );
+                    setState(() {
+                      status = value;
+                    });
                   },
+                  activeColor: Colors.green,
                 ),
               ),
-            )
+            ),
           ],
         ),
         drawer: Drawer(
+          key: _drawerkey,
           backgroundColor: Colors.white,
-          child: ListView(
-            children: const [
-              DrawerTitleWidget(),
-              ListTile(
-                minLeadingWidth: 0,
-                leading: Icon(
-                  Icons.lock_outline,
-                  color: Color(0xffB6B6B6),
-                ),
-                title: Text('Change Password'),
+          child: Stack(
+            // shrinkWrap: true,
+            children: [
+              Column(
+                children: [
+                  DrawerTitleWidget(
+                    callback: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  buildDrawerListItem(
+                    title: 'Change Password',
+                    iconData: 'lock',
+                  ),
+                  buildDrawerListItem(
+                    title: 'Notifications',
+                  ),
+                  buildDrawerListItem(
+                    title: 'Rate us',
+                    iconData: 'star',
+                  ),
+                  buildDrawerListItem(
+                    title: 'Support',
+                    iconData: 'message-question',
+                  ),
+                ],
               ),
-              ListTile(
-                minLeadingWidth: 0,
-                leading: Icon(
-                  Icons.notifications_active,
-                  color: Color(0xffB6B6B6),
+              Positioned(
+                bottom: 150,
+                left: 120,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: const Text(
+                    'Logout',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(
+                      const Color(0xff292F3D),
+                    ),
+                    padding: MaterialStateProperty.all(
+                      const EdgeInsets.symmetric(
+                        horizontal: 35,
+                        vertical: 10,
+                      ),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7),
+                      ),
+                    ),
+                  ),
                 ),
-                title: Text('Notifications'),
-              ),
-              ListTile(
-                minLeadingWidth: 0,
-                leading: Icon(
-                  Icons.star_border_outlined,
-                  color: Color(0xffB6B6B6),
-                ),
-                title: Text('Rate us'),
-              ),
-              ListTile(
-                minLeadingWidth: 0,
-                leading: Icon(
-                  Icons.support_rounded,
-                  color: Color(0xffB6B6B6),
-                ),
-                title: Text('Support'),
               )
             ],
           ),
@@ -146,12 +176,27 @@ class _HomeTabState extends State<HomeTab> {
       ),
     );
   }
+
+  ListTile buildDrawerListItem(
+      {required String? title, String? iconData = 'lock'}) {
+    return ListTile(
+      minLeadingWidth: 0,
+      leading: Image.asset("Assets/Images/$iconData.png"),
+      title: Text(
+        title!,
+        style: const TextStyle(
+          fontWeight: FontWeight.w400,
+          fontSize: 14,
+        ),
+      ),
+    );
+  }
 }
 
 class DrawerTitleWidget extends StatelessWidget {
-  const DrawerTitleWidget({
-    Key? key,
-  }) : super(key: key);
+  const DrawerTitleWidget({Key? key, this.callback}) : super(key: key);
+
+  final Function? callback;
 
   @override
   Widget build(BuildContext context) {
@@ -160,11 +205,16 @@ class DrawerTitleWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Icon(
-            Icons.close,
-            color: Colors.black,
+          IconButton(
+            onPressed: () {
+              callback!();
+            },
+            icon: const Icon(
+              Icons.close,
+              color: Colors.black,
+            ),
           ),
-          Center(
+          const Center(
             child: Text(
               'Menu',
               style: TextStyle(
