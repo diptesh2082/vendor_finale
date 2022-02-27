@@ -16,7 +16,7 @@ class _OrderDetailsState extends State<OrderDetails> {
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
         title: const Text(
-          'Booking Summary',
+          'Order Details',
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w600,
