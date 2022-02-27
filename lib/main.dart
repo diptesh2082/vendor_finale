@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'Screens/booking_summary_screen.dart';
 import 'Screens/home__screen.dart';
 
 void main() {
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'PoppinsRegular',
       ),
-      home: const HomeScreen(),
+      home: const BookingScreen(),
     );
   }
 }
