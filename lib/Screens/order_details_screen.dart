@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:vyam_vandor/app_colors.dart';
 
-class BookingScreen extends StatefulWidget {
-  const BookingScreen({Key? key}) : super(key: key);
+import '../app_colors.dart';
+
+class OrderDetails extends StatefulWidget {
+  const OrderDetails({Key? key}) : super(key: key);
 
   @override
-  _BookingScreenState createState() => _BookingScreenState();
+  _OrderDetailsState createState() => _OrderDetailsState();
 }
 
-class _BookingScreenState extends State<BookingScreen> {
+class _OrderDetailsState extends State<OrderDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,20 +88,45 @@ class _BookingScreenState extends State<BookingScreen> {
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 15.0,
-                            ),
-                            SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: const Text(
-                                'Bus stand, Barvsdv',
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w500,
-                                ),
+                            const Text(
+                              'Branch - Barakar',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
+                            const Text(
+                              'Per - day',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const Text(
+                              '05 Feb',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                CircleAvatar(
+                                  radius: 4,
+                                  backgroundColor: Colors.green,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                const Text(
+                                  'Active',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            )
                           ],
                         )
                       ],
@@ -208,25 +234,6 @@ class _BookingScreenState extends State<BookingScreen> {
             const SizedBox(
               height: 10.0,
             ),
-            //Container For TextField
-            Container(
-              height: 45,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.0)),
-              child: TextFormField(
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                  hintText: 'Enter OTP',
-                  hintStyle: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 14,
-                    color: Color(0xffC9C9C9),
-                  ),
-                ),
-              ),
-            ), //Container For payment
             const SizedBox(
               height: 10.0,
             ),
