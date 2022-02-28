@@ -37,20 +37,21 @@ class _BookingsState extends State<Bookings> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return DefaultTabController(
       length: 4,
       child: Scaffold(
         backgroundColor: HexColor("F5F5F5"),
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(
-              CupertinoIcons.back,
-              color: HexColor("3A3A3A"),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
+          // leading: IconButton(
+          //   icon: Icon(
+          //     CupertinoIcons.back,
+          //     color: HexColor("3A3A3A"),
+          //   ),
+          //   onPressed: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
           bottom: TabBar(
               indicatorColor: HexColor("F5F5F5"),
               onTap: (index) {
@@ -91,75 +92,71 @@ class _BookingsState extends State<Bookings> {
               tabs: [
                 Container(
                     width: 100,
+                    height: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         color: _allTime ? _maleColor : _inactiveColor),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 11.0, bottom: 11.0),
-                      child: Center(
-                        child: Text(
-                          "All time",
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 15,
-                              color: _allTime ? _textActive : _textInactive),
-                        ),
+                    child: Center(
+                      child: Text(
+                        "All time",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12,
+                            color: _allTime ? _textActive : _textInactive),
                       ),
                     )),
                 Container(
                     width: 100,
+                    height: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         color: _7Days ? _maleColor : _inactiveColor),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 11.0, bottom: 11.0),
-                      child: Center(
-                        child: Text(
-                          "7 days",
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 15,
-                              color: _7Days ? _textActive : _textInactive),
-                        ),
+                    child: Center(
+                      child: Text(
+                        "7 days",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12,
+                            color: _7Days ? _textActive : _textInactive),
                       ),
                     )),
                 Container(
                     width: 100,
+                    height: 50,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(8),
                         color: _15Days ? _maleColor : _inactiveColor),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 11.0, bottom: 11.0),
-                      child: Center(
-                        child: Text(
-                          "15 days",
-                          style: GoogleFonts.poppins(
-                              fontWeight: FontWeight.w700,
-                              fontSize: 15,
-                              color: _15Days ? _textActive : _textInactive),
-                        ),
+                    child: Center(
+                      child: Text(
+                        "15 days",
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.poppins(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12,
+                            color: _15Days ? _textActive : _textInactive),
                       ),
                     )),
                 Container(
                   width: 100,
+                  height: 50,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       color: _30Days ? _maleColor : _inactiveColor),
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 11.0, bottom: 11.0),
-                    child: Center(
-                      child: Text(
-                        "30 days",
-                        style: GoogleFonts.poppins(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 15,
-                            color: _30Days ? _textActive : _textInactive),
-                      ),
+                  child: Center(
+                    child: Text(
+                      "30 days",
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12,
+                          color: _30Days ? _textActive : _textInactive),
                     ),
                   ),
                 ),
               ]),
-          toolbarHeight: 80,
+          toolbarHeight: 72,
           elevation: 0,
           backgroundColor: Colors.transparent,
           centerTitle: true,

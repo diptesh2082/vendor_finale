@@ -35,12 +35,13 @@ class AllTimeState extends State<AllTime> {
                           borderRadius: BorderRadius.circular(12),
                           color: HexColor("292F3D"),
                         ),
-                        width: size.width * 0.47,
-                        height: 400,
+                        width: size.width * 0.45,
+                        height: 290,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: ClipRRect(
                             child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
@@ -50,9 +51,10 @@ class AllTimeState extends State<AllTime> {
                                         color: Colors.white,
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 240,
-                                    ),
+                                    const Spacer(),
+                                    // const SizedBox(
+                                    //   width: 240,
+                                    // ),
                                     Image.asset("Assets/trend-down.png"),
                                     const SizedBox(
                                       width: 2,
@@ -78,7 +80,7 @@ class AllTimeState extends State<AllTime> {
                                   ),
                                 ),
                                 const SizedBox(
-                                  height: 80,
+                                  height: 42,
                                 ),
                                 const Text(
                                   "₹ 500",
@@ -87,8 +89,9 @@ class AllTimeState extends State<AllTime> {
                                     fontSize: 35,
                                   ),
                                 ),
+
                                 const SizedBox(
-                                  height: 80,
+                                  height: 54,
                                 ),
                                 Image.asset(
                                   "Assets/Vector 7.png",
@@ -100,9 +103,10 @@ class AllTimeState extends State<AllTime> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 20,
-                      ),
+                      const Spacer(),
+                      // const SizedBox(
+                      //   width: 10,
+                      // ),
                       Column(
                         children: [
                           Container(
@@ -110,8 +114,8 @@ class AllTimeState extends State<AllTime> {
                               borderRadius: BorderRadius.circular(12),
                               color: HexColor("292F3D"),
                             ),
-                            width: size.width * 0.47,
-                            height: 190,
+                            width: size.width * 0.45,
+                            height: 135,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: ClipRRect(
@@ -125,9 +129,10 @@ class AllTimeState extends State<AllTime> {
                                             color: Colors.white,
                                           ),
                                         ),
-                                        const SizedBox(
-                                          width: 220,
-                                        ),
+                                        const Spacer(),
+                                        // const SizedBox(
+                                        //   width: 220,
+                                        // ),
                                         Image.asset(
                                             "Assets/trend-up.png"),
                                         const SizedBox(
@@ -142,7 +147,7 @@ class AllTimeState extends State<AllTime> {
                                       ],
                                     ),
                                     const SizedBox(
-                                      height: 30,
+                                      height: 24,
                                     ),
                                     const Text(
                                       "22",
@@ -164,8 +169,8 @@ class AllTimeState extends State<AllTime> {
                               borderRadius: BorderRadius.circular(12),
                               color: HexColor("292F3D"),
                             ),
-                            width: size.width * 0.47,
-                            height: 190,
+                            width: size.width * 0.45,
+                            height: 135,
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: ClipRRect(
@@ -181,7 +186,7 @@ class AllTimeState extends State<AllTime> {
                                       ),
                                     ),
                                     SizedBox(
-                                      height: 30,
+                                      height: 21,
                                     ),
                                     Text(
                                       "144",
@@ -203,7 +208,7 @@ class AllTimeState extends State<AllTime> {
                     height: 20,
                   ),
                   SizedBox(
-                    height: size.height / 15,
+                    height: 63,
                     child: Card(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0),

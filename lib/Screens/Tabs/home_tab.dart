@@ -34,12 +34,17 @@ class _HomeTabState extends State<HomeTab> {
               ),
               status
                   ? Container()
-                  : Center(
-                      child: Image.asset("Assets/Images/no_bookings.png"),
-                    ),
+                  : Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height*.15,
+                      ),
+                      Image.asset("Assets/Images/no_bookings.png"),
+                    ],
+                  ),
               !status
                   ? Container()
-                  : ExpansionTile(
+                  : const ExpansionTile(
                       title: Text('Upcoming Bookings'),
                       textColor: Colors.black,
                       children: [
@@ -50,7 +55,7 @@ class _HomeTabState extends State<HomeTab> {
                     ),
               !status
                   ? Container()
-                  : ExpansionTile(
+                  : const ExpansionTile(
                       title: Text('Active Bookings Bookings'),
                       children: [
                         ActiveBookingCard(),
@@ -59,7 +64,7 @@ class _HomeTabState extends State<HomeTab> {
                     ),
               !status
                   ? Container()
-                  : ExpansionTile(
+                  : const ExpansionTile(
                       title: Text('Past Bookings'),
                       children: [
                         BookingCard(),
@@ -82,16 +87,17 @@ class _HomeTabState extends State<HomeTab> {
       iconTheme: const IconThemeData(color: Colors.black),
       titleSpacing: 0,
       elevation: 0,
-      leading: IconButton(
-        onPressed: () {
-          //TODO: See Opening Drawer;
-        },
-        icon: Image.asset(
-          "Assets/Images/menu.png",
-          scale: 1,
-          color: Colors.black,
-        ),
-      ),
+      // leading: IconButton(
+      //   onPressed: () {
+      //     //TODO: See Opening Drawer;
+      //     buildDrawer(context);
+      //   },
+      //   icon: Image.asset(
+      //     "Assets/Images/menu.png",
+      //     scale: 1,
+      //     color: Colors.black,
+      //   ),
+      // ),
       title: const Text(
         'Transformers Gym',
         style: TextStyle(

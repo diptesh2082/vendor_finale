@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'PoppinsRegular',
       ),
-      home: const OrderDetails(),
+      home: const HomeScreen(),
     );
   }
 }
