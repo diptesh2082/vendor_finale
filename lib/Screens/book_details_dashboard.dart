@@ -13,9 +13,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   final double coverheight = 150;
   final double profileheight = 80;
   List trainers = [
-    "assets/trainer1.png",
-    "assets/trainer2.png",
-    "assets/trainer3.png",
+    "Assets/Images/trainer1.png",
+    "Assets/Images/trainer2.png",
+    "Assets/Images/trainer3.png",
   ];
 
   List<IconData> icons = [
@@ -37,7 +37,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   final trainername = ['Jake Paul', 'Jim Harry', 'Kim Jhonas'];
   List<String> multiimages = [];
   late Future<List<FirebaseFile>> futurefiles;
-
+  
 
   @override
   void initState() {
@@ -66,7 +66,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         height: coverheight,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage("assets/rectangle_14.png"),
+                                image: AssetImage("Assets/Images/rectangle_14.png"),
                                 fit: BoxFit.cover)),
                       ),
                       Positioned(
@@ -117,7 +117,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+                      const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
                   child: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0)),
@@ -191,16 +191,16 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
                             return Padding(
                               padding:
-                              const EdgeInsets.symmetric(horizontal: 8.0),
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
                               child: SizedBox(
                                 height: 200,
                                 child: GridView.builder(
                                     shrinkWrap: true,
                                     gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3,
-                                        crossAxisSpacing: 0,
-                                        mainAxisSpacing: 12.0),
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            crossAxisSpacing: 0,
+                                            mainAxisSpacing: 12.0),
                                     itemCount: files.length,
                                     itemBuilder: (context, index) {
                                       final file = files[index];
@@ -209,15 +209,15 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               ),
                             );
 
-
+                           
                           }
                       }
 
-
+                 
                     }),
                 Padding(
                   padding:
-                  const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+                      const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
                   child: Container(
                     height: 150,
                     width: double.infinity,
@@ -229,7 +229,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           children: [
                             const Padding(
                               padding:
-                              const EdgeInsets.only(left: 8.0, top: 8.0),
+                                  const EdgeInsets.only(left: 8.0, top: 8.0),
                               child: Text('Rules',
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
@@ -239,7 +239,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             ),
                             Padding(
                               padding:
-                              const EdgeInsets.only(left: 12.0, top: 12.0),
+                                  const EdgeInsets.only(left: 12.0, top: 12.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: const [
@@ -286,7 +286,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+                      const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
                   child: Container(
                     height: 150,
                     width: double.infinity,
@@ -327,8 +327,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         ),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.05,
                                         ),
                                       ],
@@ -356,8 +356,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                           ),
                                           SizedBox(
                                             width: MediaQuery.of(context)
-                                                .size
-                                                .width *
+                                                    .size
+                                                    .width *
                                                 0.09,
                                           ),
                                         ],
@@ -377,8 +377,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         return amenities(index);
                       }),
                       separatorBuilder: (context, _) => SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.08,
-                      ),
+                            width: MediaQuery.of(context).size.width * 0.08,
+                          ),
                       itemCount: amenities_name.length),
                 ),
                 const Padding(
@@ -428,43 +428,43 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   }
 
   Widget buildFile(BuildContext context, FirebaseFile file) => Image.network(
-    file.url,
-    height: 128,
-    width: 127,
-  );
+        file.url,
+        height: 128,
+        width: 127,
+      );
 
   Widget amenities(int index) => Padding(
-    padding: const EdgeInsets.only(left: 8.0, top: 6.0),
-    child: Container(
-      child: FittedBox(
-        child: Column(
-          children: [
-            Container(
-              height: 50,
-              width: 40,
-              child: Icon(
-                icons[index],
-                size: 16,
-              ),
-              //color: Colors.amber,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.amber.shade400,
-              ),
+        padding: const EdgeInsets.only(left: 8.0, top: 6.0),
+        child: Container(
+          child: FittedBox(
+            child: Column(
+              children: [
+                Container(
+                  height: 50,
+                  width: 40,
+                  child: Icon(
+                    icons[index],
+                    size: 16,
+                  ),
+                  //color: Colors.amber,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.amber.shade400,
+                  ),
+                ),
+                Text(
+                  amenities_name[index],
+                  //textAlign: TextAlign.center,
+                  style: const TextStyle(
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12),
+                ),
+              ],
             ),
-            Text(
-              amenities_name[index],
-              //textAlign: TextAlign.center,
-              style: const TextStyle(
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12),
-            ),
-          ],
+          ),
         ),
-      ),
-    ),
-  );
+      );
 }
 
 Future<List<XFile>> multiimagepicker() async {
@@ -505,10 +505,10 @@ class StorageDatabase {
     return urls
         .asMap()
         .map((index, url) {
-      final ref = result.items[index];
-      final file = FirebaseFile(ref: ref, url: url);
-      return MapEntry(index, file);
-    })
+          final ref = result.items[index];
+          final file = FirebaseFile(ref: ref, url: url);
+          return MapEntry(index, file);
+        })
         .values
         .toList();
   }

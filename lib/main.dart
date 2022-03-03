@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:get/get.dart';
+import 'package:vyam_vandor/Screens/login_screen.dart';
 
 import 'package:vyam_vandor/Screens/order_details_screen.dart';
 
@@ -9,7 +11,9 @@ import 'package:vyam_vandor/Screens/order_details_screen.dart';
 import 'Screens/booking_summary_screen.dart';
 import 'Screens/home__screen.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
         statusBarColor: Color(0xffF4F4F4),
@@ -31,7 +35,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         fontFamily: 'PoppinsRegular',
       ),
-      home: const HomeScreen(),
+      home: const LoginScreen(),
     );
   }
 }

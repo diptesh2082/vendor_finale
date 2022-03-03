@@ -68,6 +68,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
+                                  // fontFamily: "Poppins"
                                 ),
                               ),
                               const SizedBox(
@@ -82,6 +83,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                   const Text(
                                     'Barakar',
                                     style: TextStyle(
+                                      // fontFamily: "Poppins",
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -97,6 +99,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                   'Bus stand, Barvsdv',
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
+                                    // fontFamily: "Poppins",
                                     fontSize: 12,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -128,6 +131,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               Text(
                                 'Workout',
                                 style: TextStyle(
+                                    // fontFamily: "Poppins",
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
                                     color: Colors.green),
@@ -138,6 +142,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               Text(
                                 'Package',
                                 style: TextStyle(
+                                  // fontFamily: "Poppins",
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black,
@@ -146,6 +151,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               Text(
                                 'Start date',
                                 style: TextStyle(
+                                  // fontFamily: "Poppins",
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black,
@@ -154,6 +160,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               Text(
                                 'Valid upto',
                                 style: TextStyle(
+                                  // fontFamily: "Poppins",
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black,
@@ -167,6 +174,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               Text(
                                 'Gym- 3 months',
                                 style: TextStyle(
+                                    // fontFamily: "Poppins",
                                     fontSize: 14,
                                     fontWeight: FontWeight.w700,
                                     color: Colors.green),
@@ -177,6 +185,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               Text(
                                 '3 months',
                                 style: TextStyle(
+                                  // fontFamily: "Poppins",
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black,
@@ -185,6 +194,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               Text(
                                 'Feb 11, 2022',
                                 style: TextStyle(
+                                  fontFamily: "Poppins",
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black,
@@ -193,6 +203,7 @@ class _BookingScreenState extends State<BookingScreen> {
                               Text(
                                 'May 11, 2022',
                                 style: TextStyle(
+                                  fontFamily: "Poppins",
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.black,
@@ -221,6 +232,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     contentPadding: EdgeInsets.symmetric(horizontal: 10),
                     hintText: 'Enter OTP',
                     hintStyle: TextStyle(
+                      fontFamily: "Poppins",
                       fontWeight: FontWeight.w700,
                       fontSize: 14,
                       color: Color(0xffC9C9C9),
@@ -246,6 +258,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     const Text(
                       'Payment',
                       style: TextStyle(
+                        // fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: Colors.green,
@@ -260,6 +273,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         Text(
                           'Total Amount',
                           style: TextStyle(
+                            // fontFamily: "Poppins",
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
@@ -268,6 +282,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         Text(
                           '\$ 0.0',
                           style: TextStyle(
+                            // fontFamily: "Poppins",
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                             color: Color(0xff3A3A3A),
@@ -281,6 +296,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         Text(
                           'Discount',
                           style: TextStyle(
+                            // fontFamily: "Poppins",
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             color: Colors.black,
@@ -299,6 +315,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     const Text(
                       'Promo code',
                       style: TextStyle(
+                        // fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
@@ -310,6 +327,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         Text(
                           'Grand Total',
                           style: TextStyle(
+                            fontFamily: "Poppins",
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
                             color: Colors.green,
@@ -318,6 +336,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         Text(
                           '\$ 100.0',
                           style: TextStyle(
+                            fontFamily: "Poppins",
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
                             color: Colors.green,
@@ -345,6 +364,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     Text(
                       'Customers Details',
                       style: TextStyle(
+                          // fontFamily: "Poppins",
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
                           color: Color(0xff3A3A3A)),
@@ -355,6 +375,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     Text(
                       'Username: John Doe',
                       style: TextStyle(
+                        // fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
@@ -363,6 +384,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     Text(
                       'Phone Number: 078-66-555',
                       style: TextStyle(
+                        // fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
@@ -371,6 +393,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     Text(
                       'Payment Method : Cash',
                       style: TextStyle(
+                        fontFamily: "Poppins",
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Colors.black,
