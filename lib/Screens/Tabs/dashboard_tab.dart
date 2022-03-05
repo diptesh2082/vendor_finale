@@ -13,9 +13,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   final double coverheight = 150;
   final double profileheight = 80;
   List trainers = [
-    "assets/trainer1.png",
-    "assets/trainer2.png",
-    "assets/trainer3.png",
+    "Assets/Images/trainer1.png",
+    "Assets/Images/trainer2.png",
+    "Assets/Images/trainer3.png",
   ];
 
   List<IconData> icons = [
@@ -66,7 +66,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         height: coverheight,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage("assets/rectangle_14.png"),
+                                image: AssetImage("Assets/Images/rectangle_14.png"),
                                 fit: BoxFit.cover)),
                       ),
                       Positioned(
@@ -468,7 +468,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 }
 
 Future<List<XFile>> multiimagepicker() async {
-  List<XFile>? _images = await ImagePicker().pickMultiImage();
+  List<XFile>? _images = await ImagePicker().pickMultiImage(
+    imageQuality: 50
+  );
   if (_images != null && _images.isNotEmpty) {
     return _images;
   }
@@ -477,7 +479,7 @@ Future<List<XFile>> multiimagepicker() async {
 
 Future<String> uploadimage(XFile image) async {
   Reference db = FirebaseStorage.instance
-      .ref("TransformerGymImage/${getImageName(image)}");
+      .ref("gyms/TransformerGymImage/${getImageName(image)}");
   await db.putFile(File(image.path));
   return await db.getDownloadURL();
 }
