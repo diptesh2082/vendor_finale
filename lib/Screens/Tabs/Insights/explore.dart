@@ -2,13 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-// import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../controllers/gym_controller.dart';
-// import 'package:vyam/controllers/gym_controller.dart';
+import 'package:vyam_vandor/controllers/gym_controller.dart';
 
 class Explore extends StatefulWidget {
   const Explore({Key? key}) : super(key: key);

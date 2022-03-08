@@ -2,12 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:vyam_vandor/views/payments/allTimePayment.dart';
-import 'package:vyam_vandor/views/payments/day7pay.dart';
-import 'package:vyam_vandor/views/payments/monthpay.dart';
-// import 'package:vyam/views/payments/allTimePayment.dart';
-// import 'package:vyam/views/payments/day7pay.dart';
-// import 'package:vyam/views/payments/monthpay.dart';
+import 'package:vyam_vandor/Screens/Tabs/Insights/payments/allTimePayment.dart';
+import 'package:vyam_vandor/Screens/Tabs/Insights/payments/day7pay.dart';
+import 'package:vyam_vandor/Screens/Tabs/Insights/payments/monthpay.dart';
 
 class PaymentHistory extends StatefulWidget {
   const PaymentHistory({Key? key}) : super(key: key);
