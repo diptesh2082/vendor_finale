@@ -2,7 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:vyam_vandor/bookings/bookings_main_page.dart';
 import 'package:vyam_vandor/reviews.dart';
+import 'package:vyam_vandor/sales/sales_main_page.dart';
 import 'Screens/home__screen.dart';
 
 void main() async{
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
           elevation: 0.0,
         )
       ),
-      home: Reviews(),
+      home: Bookings(),
     );
   }
 }
