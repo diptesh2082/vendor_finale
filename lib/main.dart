@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           elevation: 0.0,
         )
       ),
-      home: Bookings(),
+      home: Sales(),
     );
   }
 }
