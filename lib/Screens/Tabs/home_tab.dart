@@ -129,6 +129,9 @@ class _HomeTabState extends State<HomeTab> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: TextFormField(
+                onChanged: (value){
+
+                },
                 decoration: InputDecoration(
                   prefixIcon: Image.asset("Assets/Images/Search.png"),
                   hintText: 'Search',

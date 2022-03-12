@@ -49,19 +49,19 @@ class _SalesState extends State<Sales> {
                   child: ButtonsTabBar(
                     backgroundColor: Colors.black,
                     unselectedBackgroundColor: Colors.white,
-                    labelStyle: TextStyle(
+                    labelStyle: const TextStyle(
                       color: Colors.white,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                     ),
                     contentPadding: EdgeInsets.symmetric(vertical: 11, horizontal: kDefaultPadding),
-                    unselectedLabelStyle: TextStyle(
+                    unselectedLabelStyle: const TextStyle(
                       color: Colors.black,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                     ),
                     radius: 8,
-                    tabs: [
+                    tabs: const [
                       Tab(text: 'All time',),
                       Tab(text: '7 days',),
                       Tab(text: 'Month',),
@@ -73,7 +73,7 @@ class _SalesState extends State<Sales> {
                 child: Container(
                   width: double.maxFinite,
                   height: MediaQuery.of(context).size.height-160,
-                  child: TabBarView(
+                  child: const TabBarView(
                     children: [
                       AllTimeSales(),
                       DaysSales(),
