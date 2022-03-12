@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:vyam_vandor/Screens/Tabs/Insights/insights.dart';
 import 'package:vyam_vandor/Screens/Tabs/dashboard_tab.dart';
 import 'package:vyam_vandor/Screens/Tabs/home_tab.dart';
-// import 'package:vyam_vandor/Screens/Tabs/insight_tab.dart';
 import 'package:vyam_vandor/app_colors.dart';
-import 'package:vyam_vandor/views/bookings.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -59,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> _buildScreens() {
     return [
       const HomeTab(),
-      const Bookings(),
+      const InsightsTab(),
       DashBoardScreen(),
     ];
   }

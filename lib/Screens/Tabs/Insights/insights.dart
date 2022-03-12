@@ -7,19 +7,15 @@ import 'days/allTime.dart';
 import 'days/days15.dart';
 import 'days/days30.dart';
 import 'days/days7.dart';
-// import 'package:vyam/views/days/allTime.dart';
-// import 'package:vyam/views/days/days15.dart';
-// import 'package:vyam/views/days/days30.dart';
-// import 'package:vyam/views/days/days7.dart';
 
-class Bookings extends StatefulWidget {
-  const Bookings({Key? key}) : super(key: key);
+class InsightsTab extends StatefulWidget {
+  const InsightsTab({Key? key}) : super(key: key);
 
   @override
-  State<Bookings> createState() => _BookingsState();
+  State<InsightsTab> createState() => _InsightsTabState();
 }
 
-class _BookingsState extends State<Bookings> {
+class _InsightsTabState extends State<InsightsTab> {
   var _getIndex = 0;
 
   bool _allTime = true;

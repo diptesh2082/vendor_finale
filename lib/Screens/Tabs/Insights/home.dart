@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:vyam_vandor/views/yoga.dart';
-import 'package:vyam_vandor/views/zumba.dart';
+import 'package:vyam_vandor/Screens/Tabs/Insights/yoga.dart';
+import 'package:vyam_vandor/Screens/Tabs/Insights/zumba.dart';
 
 import 'gyms.dart';
-// import 'package:vyam/views/gyms.dart';
-// import 'package:vyam/views/yoga.dart';
-// import 'package:vyam/views/zumba.dart';
+// import 'package:vyam/Insights/gyms.dart';
+// import 'package:vyam/Insights/yoga.dart';
+// import 'package:vyam/Insights/zumba.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);

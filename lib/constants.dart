@@ -17,3 +17,18 @@ double kDefaultPadding = 16;
 double kContainerBorderRadius = 10;
 
 String kFontFamily = 'Poppins';
+
+final List<String> months = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
