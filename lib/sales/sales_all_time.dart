@@ -12,27 +12,47 @@ class AllTimeSales extends StatelessWidget {
     String salesStatus = '+ \$20';
     String bookingsTotal = '70';
     String bookingsStatus = '+ 3';
-    sales() async{
-      final stream = await FirebaseFirestore.instance.collection('bookings').where("vendorId", isEqualTo: "dipteshmandal555@gmail.com").where("booking_accepted", isEqualTo: true).snapshots();
-    }
+    // sales() async{
+    final stream =  FirebaseFirestore.instance.collectionGroup('user_booking').snapshots();
+
+          // .where("vendorId", isEqualTo: "dipteshmandal555@gmail.com").where("booking_accepted", isEqualTo: true)
+
+      // return stream;
+    // }
     int sum = 0;
     return Scaffold(
       backgroundColor: kScaffoldBackgroundColor,
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance
-            .collection('bookings')
-            .where("vendorId", isEqualTo: "dipteshmandal555@gmail.com")
-            .where("booking_accepted", isEqualTo: true)
-            .snapshots(),
+        stream: stream,
+        //     .where((event){
+        //
+        // }),
+        // FirebaseFirestore.instance
+        //     .collectionGroup('user_booking')
+        // // .orderBy("order_time",descending: true)
+        //     // .where("vendorId", isEqualTo: "T@gmail.com")
+        //     // .where("booking_accepted", isEqualTo: true)
+        //     .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text("Something went wrong");
+            return const Center(child: Text("Something went wrong"));
           }
-          if (snapshot.connectionState == ConnectionState.waiting)
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          }
           var document = snapshot.data!.docs;
+             document=document
+              .where((element) {
+            return element
+                .get("vendorId")
+                .toString()
+                .contains("T@gmail.com")
+            ;
+          }).toList();
+
+          
           return document.isNotEmpty
               ? Padding(
                   padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -89,7 +109,7 @@ class AllTimeSales extends StatelessWidget {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 16,
                           ),
                           Expanded(
@@ -113,7 +133,7 @@ class AllTimeSales extends StatelessWidget {
                                             fontSize: 12,
                                           ),
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Text(
                                           bookingsStatus,
                                           style: TextStyle(
@@ -143,7 +163,7 @@ class AllTimeSales extends StatelessWidget {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 23,
                       ),
                       Expanded(
@@ -155,14 +175,14 @@ class AllTimeSales extends StatelessWidget {
                                 document[index]['booking_date']
                                     .toDate()
                                     .toString());
-                            DateTime starting_date = DateTime(
+                            DateTime startingDate = DateTime(
                                 booking_date.year, booking_date.month, booking_date.day);
-                            DateTime plan_end_duration = DateTime.parse(
+                            DateTime planEndDuration = DateTime.parse(
                                 document[index]['plan_end_duration']
                                     .toDate()
                                     .toString());
-                            DateTime ending_date = DateTime(plan_end_duration.year,
-                                plan_end_duration.month, plan_end_duration.day);
+                            DateTime endingDate = DateTime(planEndDuration.year,
+                                planEndDuration.month, planEndDuration.day);
                             //sum+=int.parse(document[index]['booking_price']);
                             return Container(
                               decoration: BoxDecoration(
@@ -190,11 +210,11 @@ class AllTimeSales extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 8,
                                         ),
                                         Text(
-                                          '${months[starting_date.month - 1]} ${starting_date.day} - ${months[ending_date.month - 1]} ${ending_date.day}',
+                                          '${months[startingDate.month - 1]} ${startingDate.day} - ${months[endingDate.month - 1]} ${endingDate.day}',
                                           style: TextStyle(
                                             fontFamily: kFontFamily,
                                             fontSize: 12,
@@ -212,7 +232,7 @@ class AllTimeSales extends StatelessWidget {
                                         ),
                                       ],
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.end,
@@ -225,7 +245,7 @@ class AllTimeSales extends StatelessWidget {
                                             fontWeight: FontWeight.w600,
                                           ),
                                         ),
-                                        Divider(
+                                        const Divider(
                                           color: Colors.white,
                                           height: 31,
                                         ),
@@ -241,11 +261,11 @@ class AllTimeSales extends StatelessWidget {
                                                     : kCompletedCircleColor,
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               width: 4,
                                             ),
                                             Text(
-                                              document[index]['booking_status'] == 'a' ? 'Active' : 'Completed',
+                                              document[index]['booking_status'] == 'active' ? 'Active' : 'Completed',
                                               style: TextStyle(
                                                 fontFamily: kFontFamily,
                                                 fontSize: 10,
@@ -271,7 +291,7 @@ class AllTimeSales extends StatelessWidget {
                     ],
                   ),
                 )
-              : Center(
+              : const Center(
                   child: Text(
                     "No Bookings",
                     style: TextStyle(

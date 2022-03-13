@@ -17,7 +17,7 @@ class DaysSales extends StatelessWidget {
     final present_date = DateTime.now();
     final seven_days_back = present_date.subtract(const Duration(days: 7));
     Timestamp myTimeStamp = Timestamp.fromDate(seven_days_back);
-
+    var lastWeak;
     return Scaffold(
       backgroundColor: kScaffoldBackgroundColor,
       body: StreamBuilder(
@@ -31,10 +31,11 @@ class DaysSales extends StatelessWidget {
           if (snapshot.hasError) {
             return Text("Something went wrong");
           }
-          if (snapshot.connectionState == ConnectionState.waiting)
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          }
           var document = snapshot.data!.docs;
           return document.isNotEmpty ? Padding(
             padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -90,7 +91,7 @@ class DaysSales extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: 16,),
+                    const SizedBox(width: 16,),
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
@@ -141,7 +142,7 @@ class DaysSales extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 23,),
+                const SizedBox(height: 23,),
                 Expanded(
                   child: ListView.separated(
                     itemCount: document.length,

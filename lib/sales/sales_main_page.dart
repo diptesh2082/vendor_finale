@@ -70,7 +70,7 @@ class _SalesState extends State<Sales> {
                 ),
               ),
               SingleChildScrollView(
-                child: Container(
+                child: SizedBox(
                   width: double.maxFinite,
                   height: MediaQuery.of(context).size.height-160,
                   child: const TabBarView(
