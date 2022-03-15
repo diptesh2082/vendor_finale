@@ -13,11 +13,12 @@ class AllTimeSales extends StatelessWidget {
     String bookingsTotal = '70';
     String bookingsStatus = '+ 3';
     // sales() async{
-    final stream =  FirebaseFirestore.instance.collectionGroup('user_booking').snapshots();
+    final stream =
+        FirebaseFirestore.instance.collectionGroup('user_booking').snapshots();
 
-          // .where("vendorId", isEqualTo: "dipteshmandal555@gmail.com").where("booking_accepted", isEqualTo: true)
+    // .where("vendorId", isEqualTo: "dipteshmandal555@gmail.com").where("booking_accepted", isEqualTo: true)
 
-      // return stream;
+    // return stream;
     // }
     int sum = 0;
     return Scaffold(
@@ -43,16 +44,10 @@ class AllTimeSales extends StatelessWidget {
             );
           }
           var document = snapshot.data!.docs;
-             document=document
-              .where((element) {
-            return element
-                .get("vendorId")
-                .toString()
-                .contains("T@gmail.com")
-            ;
+          document = document.where((element) {
+            return element.get("vendorId").toString().contains("T@gmail.com");
           }).toList();
 
-          
           return document.isNotEmpty
               ? Padding(
                   padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -81,7 +76,7 @@ class AllTimeSales extends StatelessWidget {
                                             fontSize: 12,
                                           ),
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Text(
                                           salesStatus,
                                           style: TextStyle(
@@ -170,13 +165,12 @@ class AllTimeSales extends StatelessWidget {
                         child: ListView.separated(
                           itemCount: document.length,
                           itemBuilder: (context, index) {
-
                             DateTime booking_date = DateTime.parse(
                                 document[index]['booking_date']
                                     .toDate()
                                     .toString());
-                            DateTime startingDate = DateTime(
-                                booking_date.year, booking_date.month, booking_date.day);
+                            DateTime startingDate = DateTime(booking_date.year,
+                                booking_date.month, booking_date.day);
                             DateTime planEndDuration = DateTime.parse(
                                 document[index]['plan_end_duration']
                                     .toDate()
@@ -238,7 +232,8 @@ class AllTimeSales extends StatelessWidget {
                                           CrossAxisAlignment.end,
                                       children: [
                                         Text(
-                                          document[index]['booking_price'].toString(),
+                                          document[index]['booking_price']
+                                              .toString(),
                                           style: TextStyle(
                                             fontFamily: kFontFamily,
                                             fontSize: 14,
@@ -256,7 +251,9 @@ class AllTimeSales extends StatelessWidget {
                                               width: 9,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
-                                                color: document[index]['booking_status'] == 'a'
+                                                color: document[index][
+                                                            'booking_status'] ==
+                                                        'active'
                                                     ? kActiveCircleColor
                                                     : kCompletedCircleColor,
                                               ),
@@ -265,7 +262,11 @@ class AllTimeSales extends StatelessWidget {
                                               width: 4,
                                             ),
                                             Text(
-                                              document[index]['booking_status'] == 'active' ? 'Active' : 'Completed',
+                                              document[index]
+                                                          ['booking_status'] ==
+                                                      'active'
+                                                  ? 'Active'
+                                                  : 'Completed',
                                               style: TextStyle(
                                                 fontFamily: kFontFamily,
                                                 fontSize: 10,
