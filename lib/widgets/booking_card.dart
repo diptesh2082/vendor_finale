@@ -1,10 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:vyam_vandor/Screens/booking_summary_screen.dart';
+import 'package:get/get.dart';
 
-class BookingCard extends StatelessWidget {
-  const BookingCard({
-    Key? key,
-  }) : super(key: key);
+class BookingCard extends StatefulWidget {
+  const BookingCard(
+      {Key? key,
+      this.userName = "",
+      this.bookingID = "",
+      this.bookingdate = "",
+      this.bookingPlan = "",
+      this.bookingPrice = 0.0,
+      this.userID = "",
+      this.bookings,
+      required this.otp})
+      : super(key: key);
 
+  final String? userName;
+  final String? bookingID;
+  final String? bookingdate;
+  final String? bookingPlan;
+  final double? bookingPrice;
+  final String? userID;
+  final int? otp;
+  final Map? bookings;
+
+  @override
+  State<BookingCard> createState() => _BookingCardState();
+}
+
+class _BookingCardState extends State<BookingCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -19,22 +43,25 @@ class BookingCard extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: const [
+            children: [
               Text(
-                'Booking ID - 22',
-                style: TextStyle(fontWeight: FontWeight.w400, fontSize: 10),
+                'Booking ID - ${widget.bookingID}',
+                style:
+                    const TextStyle(fontWeight: FontWeight.w400, fontSize: 10),
               ),
               Text(
-                'John Doe',
-                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                '${widget.userName}',
+                style:
+                    const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+              ),
+              //TODO: Add Booking Dates to the Text Widget
+              Text(
+                widget.bookingdate!,
+                style: const TextStyle(fontWeight: FontWeight.w500),
               ),
               Text(
-                '07 Feb - 01 March',
-                style: TextStyle(fontWeight: FontWeight.w500),
-              ),
-              Text(
-                'Per Day',
-                style: TextStyle(fontWeight: FontWeight.w500),
+                '${widget.bookingPlan}',
+                style: const TextStyle(fontWeight: FontWeight.w500),
               ),
             ],
           ),
@@ -42,15 +69,31 @@ class BookingCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 18.0),
+              Padding(
+                padding: const EdgeInsets.only(top: 18.0),
                 child: Text(
-                  '\$ 20',
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+                  '\$ ${widget.bookingPrice}',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w600, fontSize: 18),
                 ),
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  print("The otp for booking is : ");
+                  print(widget.otp);
+                  print(widget.bookingID);
+                  print(widget.userID);
+                  print(widget.bookingPlan);
+                  print(widget.bookingdate);
+
+                  Get.to(
+                    () => BookingScreen(
+                      otp: widget.otp,
+                      bookingID: widget.bookingID,
+                      userID: widget.userID,
+                    ),
+                  );
+                },
                 child: const Text(
                   'Accept',
                   style: TextStyle(fontWeight: FontWeight.bold),

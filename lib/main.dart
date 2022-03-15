@@ -2,12 +2,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:vyam_vandor/Screens/login_screen.dart';
 import 'package:vyam_vandor/bookings/bookings_main_page.dart';
 import 'package:vyam_vandor/reviews.dart';
 import 'package:vyam_vandor/sales/sales_main_page.dart';
 import 'Screens/home__screen.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   SystemChrome.setSystemUIOverlayStyle(
@@ -28,13 +29,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'PoppinsRegular',
-        appBarTheme: AppBarTheme(
-          elevation: 0.0,
-        )
-      ),
-      home: const HomeScreen(),
+          primarySwatch: Colors.blue,
+          fontFamily: 'PoppinsRegular',
+          appBarTheme: const AppBarTheme(
+            elevation: 0.0,
+          )),
+      home: const LoginScreen(),
     );
   }
 }
