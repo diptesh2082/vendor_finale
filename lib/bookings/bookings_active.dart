@@ -17,12 +17,13 @@ class ActiveBookings extends StatelessWidget {
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text("Something went wrong");
+            return const Text("Something went wrong");
           }
-          if (snapshot.connectionState == ConnectionState.waiting)
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          }
           var document = snapshot.data!.docs;
           return document.isNotEmpty
               ? ListView.separated(
@@ -67,7 +68,7 @@ class ActiveBookings extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 8,
                                   ),
                                   Text(
@@ -89,7 +90,7 @@ class ActiveBookings extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
@@ -115,7 +116,7 @@ class ActiveBookings extends StatelessWidget {
                                           color: kActiveCircleColor,
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 4,
                                       ),
                                       Text(
@@ -142,7 +143,7 @@ class ActiveBookings extends StatelessWidget {
                     color: kDividerColor,
                   ),
                 )
-              : Center(
+              : const Center(
                   child: Text(
                     "No Bookings",
                     style: TextStyle(

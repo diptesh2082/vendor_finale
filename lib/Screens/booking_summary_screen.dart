@@ -246,9 +246,10 @@ class _BookingScreenState extends State<BookingScreen> {
                                     height: 10.0,
                                   ),
                                   Text(
-                                    DateFormat().format(snapshot.data
-                                        .get('booking_date')
-                                        .toDate()),
+                                    DateFormat(DateFormat.YEAR_MONTH_DAY)
+                                        .format(snapshot.data
+                                            .get('booking_date')
+                                            .toDate()),
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
@@ -256,9 +257,10 @@ class _BookingScreenState extends State<BookingScreen> {
                                     ),
                                   ),
                                   Text(
-                                    DateFormat().format(snapshot.data
-                                        .get('booking_date')
-                                        .toDate()),
+                                    DateFormat(DateFormat.YEAR_MONTH_DAY)
+                                        .format(snapshot.data
+                                            .get('booking_date')
+                                            .toDate()),
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
@@ -266,9 +268,10 @@ class _BookingScreenState extends State<BookingScreen> {
                                     ),
                                   ),
                                   Text(
-                                    DateFormat().format(snapshot.data
-                                        .get('plan_end_duration')
-                                        .toDate()),
+                                    DateFormat(DateFormat.YEAR_MONTH_DAY)
+                                        .format(snapshot.data
+                                            .get('plan_end_duration')
+                                            .toDate()),
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,

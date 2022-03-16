@@ -23,11 +23,8 @@ class OrderDetails extends StatefulWidget {
 class _OrderDetailsState extends State<OrderDetails> {
   @override
   void initState() {
-    _controller = TextEditingController();
     super.initState();
   }
-
-  TextEditingController? _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -248,9 +245,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     ),
                                   ),
                                   Text(
-                                    DateFormat().format(snapshot.data
-                                        .get('booking_date')
-                                        .toDate()),
+                                    DateFormat(DateFormat.YEAR_MONTH_DAY)
+                                        .format(snapshot.data
+                                            .get('booking_date')
+                                            .toDate()),
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
@@ -258,9 +256,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     ),
                                   ),
                                   Text(
-                                    DateFormat().format(snapshot.data
-                                        .get('plan_end_duration')
-                                        .toDate()),
+                                    DateFormat(DateFormat.YEAR_MONTH_DAY)
+                                        .format(snapshot.data
+                                            .get('plan_end_duration')
+                                            .toDate()),
                                     style: const TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,

@@ -1,11 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:vyam_vandor/Screens/login_screen.dart';
-import 'package:vyam_vandor/bookings/bookings_main_page.dart';
-import 'package:vyam_vandor/reviews.dart';
-import 'package:vyam_vandor/sales/sales_main_page.dart';
 import 'Screens/home__screen.dart';
 
 void main() async {
@@ -34,7 +32,22 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(
             elevation: 0.0,
           )),
-      home: const LoginScreen(),
+      home: StreamBuilder(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (snapshot.hasData) {
+            return const HomeScreen();
+          }
+
+          return const LoginScreen();
+        },
+      ),
     );
   }
 }

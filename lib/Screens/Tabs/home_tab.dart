@@ -126,8 +126,10 @@ class _HomeTabState extends State<HomeTab> {
                                             bookingPrice: doc[index]
                                                     ['booking_price'] ??
                                                 "",
-                                            bookingdate: DateFormat().format(
-                                                doc[index]['booking_date']
+                                            bookingdate: DateFormat(
+                                                    DateFormat.YEAR_MONTH_DAY)
+                                                .format(doc[index]
+                                                        ['booking_date']
                                                     .toDate()),
                                             otp: int.parse(
                                                 doc[index]['otp_pass']),
@@ -183,8 +185,10 @@ class _HomeTabState extends State<HomeTab> {
                                               bookingPrice: doc[index]
                                                       ['booking_price'] ??
                                                   "",
-                                              bookingdate: DateFormat().format(
-                                                  doc[index]['booking_date']
+                                              bookingdate: DateFormat(
+                                                      DateFormat.YEAR_MONTH_DAY)
+                                                  .format(doc[index]
+                                                          ['booking_date']
                                                       .toDate()));
                                         }
                                         return Container();

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:vyam_vandor/Services/firebase_messaging.dart';
+import 'package:vyam_vandor/Services/firebase_messaging_api.dart';
 import 'package:intl/intl.dart';
 
 import '../widgets/active_booking.dart';

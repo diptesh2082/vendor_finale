@@ -8,7 +8,6 @@ class MonthSales extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     String salesTotal = '\$200';
     String salesStatus = '+ \$20';
     String bookingsTotal = '23';
@@ -25,12 +24,13 @@ class MonthSales extends StatelessWidget {
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text("Something went wrong");
+            return const Text("Something went wrong");
           }
-          if (snapshot.connectionState == ConnectionState.waiting)
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          }
           var document = snapshot.data!.docs;
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
@@ -46,10 +46,10 @@ class MonthSales extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     GestureDetector(
                       onTap: () {},
-                      child: Icon(
+                      child: const Icon(
                         Icons.filter_list,
                         color: Color(0xFF130F26),
                         size: 24,
@@ -57,14 +57,17 @@ class MonthSales extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 16,),
+                const SizedBox(
+                  height: 16,
+                ),
                 Row(
                   children: [
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
                           color: kContainerColor,
-                          borderRadius: BorderRadius.circular(kContainerBorderRadius),
+                          borderRadius:
+                              BorderRadius.circular(kContainerBorderRadius),
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(kDefaultPadding),
@@ -80,7 +83,7 @@ class MonthSales extends StatelessWidget {
                                       fontSize: 12,
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Text(
                                     salesStatus,
                                     style: TextStyle(
@@ -93,14 +96,14 @@ class MonthSales extends StatelessWidget {
                                 ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(top: 6, bottom: 22),
+                                padding:
+                                    const EdgeInsets.only(top: 6, bottom: 22),
                                 child: Text(
                                   salesTotal,
                                   style: TextStyle(
                                       fontFamily: kFontFamily,
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 20
-                                  ),
+                                      fontSize: 20),
                                 ),
                               ),
                             ],
@@ -108,12 +111,15 @@ class MonthSales extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(width: 16,),
+                    const SizedBox(
+                      width: 16,
+                    ),
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
                           color: kContainerColor,
-                          borderRadius: BorderRadius.circular(kContainerBorderRadius),
+                          borderRadius:
+                              BorderRadius.circular(kContainerBorderRadius),
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(kDefaultPadding),
@@ -129,7 +135,7 @@ class MonthSales extends StatelessWidget {
                                       fontSize: 12,
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Text(
                                     bookingsStatus,
                                     style: TextStyle(
@@ -142,14 +148,14 @@ class MonthSales extends StatelessWidget {
                                 ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(top: 6, bottom: 22),
+                                padding:
+                                    const EdgeInsets.only(top: 6, bottom: 22),
                                 child: Text(
                                   bookingsTotal,
                                   style: TextStyle(
                                       fontFamily: kFontFamily,
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 20
-                                  ),
+                                      fontSize: 20),
                                 ),
                               ),
                             ],
@@ -159,18 +165,17 @@ class MonthSales extends StatelessWidget {
                     ),
                   ],
                 ),
-                SizedBox(height: 23,),
+                const SizedBox(
+                  height: 23,
+                ),
                 Expanded(
                   child: ListView.separated(
                     itemCount: document.length,
                     itemBuilder: (context, index) {
-
                       DateTime booking_date = DateTime.parse(
-                          document[index]['booking_date']
-                              .toDate()
-                              .toString());
-                      DateTime starting_date = DateTime(
-                          booking_date.year, booking_date.month, booking_date.day);
+                          document[index]['booking_date'].toDate().toString());
+                      DateTime starting_date = DateTime(booking_date.year,
+                          booking_date.month, booking_date.day);
                       DateTime plan_end_duration = DateTime.parse(
                           document[index]['plan_end_duration']
                               .toDate()
@@ -181,17 +186,19 @@ class MonthSales extends StatelessWidget {
                       return Container(
                         decoration: BoxDecoration(
                           color: kContainerColor,
-                          borderRadius: BorderRadius.circular(kContainerBorderRadius),
+                          borderRadius:
+                              BorderRadius.circular(kContainerBorderRadius),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(kDefaultPadding-1),
+                          padding: EdgeInsets.all(kDefaultPadding - 1),
                           child: Row(
                             children: [
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 1),
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 1),
                                     child: Text(
                                       document[index]['user_name'],
                                       style: TextStyle(
@@ -201,7 +208,9 @@ class MonthSales extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 8,),
+                                  const SizedBox(
+                                    height: 8,
+                                  ),
                                   Text(
                                     '${months[starting_date.month - 1]} ${starting_date.day} - ${months[ending_date.month - 1]} ${ending_date.day}',
                                     style: TextStyle(
@@ -221,7 +230,7 @@ class MonthSales extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              Spacer(),
+                              const Spacer(),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
@@ -233,7 +242,10 @@ class MonthSales extends StatelessWidget {
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  Divider(color: Colors.white, height: 31,),
+                                  const Divider(
+                                    color: Colors.white,
+                                    height: 31,
+                                  ),
                                   Row(
                                     children: [
                                       Container(
@@ -241,12 +253,20 @@ class MonthSales extends StatelessWidget {
                                         width: 9,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: document[index]['booking_status'] == 'a' ? kActiveCircleColor : kCompletedCircleColor,
+                                          color: document[index]
+                                                      ['booking_status'] ==
+                                                  'a'
+                                              ? kActiveCircleColor
+                                              : kCompletedCircleColor,
                                         ),
                                       ),
-                                      SizedBox(width: 4,),
+                                      const SizedBox(
+                                        width: 4,
+                                      ),
                                       Text(
-                                        document[index]['booking_status'] == 'a' ? 'Active' : 'Completed',
+                                        document[index]['booking_status'] == 'a'
+                                            ? 'Active'
+                                            : 'Completed',
                                         style: TextStyle(
                                           fontFamily: kFontFamily,
                                           fontSize: 10,
@@ -263,7 +283,10 @@ class MonthSales extends StatelessWidget {
                         ),
                       );
                     },
-                    separatorBuilder: (context, index) => Divider(height: kDividerHeight, color: kDividerColor,),
+                    separatorBuilder: (context, index) => Divider(
+                      height: kDividerHeight,
+                      color: kDividerColor,
+                    ),
                   ),
                 ),
               ],

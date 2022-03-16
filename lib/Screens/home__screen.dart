@@ -6,6 +6,8 @@ import 'package:vyam_vandor/Screens/Tabs/dashboard_tab.dart';
 import 'package:vyam_vandor/Screens/Tabs/home_tab.dart';
 import 'package:vyam_vandor/app_colors.dart';
 
+import '../Services/firebase_messaging_api.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -48,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         iconSize: 40,
         title: ('Dashboard'),
-        //TODO: Change Bottom nav Bar TextStyle
         activeColorPrimary: CupertinoColors.activeBlue,
         inactiveColorPrimary: CupertinoColors.systemGrey,
       ),
@@ -66,6 +67,14 @@ class _HomeScreenState extends State<HomeScreen> {
   PersistentTabController? _persistentTabController;
 
   var status = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    FirebaseMessagingApi().onbackgroundMessageClick(context);
+    FirebaseMessagingApi().getforegroundMessages();
+  }
 
   @override
   Widget build(BuildContext context) {

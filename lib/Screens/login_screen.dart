@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:vyam_vandor/Services/firebase_auth_api.dart';
-import 'package:vyam_vandor/app_colors.dart';
 import 'package:vyam_vandor/widgets/custom_text_field.dart';
 import 'package:vyam_vandor/widgets/primary_button.dart';
 
@@ -49,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          //crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CircleAvatar(
               backgroundColor: Colors.black,

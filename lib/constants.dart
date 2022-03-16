@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-Color kScaffoldBackgroundColor = Color(0xFFE5E5E5);
-Color kAppbarBackgroundColor = Color(0xFFE5E5E5);
-Color kAppBarIconColor = Color(0xFF3A3A3A);
-Color kReviewTextColor = Color(0xFF3A3A3A);
-Color kDividerColor = Color(0xFFE5E5E5);
-Color kRatingStarColor = Color(0xFFFFC700);
+Color kScaffoldBackgroundColor = const Color(0xFFE5E5E5);
+Color kAppbarBackgroundColor = const Color(0xFFE5E5E5);
+Color kAppBarIconColor = const Color(0xFF3A3A3A);
+Color kReviewTextColor = const Color(0xFF3A3A3A);
+Color kDividerColor = const Color(0xFFE5E5E5);
+Color kRatingStarColor = const Color(0xFFFFC700);
 Color kContainerColor = Colors.white;
-Color kDurationColor = Color(0xFFA7A7A7);
-Color kActiveCircleColor = Color(0xFF219653);
-Color kCompletedCircleColor = Color(0xFFF2994A);
-Color kStatuscolor = Color(0xFF219653);
+Color kDurationColor = const Color(0xFFA7A7A7);
+Color kActiveCircleColor = const Color(0xFF219653);
+Color kCompletedCircleColor = const Color(0xFFF2994A);
+Color kStatuscolor = const Color(0xFF219653);
 
 double kDividerHeight = 16;
 double kDefaultPadding = 16;
