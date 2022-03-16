@@ -59,8 +59,8 @@ class _HomeTabState extends State<HomeTab> {
                   backgroundColor: AppColors.backgroundColor,
                   floatingActionButton: FloatingActionButton(
                     onPressed: () {
-                      // FirebaseFirestoreAPi().updateTokenToFirebase();
-                      FirebaseFirestoreAPi().checkTokenChange();
+                      // // FirebaseFirestoreAPi().updateTokenToFirebase();
+                      // FirebaseFirestoreAPi().checkTokenChange();
                     },
                   ),
                   appBar: buildAppBar(
@@ -109,6 +109,7 @@ class _HomeTabState extends State<HomeTab> {
                                     var doc = snap.data.docs;
 
                                     return ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       itemCount: doc.length,
                                       itemBuilder: (context, index) {
@@ -164,6 +165,7 @@ class _HomeTabState extends State<HomeTab> {
                                     }
                                     var doc = snap.data.docs;
                                     return ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       itemCount: doc.length,
                                       itemBuilder: (context, index) {
@@ -225,6 +227,7 @@ class _HomeTabState extends State<HomeTab> {
                                     var doc = snap.data.docs;
 
                                     return ListView.builder(
+                                      physics: NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       itemCount: doc.length,
                                       itemBuilder: (context, index) {
