@@ -81,7 +81,7 @@ class AllTimeSales extends StatelessWidget {
                                             fontSize: 12,
                                           ),
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         Text(
                                           salesStatus,
                                           style: TextStyle(
@@ -175,6 +175,7 @@ class AllTimeSales extends StatelessWidget {
                                 document[index]['booking_date']
                                     .toDate()
                                     .toString());
+                            print(booking_date);
                             DateTime startingDate = DateTime(
                                 booking_date.year, booking_date.month, booking_date.day);
                             DateTime planEndDuration = DateTime.parse(
@@ -222,7 +223,7 @@ class AllTimeSales extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          document[index]['booking_plan'],
+                                          document!=null?document[index]['booking_plan']:"",
                                           style: TextStyle(
                                             fontFamily: kFontFamily,
                                             fontSize: 10,
