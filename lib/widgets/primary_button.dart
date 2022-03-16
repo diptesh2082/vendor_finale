@@ -5,14 +5,12 @@ buildPrimaryButton(callBack, String title,
     TextButton(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(
-          color ?? Colors.green,
+          color ?? const Color(0xffFFCA00),
         ),
       ),
       onPressed: callBack,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 3,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 65),
         child: isWatchNow!
             ? Row(
                 children: [
@@ -23,7 +21,7 @@ buildPrimaryButton(callBack, String title,
                   Text(
                     title,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: Colors.black,
                     ),
                   )
                 ],
@@ -31,7 +29,7 @@ buildPrimaryButton(callBack, String title,
             : Text(
                 title,
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: Colors.black,
                   fontFamily: 'Poppins',
                 ),
               ),

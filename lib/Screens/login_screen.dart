@@ -44,27 +44,25 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: const Text(
-          'VYAM',
-          style: TextStyle(
-            color: Colors.black,
-            fontFamily: 'Poppins',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      backgroundColor: Colors.white,
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          //crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            CircleAvatar(
+              backgroundColor: Colors.black,
+              radius: 75,
+              child: Image.asset(
+                "Assets/Images/log.png",
+                height: 80,
+                width: 80,
+              ),
+            ),
+            const SizedBox(height: 60),
             CustomTextFiled(
-              hintText: 'Email',
+              hintText: 'Username',
               textEditingController: _emailController,
             ),
             const SizedBox(
@@ -76,13 +74,13 @@ class _LoginScreenState extends State<LoginScreen> {
               obscure: true,
             ),
             const SizedBox(
-              height: 20,
+              height: 55,
             ),
             buildPrimaryButton(
               () {
                 _signIn();
               },
-              'Login',
+              'log in',
             )
           ],
         ),
