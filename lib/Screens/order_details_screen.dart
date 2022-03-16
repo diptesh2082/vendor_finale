@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:vyam_vandor/Screens/home__screen.dart';
 import '../app_colors.dart';
 
 class OrderDetails extends StatefulWidget {
@@ -41,7 +43,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         ),
         leading: IconButton(
           onPressed: () {
-            Navigator.pop(context);
+            Get.to(const HomeScreen());
           },
           icon: const Icon(
             Icons.arrow_back,
@@ -51,7 +53,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         elevation: 0,
         backgroundColor: Colors.transparent,
         centerTitle: true,
-        automaticallyImplyLeading: true,
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: StreamBuilder(
