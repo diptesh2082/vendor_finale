@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class DashBoardScreen extends StatefulWidget {
+  const DashBoardScreen({Key? key}) : super(key: key);
+
   @override
   _DashBoardScreenState createState() => _DashBoardScreenState();
 }
@@ -38,7 +40,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   List<String> multiimages = [];
   late Future<List<FirebaseFile>> futurefiles;
 
-
   @override
   void initState() {
     super.initState();
@@ -66,7 +67,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         height: coverheight,
                         decoration: const BoxDecoration(
                             image: DecorationImage(
-                                image: AssetImage("Assets/Images/rectangle_14.png"),
+                                image: AssetImage(
+                                    "Assets/Images/rectangle_14.png"),
                                 fit: BoxFit.cover)),
                       ),
                       Positioned(
@@ -117,7 +119,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+                      const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
                   child: Card(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12.0)),
@@ -142,7 +144,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 12.0, top: 8.0, right: 14),
+                  padding:
+                      const EdgeInsets.only(left: 12.0, top: 8.0, right: 14),
                   child: Row(
                     children: [
                       const Text(
@@ -182,25 +185,27 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     builder: (context, snapshot) {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
-                          return const Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         default:
                           if (snapshot.hasError) {
-                            return const Center(child: Text(" Some error occured!!"));
+                            return const Center(
+                                child: Text(" Some error occured!!"));
                           } else {
                             final files = snapshot.data!;
 
                             return Padding(
                               padding:
-                              const EdgeInsets.symmetric(horizontal: 8.0),
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
                               child: SizedBox(
                                 height: 200,
                                 child: GridView.builder(
                                     shrinkWrap: true,
                                     gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 3,
-                                        crossAxisSpacing: 0,
-                                        mainAxisSpacing: 12.0),
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3,
+                                            crossAxisSpacing: 0,
+                                            mainAxisSpacing: 12.0),
                                     itemCount: files.length,
                                     itemBuilder: (context, index) {
                                       final file = files[index];
@@ -208,17 +213,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     }),
                               ),
                             );
-
-
                           }
                       }
-
-
                     }),
                 Padding(
                   padding:
-                  const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-                  child: Container(
+                      const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+                  child: SizedBox(
                     height: 150,
                     width: double.infinity,
                     child: Card(
@@ -228,8 +229,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Padding(
-                              padding:
-                              const EdgeInsets.only(left: 8.0, top: 8.0),
+                              padding: EdgeInsets.only(left: 8.0, top: 8.0),
                               child: Text('Rules',
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
@@ -239,7 +239,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             ),
                             Padding(
                               padding:
-                              const EdgeInsets.only(left: 12.0, top: 12.0),
+                                  const EdgeInsets.only(left: 12.0, top: 12.0),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: const [
@@ -286,8 +286,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
                 Padding(
                   padding:
-                  const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-                  child: Container(
+                      const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+                  child: SizedBox(
                     height: 150,
                     width: double.infinity,
                     child: Card(
@@ -327,8 +327,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         ),
                                         SizedBox(
                                           width: MediaQuery.of(context)
-                                              .size
-                                              .width *
+                                                  .size
+                                                  .width *
                                               0.05,
                                         ),
                                       ],
@@ -356,8 +356,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                           ),
                                           SizedBox(
                                             width: MediaQuery.of(context)
-                                                .size
-                                                .width *
+                                                    .size
+                                                    .width *
                                                 0.09,
                                           ),
                                         ],
@@ -369,7 +369,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         )),
                   ),
                 ),
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.1,
                   child: ListView.separated(
                       scrollDirection: Axis.horizontal,
@@ -377,8 +377,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         return amenities(index);
                       }),
                       separatorBuilder: (context, _) => SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.08,
-                      ),
+                            width: MediaQuery.of(context).size.width * 0.08,
+                          ),
                       itemCount: amenities_name.length),
                 ),
                 const Padding(
@@ -395,7 +395,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 Padding(
                   padding: const EdgeInsets.only(
                       left: 8.0, right: 8.0, top: 10.0, bottom: 14),
-                  child: Container(
+                  child: SizedBox(
                     height: 50,
                     width: double.infinity,
                     child: Card(
@@ -428,49 +428,45 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   }
 
   Widget buildFile(BuildContext context, FirebaseFile file) => Image.network(
-    file.url,
-    height: 128,
-    width: 127,
-  );
+        file.url,
+        height: 128,
+        width: 127,
+      );
 
   Widget amenities(int index) => Padding(
-    padding: const EdgeInsets.only(left: 8.0, top: 6.0),
-    child: Container(
-      child: FittedBox(
-        child: Column(
-          children: [
-            Container(
-              height: 50,
-              width: 40,
-              child: Icon(
-                icons[index],
-                size: 16,
+        padding: const EdgeInsets.only(left: 8.0, top: 6.0),
+        child: FittedBox(
+          child: Column(
+            children: [
+              Container(
+                height: 50,
+                width: 40,
+                child: Icon(
+                  icons[index],
+                  size: 16,
+                ),
+                //color: Colors.amber,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.amber.shade400,
+                ),
               ),
-              //color: Colors.amber,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.amber.shade400,
+              Text(
+                amenities_name[index],
+                //textAlign: TextAlign.center,
+                style: const TextStyle(
+                    fontFamily: 'Poppins',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12),
               ),
-            ),
-            Text(
-              amenities_name[index],
-              //textAlign: TextAlign.center,
-              style: const TextStyle(
-                  fontFamily: 'Poppins',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    ),
-  );
+      );
 }
 
 Future<List<XFile>> multiimagepicker() async {
-  List<XFile>? _images = await ImagePicker().pickMultiImage(
-    imageQuality: 50
-  );
+  List<XFile>? _images = await ImagePicker().pickMultiImage(imageQuality: 50);
   if (_images != null && _images.isNotEmpty) {
     return _images;
   }
@@ -507,10 +503,10 @@ class StorageDatabase {
     return urls
         .asMap()
         .map((index, url) {
-      final ref = result.items[index];
-      final file = FirebaseFile(ref: ref, url: url);
-      return MapEntry(index, file);
-    })
+          final ref = result.items[index];
+          final file = FirebaseFile(ref: ref, url: url);
+          return MapEntry(index, file);
+        })
         .values
         .toList();
   }
@@ -522,4 +518,3 @@ class FirebaseFile {
 
   const FirebaseFile({required this.ref, required this.url});
 }
-

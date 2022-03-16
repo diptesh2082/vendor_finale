@@ -21,7 +21,7 @@ class CustomTextFiled extends StatelessWidget {
           hintText == "Enter Your Email" ? [AutofillHints.email] : [],
       style: const TextStyle(fontSize: 17),
       decoration: InputDecoration(
-        fillColor: Colors.white,
+        fillColor: const Color(0xffE4E4E4),
         filled: true,
         hintText: hintText,
         hintStyle: const TextStyle(fontSize: 14),

@@ -43,7 +43,8 @@ class _BookingsState extends State<Bookings> {
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.fromLTRB(kDefaultPadding-3, 10, kDefaultPadding-3, 24),
+                padding: EdgeInsets.fromLTRB(
+                    kDefaultPadding - 3, 10, kDefaultPadding - 3, 24),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: ButtonsTabBar(
@@ -54,7 +55,8 @@ class _BookingsState extends State<Bookings> {
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                     ),
-                    contentPadding: EdgeInsets.symmetric(vertical: 11, horizontal: kDefaultPadding),
+                    contentPadding: EdgeInsets.symmetric(
+                        vertical: 11, horizontal: kDefaultPadding),
                     unselectedLabelStyle: const TextStyle(
                       color: Colors.black,
                       fontSize: 12,
@@ -62,17 +64,23 @@ class _BookingsState extends State<Bookings> {
                     ),
                     radius: 8,
                     tabs: const [
-                      Tab(text: 'Upcoming',),
-                      Tab(text: 'Active',),
-                      Tab(text: 'Completed',),
+                      Tab(
+                        text: 'Upcoming',
+                      ),
+                      Tab(
+                        text: 'Active',
+                      ),
+                      Tab(
+                        text: 'Completed',
+                      ),
                     ],
                   ),
                 ),
               ),
               SingleChildScrollView(
-                child: Container(
+                child: SizedBox(
                   width: double.maxFinite,
-                  height: MediaQuery.of(context).size.height-160,
+                  height: MediaQuery.of(context).size.height - 160,
                   child: const TabBarView(
                     children: [
                       UpcomingBookings(),

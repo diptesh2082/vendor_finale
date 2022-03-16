@@ -20,7 +20,7 @@ class AllTimePay extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 27,left: 27),
+                    padding: const EdgeInsets.only(right: 27, left: 27),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -104,11 +104,10 @@ class AllTimePay extends StatelessWidget {
                               child: Text(
                                 "Vyam",
                                 style: TextStyle(
-                                  color: Colors.black,
-                                  fontFamily: "Poppins",
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w600
-                                ),
+                                    color: Colors.black,
+                                    fontFamily: "Poppins",
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w600),
                                 textAlign: TextAlign.left,
                               ),
                             ),
@@ -120,11 +119,10 @@ class AllTimePay extends StatelessWidget {
                         subtitle: const Text(
                           '05 Jan 2022',
                           style: TextStyle(
-                            color: Colors.black38,
-                            fontFamily: "Poppins",
-                            fontSize: 9,
-                            fontWeight: FontWeight.w600
-                          ),
+                              color: Colors.black38,
+                              fontFamily: "Poppins",
+                              fontSize: 9,
+                              fontWeight: FontWeight.w600),
                         ),
                         trailing: Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
@@ -144,11 +142,10 @@ class AllTimePay extends StatelessWidget {
                             Text(
                               "Credited to bank account",
                               style: TextStyle(
-                                color: Colors.black38,
-                                fontFamily: "Poppins",
-                                fontSize: 9,
-                                fontWeight: FontWeight.w600
-                              ),
+                                  color: Colors.black38,
+                                  fontFamily: "Poppins",
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.w600),
                             ),
                           ],
                         ),

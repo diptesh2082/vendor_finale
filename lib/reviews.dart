@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:vyam_vandor/constants.dart';
-import 'dart:convert';
 
 class Reviews extends StatefulWidget {
   const Reviews({Key? key}) : super(key: key);
@@ -11,7 +10,6 @@ class Reviews extends StatefulWidget {
 }
 
 class _ReviewsState extends State<Reviews> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,12 +42,13 @@ class _ReviewsState extends State<Reviews> {
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text("Something went wrong");
+            return const Text("Something went wrong");
           }
-          if (snapshot.data == null)
+          if (snapshot.data == null) {
             return const Center(
               child: CircularProgressIndicator(),
             );
+          }
           return Padding(
             padding: EdgeInsets.all(kDefaultPadding),
             child: Column(
@@ -66,7 +65,7 @@ class _ReviewsState extends State<Reviews> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 Expanded(
@@ -78,11 +77,11 @@ class _ReviewsState extends State<Reviews> {
                       color: kDividerColor,
                     ),
                     itemBuilder: (context, index) {
-
-                      String rating = snapshot.data!.docs[index]['rating'].toString();
+                      String rating =
+                          snapshot.data!.docs[index]['rating'].toString();
                       int rate_number = int.parse(rating);
-                      if(rate_number==null){
-                        return CircularProgressIndicator();
+                      if (rate_number == null) {
+                        return const CircularProgressIndicator();
                       }
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,15 +97,20 @@ class _ReviewsState extends State<Reviews> {
                                   color: kContainerColor,
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   FutureBuilder(
-                                      future : FirebaseFirestore.instance.collection('user_details').doc(snapshot.data!.docs[index]['userId']).get(),
-                                      builder: (BuildContext context, AsyncSnapshot snapshot2) {
+                                      future: FirebaseFirestore.instance
+                                          .collection('user_details')
+                                          .doc(snapshot.data!.docs[index]
+                                              ['userId'])
+                                          .get(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot snapshot2) {
                                         if (snapshot2.data == null) {
                                           return const Center(
                                             child: CircularProgressIndicator(),
@@ -115,14 +119,13 @@ class _ReviewsState extends State<Reviews> {
                                         return Text(
                                           snapshot2.data.get('name') ?? " ",
                                           style: TextStyle(
-                                          fontFamily: kFontFamily,
-                                          color: kReviewTextColor,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      );
-                                    }
-                                  ),
+                                            fontFamily: kFontFamily,
+                                            color: kReviewTextColor,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        );
+                                      }),
                                   SizedBox(
                                     height: 10,
                                     width: 200,
@@ -147,15 +150,14 @@ class _ReviewsState extends State<Reviews> {
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 1),
                             child: RichText(
                               text: TextSpan(
-                                  text: snapshot.data!.docs[index]
-                                  ['title'],
+                                  text: snapshot.data!.docs[index]['title'],
                                   style: TextStyle(
                                     fontFamily: kFontFamily,
                                     color: kReviewTextColor,
@@ -164,7 +166,7 @@ class _ReviewsState extends State<Reviews> {
                                   )),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 8,
                           ),
                           Padding(

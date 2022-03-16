@@ -1,10 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vyam_vandor/Screens/login_screen.dart';
+import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vyam_vandor/app_colors.dart';
-
+import 'package:get/get.dart';
 import '../../widgets/active_booking.dart';
 import '../../widgets/booking_card.dart';
 import '../../widgets/drawer_tile.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+
+import '../../widgets/past_booking.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);
@@ -14,72 +21,351 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  var status = false;
+  var status = true;
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
+
+  bool showBranches = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  bool isHeightTobeIncreased = false;
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.backgroundColor,
-        appBar: buildAppBar(context),
-        drawer: buildDrawer(context),
-        body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-          child: ListView(
-            //mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              status
-                  ? Container()
-                  : Column(
-                    children: [
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height*.15,
-                      ),
-                      Image.asset("Assets/Images/no_bookings.png"),
-                    ],
+      child: FutureBuilder(
+          future: FirebaseFirestore.instance
+              .collection("product_details")
+              .doc("mahtab5752@gmail.com")
+              .get(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return Stack(
+              children: [
+                Scaffold(
+                  key: _drawerkey,
+                  backgroundColor: AppColors.backgroundColor,
+                  floatingActionButton: FloatingActionButton(
+                    onPressed: () {
+                      // FirebaseFirestoreAPi().updateTokenToFirebase();
+                      FirebaseFirestoreAPi().checkTokenChange();
+                    },
                   ),
-              !status
-                  ? Container()
-                  : const ExpansionTile(
-                      title: Text('Upcoming Bookings'),
-                      textColor: Colors.black,
+                  appBar: buildAppBar(
+                    context,
+                    isGymOpened: snapshot.data!.get("gym_status"),
+                    gymLocation: snapshot.data!.get("landmark"),
+                    gymname: snapshot.data!.get("name"),
+                    leadingCallback: () {
+                      if (showBranches == false) {
+                        _drawerkey.currentState!.openDrawer();
+                      }
+                    },
+                  ),
+                  drawer: buildDrawer(context),
+                  body: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: ListView(
                       children: [
-                        BookingCard(),
-                        BookingCard(),
-                        BookingCard(),
+                        Column(
+                          //mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            //Upcoming Bookings Cards
+                            ExpansionTile(
+                              title: const Text('Upcoming Bookings'),
+                              children: [
+                                StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collectionGroup('user_booking')
+                                      .snapshots(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot snap) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+
+                                    if (snap.data == null) {
+                                      return const Text("No Active Bookings");
+                                    }
+
+                                    var doc = snap.data.docs;
+
+                                    return ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: doc.length,
+                                      itemBuilder: (context, index) {
+                                        if (doc[index]['booking_status'] ==
+                                            'upcoming') {
+                                          return BookingCard(
+                                            userID: doc[index]['userId'] ?? "",
+                                            userName:
+                                                doc[index]['user_name'] ?? "",
+                                            bookingID:
+                                                doc[index]['booking_id'] ?? "",
+                                            bookingPlan: doc[index]
+                                                    ['booking_plan'] ??
+                                                "",
+                                            bookingPrice: doc[index]
+                                                    ['booking_price'] ??
+                                                "",
+                                            bookingdate: DateFormat(
+                                                    DateFormat.YEAR_MONTH_DAY)
+                                                .format(doc[index]
+                                                        ['booking_date']
+                                                    .toDate()),
+                                            otp: int.parse(
+                                                doc[index]['otp_pass']),
+                                          );
+                                        }
+                                        return Container();
+                                      },
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
+
+                            ///Active Booking Cards
+                            ExpansionTile(
+                              title: const Text('Active Bookings'),
+                              children: [
+                                StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collectionGroup('user_booking')
+                                      .snapshots(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot snap) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+                                    if (snap.data == null) {
+                                      return const Text("No Active Bookings");
+                                    }
+                                    var doc = snap.data.docs;
+                                    return ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: doc.length,
+                                      itemBuilder: (context, index) {
+                                        if (doc[index]['booking_status'] ==
+                                                'active' &&
+                                            doc[index]['booking_accepted'] ==
+                                                true) {
+                                          return ActiveBookingCard(
+                                              userID:
+                                                  doc[index]['userId'] ?? "",
+                                              userName:
+                                                  doc[index]['user_name'] ?? "",
+                                              bookingID: doc[index]
+                                                      ['booking_id'] ??
+                                                  "",
+                                              bookingPlan: doc[index]
+                                                      ['booking_plan'] ??
+                                                  "",
+                                              bookingPrice: doc[index]
+                                                      ['booking_price'] ??
+                                                  "",
+                                              bookingdate: DateFormat(
+                                                      DateFormat.YEAR_MONTH_DAY)
+                                                  .format(doc[index]
+                                                          ['booking_date']
+                                                      .toDate()));
+                                        }
+                                        return Container();
+                                      },
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
+                            ////
+                            ///
+                            ///
+                            ///Past Bookings Cards
+                            ExpansionTile(
+                              title: const Text('Past Bookings'),
+                              children: [
+                                StreamBuilder(
+                                  stream: FirebaseFirestore.instance
+                                      .collectionGroup('user_booking')
+                                      .snapshots(),
+                                  builder: (BuildContext context,
+                                      AsyncSnapshot snap) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    }
+
+                                    if (snap.data == null) {
+                                      return const Text("No Past Bookings");
+                                    }
+
+                                    var doc = snap.data.docs;
+
+                                    return ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: doc.length,
+                                      itemBuilder: (context, index) {
+                                        if (doc[index]['booking_status'] ==
+                                                'completed' &&
+                                            doc[index]['booking_accepted'] ==
+                                                true) {
+                                          return PastBookingCard(
+                                            userID: doc[index]['userId'] ?? "",
+                                            userName:
+                                                doc[index]['user_name'] ?? "",
+                                            bookingID:
+                                                doc[index]['booking_id'] ?? "",
+                                            bookingPlan: doc[index]
+                                                    ['booking_plan'] ??
+                                                "",
+                                            bookingPrice: doc[index]
+                                                    ['booking_price'] ??
+                                                "",
+                                            bookingdate: doc[index]
+                                                    ['booking_date'] ??
+                                                "",
+                                          );
+                                        }
+                                        return Container();
+                                      },
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-              !status
-                  ? Container()
-                  : const ExpansionTile(
-                      title: Text('Active Bookings Bookings'),
-                      children: [
-                        ActiveBookingCard(),
-                        ActiveBookingCard(),
-                      ],
-                    ),
-              !status
-                  ? Container()
-                  : const ExpansionTile(
-                      title: Text('Past Bookings'),
-                      children: [
-                        BookingCard(),
-                        BookingCard(),
-                        BookingCard(),
-                      ],
-                    ),
-            ],
-          ),
-        ),
-      ),
+                  ),
+                ),
+                showBranches == false
+                    ? Container()
+                    : Positioned(
+                        top: 80,
+                        left: 51,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(15.0),
+                          ),
+                          width: 280,
+                          height: isHeightTobeIncreased ? 400 : 250,
+                          child: StreamBuilder<QuerySnapshot>(
+                              stream: FirebaseFirestore.instance
+                                  .collection('product_details')
+                                  // .where("gym_id",
+                                  //     isEqualTo: FirebaseAuth
+                                  //         .instance.currentUser!.email)
+                                  .where(
+                                    'token',
+                                    arrayContains:
+                                        "enOny3LySKi3SppiNT8B3V:APA91bHV28q5C300EBMX0f2pTWHlvn96OCRzlnZEVo_hAtoIiDEhi_bjakLi5_DFM1XNe9r4qpwxhQIEPsRC0124jGYkMHYVkvNSYbrXuYYN6o17d6HmiPWr1N83gh95IqCNKgEX-zHG",
+                                  )
+                                  .snapshots(),
+                              builder: (context, AsyncSnapshot snapshot) {
+                                if (snapshot.data == null) {
+                                  return Container();
+                                }
+                                if (snapshot.data.docs.length + 2 > 3) {
+                                  isHeightTobeIncreased = true;
+                                }
+                                if (snapshot.data.docs.length + 2 <= 3) {
+                                  isHeightTobeIncreased = false;
+                                }
+                                if (snapshot.data == ConnectionState.waiting) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                }
+                                print(FirebaseAuth.instance.currentUser!.email);
+                                List temp = snapshot.data.docs.toList();
+                                if (temp.isEmpty) {
+                                  return const Center(
+                                    child: Text("No branches to show"),
+                                  );
+                                } else {
+                                  return ListView.separated(
+                                    shrinkWrap: true,
+                                    physics: const BouncingScrollPhysics(),
+                                    itemBuilder: ((context, index) {
+                                      if (index == snapshot.data.docs.length) {
+                                        return ListTile(
+                                          trailing: const Icon(
+                                            Icons.add,
+                                            color: Colors.black54,
+                                          ),
+                                          title: const Text(
+                                            'Add another Account',
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                          onTap: () {
+                                            print("Add another Login Session");
+                                            Get.to(
+                                              const LoginScreen(),
+                                            );
+                                          },
+                                        );
+                                      }
+                                      return ListTile(
+                                        title: Text(
+                                          snapshot.data.docs[index]['name'],
+                                          style: const TextStyle(
+                                              color: Colors.black),
+                                        ),
+                                        subtitle: Text(
+                                          snapshot.data.docs[index]['landmark'],
+                                          style: const TextStyle(
+                                            color: Color(0xffBDBDBD),
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                    separatorBuilder: (context, index) =>
+                                        const Divider(
+                                      color: Color(0xffD6D6D6),
+                                    ),
+                                    itemCount: snapshot.data.docs.length + 1,
+                                  );
+                                }
+                              }),
+                        ),
+                      )
+              ],
+            );
+          }),
     );
   }
 
-  AppBar buildAppBar(BuildContext context) {
+  AppBar buildAppBar(BuildContext context,
+      {required String? gymname,
+      required bool? isGymOpened,
+      required String? gymLocation,
+      Function? leadingCallback}) {
     return AppBar(
       toolbarHeight: kToolbarHeight + 80,
       backgroundColor: Colors.transparent,
@@ -87,20 +373,17 @@ class _HomeTabState extends State<HomeTab> {
       iconTheme: const IconThemeData(color: Colors.black),
       titleSpacing: 0,
       elevation: 0,
-      // leading: IconButton(
-      //   onPressed: () {
-      //     //TODO: See Opening Drawer;
-      //     buildDrawer(context);
-      //   },
-      //   icon: Image.asset(
-      //     "Assets/Images/menu.png",
-      //     scale: 1,
-      //     color: Colors.black,
-      //   ),
-      // ),
-      title: const Text(
-        'Transformers Gym',
-        style: TextStyle(
+      leading: IconButton(
+          onPressed: () {
+            leadingCallback!();
+          },
+          icon: const Icon(
+            Icons.menu,
+            color: Colors.black,
+          )),
+      title: Text(
+        gymname!,
+        style: const TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.w600,
           fontSize: 16,
@@ -109,19 +392,35 @@ class _HomeTabState extends State<HomeTab> {
       ),
       bottom: PreferredSize(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: const [
-                Padding(
-                  padding: EdgeInsets.only(left: 57.0),
-                  child: Text(
-                    'Branch Barakar',
-                    style: TextStyle(
-                      color: Color(0xffBDBDBD),
+            GestureDetector(
+              onTap: () {
+                print("Open that Alert dialogue Box");
+                setState(() {
+                  showBranches = !showBranches;
+                });
+              },
+              child: Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 57.0),
+                    child: Text(
+                      gymLocation!,
+                      style: const TextStyle(
+                        color: Color(0xffBDBDBD),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                  Icon(
+                    !showBranches
+                        ? Icons.keyboard_arrow_down
+                        : Icons.keyboard_arrow_up,
+                    color: const Color(0xff130F26),
+                    size: 20,
+                  )
+                ],
+              ),
             ),
             const SizedBox(
               height: 15,
@@ -129,9 +428,6 @@ class _HomeTabState extends State<HomeTab> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: TextFormField(
-                onChanged: (value){
-
-                },
                 decoration: InputDecoration(
                   prefixIcon: Image.asset("Assets/Images/Search.png"),
                   hintText: 'Search',
@@ -154,11 +450,16 @@ class _HomeTabState extends State<HomeTab> {
             transformHitTests: false,
             scale: 0.8,
             child: CupertinoSwitch(
-              value: status,
+              value: isGymOpened!,
               onChanged: (value) {
+                FirebaseFirestoreAPi()
+                    .updateGymStatusToFirestore(isGymOpened: value);
+                print(value);
                 setState(() {
                   status = value;
                 });
+                FirebaseFirestoreAPi()
+                    .updateGymStatusToFirestore(isGymOpened: value);
               },
               activeColor: Colors.green,
             ),
@@ -168,9 +469,10 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 
-  Drawer buildDrawer(BuildContext context) {
+  Drawer buildDrawer(
+    BuildContext context,
+  ) {
     return Drawer(
-      key: _drawerkey,
       backgroundColor: Colors.white,
       child: Stack(
         // shrinkWrap: true,
