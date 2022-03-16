@@ -60,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return [
       const HomeTab(),
       const InsightsTab(),
-      DashBoardScreen(),
+      const DashBoardScreen(),
     ];
   }
 
@@ -71,7 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
+    FirebaseMessagingApi().getDevicetoken();
+    FirebaseMessagingApi().initialize(context);
     FirebaseMessagingApi().onbackgroundMessageClick(context);
     FirebaseMessagingApi().getforegroundMessages();
   }

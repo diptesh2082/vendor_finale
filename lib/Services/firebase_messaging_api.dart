@@ -84,8 +84,10 @@ class FirebaseMessagingApi {
             print(tempmessage.notification!.title);
             print(tempmessage.data);
           } on PlatformException catch (e) {
+            print("Plat Form Exception ////////");
             print(e);
           } catch (e) {
+            print("Non PlatForm Exception");
             print(e);
           }
           print(tempmessage.notification!.body);
