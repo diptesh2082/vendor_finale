@@ -319,7 +319,7 @@ class _BookingScreenState extends State<BookingScreen> {
 
                               if (int.parse(_controller!.text) == widget.otp) {
                                 print("The otp is Verified");
-                                Get.to(
+                                Get.off(
                                   OrderDetails(
                                     userID: widget.userID,
                                     bookingID: widget.bookingID,

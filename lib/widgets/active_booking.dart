@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
 
 class ActiveBookingCard extends StatefulWidget {
-  const ActiveBookingCard({
-    Key? key,
-    required this.userName,
-    required this.bookingID,
-    required this.bookingdate,
-    required this.bookingPlan,
-    required this.bookingPrice,
-    required this.userID,
-  }) : super(key: key);
+  const ActiveBookingCard(
+      {Key? key,
+      required this.userName,
+      required this.bookingID,
+      required this.bookingdate,
+      required this.bookingPlan,
+      required this.bookingPrice,
+      required this.userID,
+      this.tempYear,
+      this.tempDay,
+      this.tempMonth})
+      : super(key: key);
   final String? userName;
   final String? bookingID;
   final String? bookingdate;
   final String? bookingPlan;
   final double? bookingPrice;
   final String? userID;
+  final dynamic tempYear;
+  final dynamic tempDay;
+  final dynamic tempMonth;
 
   @override
   State<ActiveBookingCard> createState() => _ActiveBookingCardState();
@@ -24,6 +30,9 @@ class ActiveBookingCard extends StatefulWidget {
 class _ActiveBookingCardState extends State<ActiveBookingCard> {
   @override
   void initState() {
+    print(widget.tempDay);
+    print(widget.tempYear);
+    print(widget.tempMonth);
     super.initState();
     print("//////////////////");
   }
@@ -75,9 +84,9 @@ class _ActiveBookingCardState extends State<ActiveBookingCard> {
                       fontWeight: FontWeight.w600, fontSize: 18),
                 ),
               ),
-              const Text(
-                '12 days remaining',
-                style: TextStyle(fontWeight: FontWeight.w500),
+              Text(
+                '${DateTime.now().difference(DateTime(int.parse(widget.tempYear), int.parse(widget.tempMonth), int.parse(widget.tempDay))).inDays} days remaining',
+                style: const TextStyle(fontWeight: FontWeight.w500),
               ),
               Row(
                 children: const [
