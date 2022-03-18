@@ -17,14 +17,14 @@ class MonthSales extends StatelessWidget {
       backgroundColor: kScaffoldBackgroundColor,
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection('bookings')
-            .where("vendorId", isEqualTo: "dipteshmandal555@gmail.com")
-            //.where("booking_date", isGreaterThanOrEqualTo: myTimeStamp)
-            .where("booking_accepted", isEqualTo: true)
+            .collectionGroup('user_booking')
+        // .where("vendorId", isEqualTo: "T@gmail.com")
+        //.where("booking_date", isGreaterThanOrEqualTo: myTimeStamp)
+        // .where("booking_accepted", isEqualTo: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return const Text("Something went wrong");
+            return Text("Something went wrong");
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -32,42 +32,31 @@ class MonthSales extends StatelessWidget {
             );
           }
           var document = snapshot.data!.docs;
-          return Padding(
+          document = document.where((element) {
+            var x = element.get("vendorId").toString().toLowerCase().contains("t@gmail.com");
+            return x;
+          }).toList();
+          document =document.where((element) {
+
+            var y =element.get("order_date").toDate().difference(DateTime.now()).inDays>-30;
+
+            return y;
+          }).toList();
+          // print(document[0]["order_date"].toDate());
+          // print(DateTime.now().difference(document[0]["order_date"].toDate()).inDays);
+          return document.isNotEmpty
+              ? Padding(
             padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Text(
-                      'January',
-                      style: TextStyle(
-                        fontFamily: kFontFamily,
-                        fontWeight: FontWeight.w600,
-                        fontSize: 16,
-                      ),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: () {},
-                      child: const Icon(
-                        Icons.filter_list,
-                        color: Color(0xFF130F26),
-                        size: 24,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
                 Row(
                   children: [
                     Expanded(
                       child: Container(
                         decoration: BoxDecoration(
                           color: kContainerColor,
-                          borderRadius:
-                              BorderRadius.circular(kContainerBorderRadius),
+                          borderRadius: BorderRadius.circular(
+                              kContainerBorderRadius),
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(kDefaultPadding),
@@ -83,7 +72,7 @@ class MonthSales extends StatelessWidget {
                                       fontSize: 12,
                                     ),
                                   ),
-                                  const Spacer(),
+                                  Spacer(),
                                   Text(
                                     salesStatus,
                                     style: TextStyle(
@@ -96,8 +85,8 @@ class MonthSales extends StatelessWidget {
                                 ],
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 6, bottom: 22),
+                                padding: const EdgeInsets.only(
+                                    top: 6, bottom: 22),
                                 child: Text(
                                   salesTotal,
                                   style: TextStyle(
@@ -118,8 +107,8 @@ class MonthSales extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           color: kContainerColor,
-                          borderRadius:
-                              BorderRadius.circular(kContainerBorderRadius),
+                          borderRadius: BorderRadius.circular(
+                              kContainerBorderRadius),
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(kDefaultPadding),
@@ -135,7 +124,7 @@ class MonthSales extends StatelessWidget {
                                       fontSize: 12,
                                     ),
                                   ),
-                                  const Spacer(),
+                                  Spacer(),
                                   Text(
                                     bookingsStatus,
                                     style: TextStyle(
@@ -148,8 +137,8 @@ class MonthSales extends StatelessWidget {
                                 ],
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(top: 6, bottom: 22),
+                                padding: const EdgeInsets.only(
+                                    top: 6, bottom: 22),
                                 child: Text(
                                   bookingsTotal,
                                   style: TextStyle(
@@ -173,28 +162,33 @@ class MonthSales extends StatelessWidget {
                     itemCount: document.length,
                     itemBuilder: (context, index) {
                       DateTime booking_date = DateTime.parse(
-                          document[index]['booking_date'].toDate().toString());
+                          document[index]['booking_date']
+                              .toDate()
+                              .toString());
                       DateTime starting_date = DateTime(booking_date.year,
                           booking_date.month, booking_date.day);
                       DateTime plan_end_duration = DateTime.parse(
                           document[index]['plan_end_duration']
                               .toDate()
                               .toString());
-                      DateTime ending_date = DateTime(plan_end_duration.year,
-                          plan_end_duration.month, plan_end_duration.day);
+                      DateTime ending_date = DateTime(
+                          plan_end_duration.year,
+                          plan_end_duration.month,
+                          plan_end_duration.day);
 
                       return Container(
                         decoration: BoxDecoration(
                           color: kContainerColor,
-                          borderRadius:
-                              BorderRadius.circular(kContainerBorderRadius),
+                          borderRadius: BorderRadius.circular(
+                              kContainerBorderRadius),
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(kDefaultPadding - 1),
                           child: Row(
                             children: [
                               Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -232,10 +226,12 @@ class MonthSales extends StatelessWidget {
                               ),
                               const Spacer(),
                               Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
+                                crossAxisAlignment:
+                                CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    document[index]['booking_price'].toString(),
+                                    document[index]['booking_price']
+                                        .toString(),
                                     style: TextStyle(
                                       fontFamily: kFontFamily,
                                       fontSize: 14,
@@ -253,9 +249,9 @@ class MonthSales extends StatelessWidget {
                                         width: 9,
                                         decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          color: document[index]
-                                                      ['booking_status'] ==
-                                                  'a'
+                                          color: document[index][
+                                          'booking_status'] ==
+                                              'a'
                                               ? kActiveCircleColor
                                               : kCompletedCircleColor,
                                         ),
@@ -264,7 +260,9 @@ class MonthSales extends StatelessWidget {
                                         width: 4,
                                       ),
                                       Text(
-                                        document[index]['booking_status'] == 'a'
+                                        document[index]
+                                        ['booking_status'] ==
+                                            'a'
                                             ? 'Active'
                                             : 'Completed',
                                         style: TextStyle(
@@ -290,6 +288,14 @@ class MonthSales extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          )
+              : const Center(
+            child: Text(
+              "No Bookings",
+              style: TextStyle(
+                color: Colors.black,
+              ),
             ),
           );
         },

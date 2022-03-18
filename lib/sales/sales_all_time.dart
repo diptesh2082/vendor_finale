@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:vyam_vandor/constants.dart';
@@ -15,6 +16,8 @@ class AllTimeSales extends StatelessWidget {
     // sales() async{
     final stream =
         FirebaseFirestore.instance.collectionGroup('user_booking').snapshots();
+
+    final _auth=FirebaseAuth.instance;
 
     // .where("vendorId", isEqualTo: "dipteshmandal555@gmail.com").where("booking_accepted", isEqualTo: true)
 
@@ -45,7 +48,7 @@ class AllTimeSales extends StatelessWidget {
           }
           var document = snapshot.data!.docs;
           document = document.where((element) {
-            return element.get("vendorId").toString().contains("T@gmail.com");
+            return element.get("vendorId").toString().toLowerCase().contains("t@gmail.com");
           }).toList();
 
           return document.isNotEmpty
@@ -159,16 +162,18 @@ class AllTimeSales extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(
-                        height: 23,
+                        height: 15,
                       ),
                       Expanded(
                         child: ListView.separated(
+                          // physics:  const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
                           itemCount: document.length,
                           itemBuilder: (context, index) {
-                            DateTime booking_date = DateTime.parse(
+                            DateTime booking_date = document[index]["booking_date"]!= null?DateTime.parse(
                                 document[index]['booking_date']
                                     .toDate()
-                                    .toString());
+                                    .toString()):DateTime.now();
 
                             print(booking_date);
                             // DateTime startingDate = DateTime(
@@ -177,10 +182,10 @@ class AllTimeSales extends StatelessWidget {
                             DateTime startingDate = DateTime(booking_date.year,
                                 booking_date.month, booking_date.day);
 
-                            DateTime planEndDuration = DateTime.parse(
+                            DateTime planEndDuration = document[index]['plan_end_duration']!= null ?DateTime.parse(
                                 document[index]['plan_end_duration']
                                     .toDate()
-                                    .toString());
+                                    .toString()):DateTime.now();
                             DateTime endingDate = DateTime(planEndDuration.year,
                                 planEndDuration.month, planEndDuration.day);
                             //sum+=int.parse(document[index]['booking_price']);
@@ -202,7 +207,7 @@ class AllTimeSales extends StatelessWidget {
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 1),
                                           child: Text(
-                                            document[index]['user_name'],
+                                            document[index]['user_name']??"",
                                             style: TextStyle(
                                               fontFamily: kFontFamily,
                                               fontSize: 14,
@@ -238,8 +243,8 @@ class AllTimeSales extends StatelessWidget {
                                           CrossAxisAlignment.end,
                                       children: [
                                         Text(
-                                          document[index]['booking_price']
-                                              .toString(),
+                                    document[index]!=null?      document[index]['booking_price']
+                                              .toString():"",
                                           style: TextStyle(
                                             fontFamily: kFontFamily,
                                             fontSize: 14,
@@ -258,10 +263,11 @@ class AllTimeSales extends StatelessWidget {
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 color: document[index][
+                                                'booking_status']!=null? document[index][
                                                             'booking_status'] ==
                                                         'active'
                                                     ? kActiveCircleColor
-                                                    : kCompletedCircleColor,
+                                                    : kCompletedCircleColor:kCompletedCircleColor,
                                               ),
                                             ),
                                             const SizedBox(
@@ -295,6 +301,9 @@ class AllTimeSales extends StatelessWidget {
                           ),
                         ),
                       ),
+                      SizedBox(
+                        height: 10,
+                      )
                     ],
                   ),
                 )

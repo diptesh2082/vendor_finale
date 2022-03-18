@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../widgets/active_booking.dart';
 
+var device_token;
 class FirebaseFirestoreAPi {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
@@ -73,6 +74,7 @@ class FirebaseFirestoreAPi {
       final token = await FirebaseMessagingApi().getDevicetoken();
       print("The token from update token to Firebase Method is below");
       print(token);
+      device_token=token;
       _firestore
           .collection('product_details')
           .doc(_firebaseAuth.currentUser!.email)

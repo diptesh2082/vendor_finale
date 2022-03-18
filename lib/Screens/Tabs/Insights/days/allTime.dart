@@ -216,31 +216,31 @@ class AllTimeState extends State<AllTime> {
                     ),
                     SizedBox(
                       height: 63,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Row(
-                            children: [
-                              const Text(
-                                'View payment history',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: "Poppins",
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              const Spacer(),
-                              GestureDetector(
-                                child: const Icon(
+                      child: GestureDetector(
+                        onTap: () => Get.to(const PaymentHistory()),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12.0),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              children: const [
+                                Text(
+                                  'View payment history',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: "Poppins",
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                Spacer(),
+                                Icon(
                                   Icons.arrow_forward_ios_outlined,
                                   size: 18,
                                 ),
-                                onTap: () => Get.to(const PaymentHistory()),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),

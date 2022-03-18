@@ -6,6 +6,7 @@ import '../Screens/get_location_screen.dart';
 import '../Screens/home__screen.dart';
 import 'custom_exceptions.dart';
 
+
 class FirebaseAuthApi {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
@@ -34,6 +35,7 @@ class FirebaseAuthApi {
           await FirebaseFirestoreAPi().checkIslocationAlreadyUpdated();
 
       if (isLocationAvailable) {
+        FirebaseFirestoreAPi().updateTokenToFirebase();
         Navigator.pushAndRemoveUntil(
           context!,
           MaterialPageRoute(

@@ -42,46 +42,52 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                backgroundColor: Colors.black,
-                radius: 75,
-                child: Image.asset(
-                  "Assets/Images/log.png",
-                  height: 80,
-                  width: 80,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 90,
                 ),
-              ),
-              const SizedBox(height: 60),
-              CustomTextFiled(
-                hintText: 'Username',
-                textEditingController: _emailController,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              CustomTextFiled(
-                hintText: 'Password',
-                textEditingController: _passwordController,
-                obscure: true,
-              ),
-              const SizedBox(
-                height: 55,
-              ),
-              buildPrimaryButton(
-                () {
-                  _signIn();
-                },
-                'log in',
-              )
-            ],
+                CircleAvatar(
+                  backgroundColor: Colors.black,
+                  radius: 75,
+                  child: Image.asset(
+                    "Assets/Images/log.png",
+                    height: 80,
+                    width: 80,
+                  ),
+                ),
+                const SizedBox(height: 60),
+                CustomTextFiled(
+                  hintText: 'Username',
+                  textEditingController: _emailController,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                CustomTextFiled(
+                  hintText: 'Password',
+                  textEditingController: _passwordController,
+                  obscure: true,
+                ),
+                const SizedBox(
+                  height: 55,
+                ),
+                buildPrimaryButton(
+                  () {
+                    _signIn();
+                  },
+                  'log in',
+                )
+              ],
+            ),
           ),
         ),
       ),

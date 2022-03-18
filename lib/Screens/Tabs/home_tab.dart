@@ -57,12 +57,12 @@ class _HomeTabState extends State<HomeTab> {
                 Scaffold(
                   key: _drawerkey,
                   backgroundColor: AppColors.backgroundColor,
-                  floatingActionButton: FloatingActionButton(
-                    onPressed: () {
-                      // // FirebaseFirestoreAPi().updateTokenToFirebase();
-                      // FirebaseFirestoreAPi().checkTokenChange();
-                    },
-                  ),
+                  // floatingActionButton: FloatingActionButton(
+                  //   onPressed: () {
+                  //     // // FirebaseFirestoreAPi().updateTokenToFirebase();
+                  //     // FirebaseFirestoreAPi().checkTokenChange();
+                  //   },
+                  // ),
                   appBar: buildAppBar(
                     context,
                     isGymOpened: snapshot.data!.get("gym_status"),
@@ -109,7 +109,7 @@ class _HomeTabState extends State<HomeTab> {
                                     var doc = snap.data.docs;
 
                                     return ListView.builder(
-                                      physics: NeverScrollableScrollPhysics(),
+                                      physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       itemCount: doc.length,
                                       itemBuilder: (context, index) {
@@ -165,7 +165,7 @@ class _HomeTabState extends State<HomeTab> {
                                     }
                                     var doc = snap.data.docs;
                                     return ListView.builder(
-                                      physics: NeverScrollableScrollPhysics(),
+                                      physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       itemCount: doc.length,
                                       itemBuilder: (context, index) {
@@ -182,9 +182,7 @@ class _HomeTabState extends State<HomeTab> {
                                             bookingPlan: doc[index]
                                                     ['booking_plan'] ??
                                                 "",
-                                            bookingPrice: doc[index]
-                                                    ['booking_price'] ??
-                                                "",
+                                            bookingPrice: double.parse(doc[index]['booking_price'].toString()),
                                             bookingdate: DateFormat(
                                                     DateFormat.YEAR_MONTH_DAY)
                                                 .format(
@@ -244,7 +242,7 @@ class _HomeTabState extends State<HomeTab> {
                                     var doc = snap.data.docs;
 
                                     return ListView.builder(
-                                      physics: NeverScrollableScrollPhysics(),
+                                      physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       itemCount: doc.length,
                                       itemBuilder: (context, index) {
@@ -269,7 +267,9 @@ class _HomeTabState extends State<HomeTab> {
                                                 "",
                                           );
                                         }
-                                        return Container();
+                                        return Container(
+
+                                        );
                                       },
                                     );
                                   },
@@ -303,7 +303,7 @@ class _HomeTabState extends State<HomeTab> {
                                   .where(
                                     'token',
                                     arrayContains:
-                                        "enOny3LySKi3SppiNT8B3V:APA91bHV28q5C300EBMX0f2pTWHlvn96OCRzlnZEVo_hAtoIiDEhi_bjakLi5_DFM1XNe9r4qpwxhQIEPsRC0124jGYkMHYVkvNSYbrXuYYN6o17d6HmiPWr1N83gh95IqCNKgEX-zHG",
+                                        device_token,
                                   )
                                   .snapshots(),
                               builder: (context, AsyncSnapshot snapshot) {
@@ -352,6 +352,12 @@ class _HomeTabState extends State<HomeTab> {
                                         );
                                       }
                                       return ListTile(
+                                        onTap: () {
+
+                                          Get.to(
+                                            const LoginScreen(),
+                                          );
+                                        },
                                         title: Text(
                                           snapshot.data.docs[index]['name'],
                                           style: const TextStyle(
@@ -393,14 +399,14 @@ class _HomeTabState extends State<HomeTab> {
       iconTheme: const IconThemeData(color: Colors.black),
       titleSpacing: 0,
       elevation: 0,
-      leading: IconButton(
-          onPressed: () {
-            leadingCallback!();
-          },
-          icon: const Icon(
-            Icons.menu,
-            color: Colors.black,
-          )),
+      // leading: IconButton(
+      //     onPressed: () {
+      //       leadingCallback!();
+      //     },
+      //     icon: const Icon(
+      //       Icons.menu,
+      //       color: Colors.black,
+      //     )),
       title: Text(
         gymname!,
         style: const TextStyle(
@@ -411,17 +417,17 @@ class _HomeTabState extends State<HomeTab> {
         ),
       ),
       bottom: PreferredSize(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            GestureDetector(
-              onTap: () {
-                print("Open that Alert dialogue Box");
-                setState(() {
-                  showBranches = !showBranches;
-                });
-              },
-              child: Row(
+        child: GestureDetector(
+          onTap: () {
+            print("Open that Alert dialogue Box");
+            setState(() {
+              showBranches = !showBranches;
+            });
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 57.0),
@@ -441,23 +447,23 @@ class _HomeTabState extends State<HomeTab> {
                   )
                 ],
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: TextFormField(
-                decoration: InputDecoration(
-                  prefixIcon: Image.asset("Assets/Images/Search.png"),
-                  hintText: 'Search',
-                  border: InputBorder.none,
-                  filled: true,
-                  fillColor: Colors.white,
+              const SizedBox(
+                height: 15,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    prefixIcon: Image.asset("Assets/Images/Search.png"),
+                    hintText: 'Search',
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor: Colors.white,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         preferredSize: const Size.fromHeight(0),
       ),

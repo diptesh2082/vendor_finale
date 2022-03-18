@@ -19,10 +19,10 @@ class DaysSales extends StatelessWidget {
       backgroundColor: kScaffoldBackgroundColor,
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
-            .collection('bookings')
-            .where("vendorId", isEqualTo: "dipteshmandal555@gmail.com")
+            .collectionGroup('user_booking')
+            // .where("vendorId", isEqualTo: "T@gmail.com")
             //.where("booking_date", isGreaterThanOrEqualTo: myTimeStamp)
-            .where("booking_accepted", isEqualTo: true)
+            // .where("booking_accepted", isEqualTo: true)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -34,6 +34,18 @@ class DaysSales extends StatelessWidget {
             );
           }
           var document = snapshot.data!.docs;
+          document = document.where((element) {
+            var x = element.get("vendorId").toString().toLowerCase().contains("t@gmail.com");
+            return x;
+          }).toList();
+          document =document.where((element) {
+
+            var y =element.get("order_date").toDate().difference(DateTime.now()).inDays>-2;
+
+            return y;
+          }).toList();
+          // print(document[0]["order_date"].toDate());
+          // print(DateTime.now().difference(document[0]["order_date"].toDate()).inDays);
           return document.isNotEmpty
               ? Padding(
                   padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
