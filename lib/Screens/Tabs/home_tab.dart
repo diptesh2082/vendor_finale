@@ -25,6 +25,7 @@ class _HomeTabState extends State<HomeTab> {
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
 
   bool showBranches = false;
+  final _auth=FirebaseAuth.instance;
 
   @override
   void initState() {
@@ -107,6 +108,13 @@ class _HomeTabState extends State<HomeTab> {
                                     }
 
                                     var doc = snap.data.docs;
+                                    doc = doc.where((element) {
+                                      return element
+                                          .get('vendorId')
+                                          .toString()
+                                      // .toLowerCase()
+                                          .contains(_auth.currentUser!.email.toString());
+                                    }).toList();
 
                                     return ListView.builder(
                                       physics: const NeverScrollableScrollPhysics(),
@@ -127,6 +135,7 @@ class _HomeTabState extends State<HomeTab> {
                                             bookingPrice: doc[index]
                                                     ['booking_price'] ??
                                                 "",
+                                            // docs: doc[index],
                                             bookingdate: DateFormat(
                                                     DateFormat.YEAR_MONTH_DAY)
                                                 .format(doc[index]

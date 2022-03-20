@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Future _signIn() async {
     try {
       FirebaseAuthApi().signIn(
-        email: _emailController!.text,
+        email: _emailController!.text.trim(),
         password: _passwordController!.text,
         context: context,
       );

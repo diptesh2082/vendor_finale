@@ -12,6 +12,7 @@ class BookingCard extends StatefulWidget {
       this.bookingPrice = 0.0,
       this.userID = "",
       this.bookings,
+        this .docs,
       required this.otp})
       : super(key: key);
 
@@ -23,6 +24,7 @@ class BookingCard extends StatefulWidget {
   final String? userID;
   final int? otp;
   final Map? bookings;
+  final Map? docs;
 
   @override
   State<BookingCard> createState() => _BookingCardState();
@@ -92,6 +94,9 @@ class _BookingCardState extends State<BookingCard> {
                       bookingID: widget.bookingID,
                       userID: widget.userID,
                     ),
+                    arguments: {
+                      "booking_id":widget.bookingID,
+                    }
                   );
                 },
                 child: const Text(

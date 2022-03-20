@@ -39,73 +39,75 @@ class _ActiveBookingCardState extends State<ActiveBookingCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
-      margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-      height: 150,
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(15.0)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                'Booking ID - ${widget.bookingID!}',
-                style:
-                    const TextStyle(fontWeight: FontWeight.w400, fontSize: 10),
-              ),
-              Text(
-                widget.userName!,
-                style:
-                    const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
-              ),
-              Text(
-                widget.bookingdate!,
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
-              Text(
-                widget.bookingPlan!,
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(top: 18.0),
-                child: Text(
-                  '\$${widget.bookingPrice}',
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w600, fontSize: 18),
+    return FittedBox(
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+        height: 150,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(15.0)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  'Booking ID - ${widget.bookingID!}',
+                  style:
+                      const TextStyle(fontWeight: FontWeight.w400, fontSize: 10),
                 ),
-              ),
-              Text(
-                '${DateTime.now().difference(DateTime(int.parse(widget.tempYear), int.parse(widget.tempMonth), int.parse(widget.tempDay))).inDays} days remaining',
-                style: const TextStyle(fontWeight: FontWeight.w500),
-              ),
-              Row(
-                children: const [
-                  CircleAvatar(
-                    radius: 3,
-                    backgroundColor: Colors.green,
+                Text(
+                  widget.userName!,
+                  style:
+                      const TextStyle(fontWeight: FontWeight.w700, fontSize: 15),
+                ),
+                Text(
+                  widget.bookingdate!,
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  widget.bookingPlan!,
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 18.0),
+                  child: Text(
+                    '\$${widget.bookingPrice}',
+                    style: const TextStyle(
+                        fontWeight: FontWeight.w600, fontSize: 18),
                   ),
-                  SizedBox(
-                    width: 3.5,
-                  ),
-                  Text(
-                    'Active',
-                    style: TextStyle(fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+                ),
+                Text(
+                  '${DateTime.now().difference(DateTime(int.parse(widget.tempYear), int.parse(widget.tempMonth), int.parse(widget.tempDay))).inDays} days remaining',
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                ),
+                Row(
+                  children: const [
+                    CircleAvatar(
+                      radius: 3,
+                      backgroundColor: Colors.green,
+                    ),
+                    SizedBox(
+                      width: 3.5,
+                    ),
+                    Text(
+                      'Active',
+                      style: TextStyle(fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
