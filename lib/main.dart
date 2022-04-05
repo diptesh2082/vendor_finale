@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:vyam_vandor/Screens/book_details_dashboard.dart';
 import 'package:vyam_vandor/Screens/login_screen.dart';
 import 'Screens/home__screen.dart';
 
@@ -12,6 +13,7 @@ void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
         statusBarColor: Color(0xffF4F4F4),
+  
         statusBarIconBrightness: Brightness.light),
   );
   runApp(const MyApp());

@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -40,6 +42,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   List<String> multiimages = [];
   late Future<List<FirebaseFile>> futurefiles;
 
+  final _auth = FirebaseAuth.instance;
+
   @override
   void initState() {
     super.initState();
@@ -50,380 +54,416 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   Widget build(BuildContext context) {
     final top = coverheight - profileheight / 2;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.grey[100],
-          child: Padding(
-            padding: const EdgeInsets.only(top: 35.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                    clipBehavior: Clip.none,
-                    alignment: Alignment.bottomLeft,
+      body: StreamBuilder<DocumentSnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('product_details')
+              .doc(_auth.currentUser!.email.toString())
+              .snapshots(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.data == null) {
+              return Container();
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            return SingleChildScrollView(
+              child: Container(
+                color: Colors.grey[100],
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 35.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        width: double.maxFinite,
-                        height: coverheight,
-                        decoration: const BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage(
-                                    "Assets/Images/rectangle_14.png"),
-                                fit: BoxFit.cover)),
-                      ),
-                      Positioned(
-                        top: top,
-                        left: 15,
-                        child: CircleAvatar(
-                          radius: profileheight / 2,
-                          backgroundColor: Colors.white,
-                          // backgroundImage: AssetImage("assets/rectangle_14.png"),
+                      ProfileTile(
+                          coverheight: coverheight,
+                          top: top,
+                          profileheight: profileheight),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0, top: 50),
+                        child: Text(
+                          snapshot.data.get('name'),
+                          style: const TextStyle(
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600),
                         ),
-                      )
-                    ]),
-                const Padding(
-                  padding: EdgeInsets.only(left: 12.0, top: 50),
-                  child: Text(
-                    'Transformers Gym',
-                    style: TextStyle(
-                        fontFamily: 'Poppins',
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 12.0, top: 8.0),
-                  child: Text(
-                    'Branch - Barakar',
-                    style: TextStyle(
-                        color: Colors.grey,
-                        fontFamily: 'Poppins',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600),
-                  ),
-                ),
-                InkWell(
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 12.0, top: 8.0),
-                    child: Text(
-                      'Switch Branch',
-                      style: TextStyle(
-                          color: Colors.black,
-                          decoration: TextDecoration.underline,
-                          fontFamily: 'Poppins',
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                  onTap: () {},
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12.0)),
-                    child: const ListTile(
-                      title: Text(
-                        'Total booking',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600),
                       ),
-                      trailing: Text(
-                        '06',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 12.0, top: 8.0, right: 14),
-                  child: Row(
-                    children: [
-                      const Text(
-                        'Photos',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontFamily: 'Poppins',
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600),
-                      ),
-                      const Spacer(),
-                      const Icon(
-                        Icons.file_upload_outlined,
-                        size: 20,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0, top: 8.0),
+                        child: Text(
+                          snapshot.data.get('branch'),
+                          style: const TextStyle(
+                              color: Colors.grey,
+                              fontFamily: 'Poppins',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600),
+                        ),
                       ),
                       InkWell(
-                        child: const Text("Add photos",
+                        child: const Padding(
+                          padding: EdgeInsets.only(left: 12.0, top: 8.0),
+                          child: Text(
+                            'Switch Branch',
                             style: TextStyle(
                                 color: Colors.black,
+                                decoration: TextDecoration.underline,
                                 fontFamily: 'Poppins',
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600)),
-                        onTap: () async {
-                          List<XFile>? _images = await multiimagepicker();
-                          //  multiimages = await multiimagepicker();
-                          if (_images.isNotEmpty) {
-                            multiimages = await multiimageuploader(_images);
-                            setState(() {});
-                          }
-                        },
-                      )
-                    ],
-                  ),
-                ),
-                FutureBuilder<List<FirebaseFile>>(
-                    future: futurefiles,
-                    builder: (context, snapshot) {
-                      switch (snapshot.connectionState) {
-                        case ConnectionState.waiting:
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        default:
-                          if (snapshot.hasError) {
-                            return const Center(
-                                child: Text(" Some error occured!!"));
-                          } else {
-                            final files = snapshot.data!;
-
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: SizedBox(
-                                height: 200,
-                                child: GridView.builder(
-                                    shrinkWrap: true,
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 3,
-                                            crossAxisSpacing: 0,
-                                            mainAxisSpacing: 12.0),
-                                    itemCount: files.length,
-                                    itemBuilder: (context, index) {
-                                      final file = files[index];
-                                      return buildFile(context, file);
-                                    }),
-                              ),
-                            );
-                          }
-                      }
-                    }),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-                  child: SizedBox(
-                    height: 150,
-                    width: double.infinity,
-                    child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(left: 8.0, top: 8.0),
-                              child: Text('Rules',
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                  )),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                        onTap: () {},
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            top: 8.0, left: 8.0, right: 8.0),
+                        child: Card(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12.0)),
+                          child: ListTile(
+                            title: const Text(
+                              'Total booking',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'PoppinsSemiBold',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 12.0, top: 12.0),
+                            trailing: Text(
+                              snapshot.data.get('total_booking'),
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'PoppinsSemiBold',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 12.0, top: 8.0, right: 14),
+                        child: Row(
+                          children: const [
+                            Text(
+                              'Photos',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontFamily: 'Poppins',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                            Spacer(),
+                            // Icon(
+                            //   Icons.file_upload_outlined,
+                            //   size: 20,
+                            // ),
+                            // InkWell(
+                            //   child: const Text("Add photos",
+                            //       style: TextStyle(
+                            //           color: Colors.black,
+                            //           fontFamily: 'Poppins',
+                            //           fontSize: 14,
+                            //           fontWeight: FontWeight.w600)),
+                            //   onTap: () async {
+                            //     List<XFile>? _images = await multiimagepicker();
+                            //     //  multiimages = await multiimagepicker();
+                            //     if (_images.isNotEmpty) {
+                            //       multiimages =
+                            //           await multiimageuploader(_images);
+                            //       setState(() {});
+                            //     }
+                            //   },
+                            // )
+                          ],
+                        ),
+                      ),
+                      FutureBuilder<List<FirebaseFile>>(
+                          future: futurefiles,
+                          builder: (context, snapshot) {
+                            switch (snapshot.connectionState) {
+                              case ConnectionState.waiting:
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              default:
+                                if (snapshot.hasError) {
+                                  return const Center(
+                                      child: Text(" Some error occured!!"));
+                                } else {
+                                  final files = snapshot.data!;
+
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: SizedBox(
+                                      height: 200,
+                                      child: GridView.builder(
+                                          shrinkWrap: true,
+                                          gridDelegate:
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 3,
+                                                  crossAxisSpacing: 0,
+                                                  mainAxisSpacing: 12.0),
+                                          itemCount: files.length,
+                                          itemBuilder: (context, index) {
+                                            final file = files[index];
+                                            return buildFile(context, file);
+                                          }),
+                                    ),
+                                  );
+                                }
+                            }
+                          }),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 8.0, right: 8.0, top: 8.0),
+                        child: SizedBox(
+                          height: 150,
+                          width: double.infinity,
+                          child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 8.0, top: 8.0),
+                                    child: Text('Rules',
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                        )),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 12.0, top: 12.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: const [
+                                        Text(
+                                          "•  Bring your towel and use it.",
+                                          style: TextStyle(
+                                              fontFamily: 'PoppinsRegular',
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 12),
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text("•  Bring seperate shoes.",
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontFamily: 'PoppinsRegular',
+                                              fontWeight: FontWeight.w400,
+                                            )),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text("•  Re-rack equipments",
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontFamily: 'PoppinsRegular',
+                                              fontWeight: FontWeight.w400,
+                                            )),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        Text(
+                                            "•  No heavy lifting without spotter",
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontFamily: 'PoppinsRegular',
+                                              fontWeight: FontWeight.w400,
+                                            )),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 8.0, right: 8.0, top: 8.0),
+                        child: SizedBox(
+                          height: 135,
+                          // width: double.infinity,
+                          child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 8.0, top: 8.0),
+                                    child: Text('Trainers',
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w700,
+                                        )),
+                                  ),
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 90,
+                                        child: StreamBuilder<QuerySnapshot>(
+                                            stream: FirebaseFirestore.instance
+                                                .collection('product_details')
+                                                .doc('mahtab5752@gmail.com')
+                                                .collection('trainers')
+                                                .snapshots(),
+                                            builder: (context,
+                                                AsyncSnapshot snapshot) {
+                                              if (snapshot.data == null) {
+                                                return Container();
+                                              }
+                                              if (snapshot.connectionState ==
+                                                  ConnectionState.waiting) {
+                                                return const Center(
+                                                  child:
+                                                      CircularProgressIndicator(),
+                                                );
+                                              }
+                                              var document = snapshot.data;
+                                              print(document);
+                                              return ListView.builder(
+                                                  itemCount: trainers.length,
+                                                  physics:
+                                                      const PageScrollPhysics(),
+                                                  scrollDirection:
+                                                      Axis.horizontal,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return Row(
+                                                      children: [
+                                                        Column(
+                                                          children: [
+                                                            Container(
+                                                              height: 65,
+                                                              width: 65,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                      shape: BoxShape
+                                                                          .circle,
+                                                                      //border: Border.all(width: 1),
+                                                                      image: DecorationImage(
+                                                                          image: AssetImage(trainers[
+                                                                              index]),
+                                                                          fit: BoxFit
+                                                                              .cover)),
+                                                            ),
+                                                            SizedBox(
+                                                              // height:
+                                                              //     MediaQuery.of(context)
+                                                              //             .size
+                                                              //             .height *
+                                                              //         0.05,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width *
+                                                                  0.05,
+                                                            ),
+                                                            Text(
+                                                              document[index]
+                                                                  ['name'],
+                                                              style:
+                                                                  const TextStyle(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w500,
+                                                                fontSize: 12,
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width *
+                                                              0.06,
+                                                        ),
+                                                      ],
+                                                    );
+                                                  });
+                                            }),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                        ),
+                      ),
+                      // Amenities//
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.1,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: ((context, index) {
+                            return amenities(index);
+                          }),
+                          separatorBuilder: (context, _) => SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.03,
+                          ),
+                          itemCount: amenities_name.length,
+                        ),
+                      ),
+                      //Address//
+                      const Padding(
+                        padding: EdgeInsets.only(left: 12.0, top: 10.0),
+                        child: Text(
+                          'Address',
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontFamily: 'Poppins',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 8.0, right: 8.0, top: 10.0, bottom: 14),
+                        child: SizedBox(
+                          height: 50,
+                          width: double.infinity,
+                          child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0)),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: const [
-                                  Text(
-                                    "•  Bring your towel and use it.",
-                                    style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12),
-                                  ),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text("•  Bring seperate shoes.",
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.only(left: 8.0, top: 14.0),
+                                    child: Text(
+                                      'Bus stand, Barakar, near pratham lodge',
                                       style: TextStyle(
-                                        fontSize: 12,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w400,
-                                      )),
-                                  SizedBox(
-                                    height: 8,
+                                          color: Colors.black,
+                                          fontFamily: "Poppins",
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w400),
+                                    ),
                                   ),
-                                  Text("•  Re-rack equipments",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w400,
-                                      )),
-                                  SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text("•  No heavy lifting without spotter",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontFamily: 'Poppins',
-                                        fontWeight: FontWeight.w400,
-                                      )),
                                 ],
-                              ),
-                            ),
-                          ],
-                        )),
+                              )),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
-                  child: SizedBox(
-                    height: 150,
-                    width: double.infinity,
-                    child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(left: 8.0, top: 8.0),
-                              child: Text('Trainers',
-                                  style: TextStyle(
-                                    fontFamily: 'Poppins',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 90,
-                              child: ListView.builder(
-                                  itemCount: trainers.length,
-                                  physics: const PageScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    return Row(
-                                      children: [
-                                        Container(
-                                          height: 65,
-                                          width: 65,
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              //border: Border.all(width: 1),
-                                              image: DecorationImage(
-                                                  image: AssetImage(
-                                                      trainers[index]),
-                                                  fit: BoxFit.cover)),
-                                        ),
-                                        SizedBox(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.05,
-                                        ),
-                                      ],
-                                    );
-                                  }),
-                            ),
-                            SizedBox(
-                              height: 15,
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 6.0),
-                                child: ListView.builder(
-                                    itemCount: trainername.length,
-                                    physics: const PageScrollPhysics(),
-                                    scrollDirection: Axis.horizontal,
-                                    itemBuilder: (context, index) {
-                                      return Row(
-                                        children: [
-                                          Text(
-                                            trainername[index],
-                                            style: const TextStyle(
-                                              fontFamily: 'Poppins',
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 12,
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: MediaQuery.of(context)
-                                                    .size
-                                                    .width *
-                                                0.09,
-                                          ),
-                                        ],
-                                      );
-                                    }),
-                              ),
-                            )
-                          ],
-                        )),
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: ((context, index) {
-                        return amenities(index);
-                      }),
-                      separatorBuilder: (context, _) => SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.08,
-                          ),
-                      itemCount: amenities_name.length),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 12.0, top: 10.0),
-                  child: Text(
-                    'Address',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontFamily: 'Poppins',
-                        fontSize: 14,
-                        fontWeight: FontWeight.w700),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 8.0, right: 8.0, top: 10.0, bottom: 14),
-                  child: SizedBox(
-                    height: 50,
-                    width: double.infinity,
-                    child: Card(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Padding(
-                              padding: EdgeInsets.only(left: 8.0, top: 14.0),
-                              child: Text(
-                                'Bus stand, Barakar, near pratham lodge',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: "Poppins",
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ),
-                          ],
-                        )),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+              ),
+            );
+          }),
     );
   }
 
@@ -438,31 +478,65 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         child: FittedBox(
           child: Column(
             children: [
-              Container(
-                height: 50,
-                width: 40,
+              CircleAvatar(
                 child: Icon(
-                  icons[index],
-                  size: 16,
+                  icons[index], // Icon list
+                  size: 60,
+                  color: Colors.black,
                 ),
-                //color: Colors.amber,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.amber.shade400,
-                ),
+                backgroundColor: Colors.amber.shade400,
+                radius: 80,
               ),
               Text(
-                amenities_name[index],
-                //textAlign: TextAlign.center,
+                amenities_name[index], // icon name list
                 style: const TextStyle(
-                    fontFamily: 'Poppins',
+                    fontFamily: 'PoppinsRegular',
                     fontWeight: FontWeight.w400,
-                    fontSize: 12),
+                    fontSize: 40),
               ),
             ],
           ),
         ),
       );
+}
+
+class ProfileTile extends StatelessWidget {
+  const ProfileTile({
+    Key? key,
+    required this.coverheight,
+    required this.top,
+    required this.profileheight,
+  }) : super(key: key);
+
+  final double coverheight;
+  final double top;
+  final double profileheight;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomLeft,
+        children: [
+          Container(
+            width: double.maxFinite,
+            height: coverheight,
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("Assets/Images/rectangle_14.png"),
+                    fit: BoxFit.cover)),
+          ),
+          Positioned(
+            top: top,
+            left: 15,
+            child: CircleAvatar(
+              radius: profileheight / 2,
+              backgroundColor: Colors.white,
+              // backgroundImage: AssetImage("assets/rectangle_14.png"),
+            ),
+          )
+        ]);
+  }
 }
 
 Future<List<XFile>> multiimagepicker() async {

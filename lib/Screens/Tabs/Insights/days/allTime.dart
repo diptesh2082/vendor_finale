@@ -183,7 +183,8 @@ class AllTimeState extends State<AllTime> {
                                             height: 24,
                                           ),
                                           Text(
-                                            snapshot.data.get('total_booking'),  //DATABASE CALLING FOR TOTAL BOOKING VALUE 
+                                            snapshot.data.get(
+                                                'total_booking'), //DATABASE CALLING FOR TOTAL BOOKING VALUE
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 35,
