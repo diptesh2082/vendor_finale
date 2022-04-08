@@ -1,7 +1,11 @@
 import 'dart:io';
 
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -467,10 +471,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
-  Widget buildFile(BuildContext context, FirebaseFile file) => Image.network(
-        file.url,
+  Widget buildFile(BuildContext context, FirebaseFile file) => CachedNetworkImage(
+
         height: 128,
-        width: 127,
+        width: 127, imageUrl: file.url,
       );
 
   Widget amenities(int index) => Padding(

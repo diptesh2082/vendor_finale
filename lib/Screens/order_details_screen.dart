@@ -44,7 +44,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         ),
         leading: IconButton(
           onPressed: () {
-            Get.to(const HomeScreen());
+            Get.back();
           },
           icon: const Icon(
             Icons.arrow_back,
@@ -77,8 +77,11 @@ class _OrderDetailsState extends State<OrderDetails> {
                   children: [
                     //Container 1 for Booking Summary
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 5, vertical: 5),
+
+
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(8.0)),
@@ -102,8 +105,10 @@ class _OrderDetailsState extends State<OrderDetails> {
 
                                 return FittedBox(
                                   child: Container(
+
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 5.0),
+
                                     child: Row(
                                       children: [
                                         Image.asset(
@@ -136,8 +141,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                   width: 2.0,
                                                 ),
                                                 Text(
-                                                  snapshot3.data
-                                                      .get('landmark'),
+
+                                                  snapshot3.data.get('landmark'),
+
                                                   style: GoogleFonts.poppins(
                                                     fontSize: 14,
                                                     fontWeight: FontWeight.w500,
@@ -157,8 +163,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                     0.5,
                                                 child: Text(
                                                   snapshot3.data.get('address'),
+
                                                   overflow:
                                                       TextOverflow.ellipsis,
+
                                                   maxLines: 2,
                                                   style: GoogleFonts.poppins(
                                                     fontSize: 12,
@@ -193,8 +201,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Workout',
-                                      style: GoogleFonts.poppins(
+
+                                      style:GoogleFonts.poppins(
+
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.green),
@@ -239,7 +248,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                                   children: [
                                     Text(
                                       '${snapshot.data.get('booking_plan')}',
-                                      style: GoogleFonts.poppins(
+
+                                      style:GoogleFonts.poppins(
+
                                           fontSize: 16,
                                           fontWeight: FontWeight.w700,
                                           color: Colors.green),
@@ -265,7 +276,9 @@ class _OrderDetailsState extends State<OrderDetails> {
                                           .format(snapshot.data
                                               .get('booking_date')
                                               .toDate()),
-                                      style: GoogleFonts.poppins(
+
+                                      style:GoogleFonts.poppins(
+
                                         fontSize: 16,
                                         fontWeight: FontWeight.w500,
                                         color: Colors.black,
@@ -429,8 +442,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
+
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+
                       child: StreamBuilder(
                           stream: FirebaseFirestore.instance
                               .collection('user_details')
@@ -450,12 +465,15 @@ class _OrderDetailsState extends State<OrderDetails> {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
+
+                             Text(
+
                                   'Customers Details',
                                   style: GoogleFonts.poppins(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,
                                       color: const Color(0xff3A3A3A)),
+
                                 ),
                                 const SizedBox(
                                   height: 10.0,
@@ -499,7 +517,56 @@ class _OrderDetailsState extends State<OrderDetails> {
                                       ),
                                     ),
                                   ],
+
                                 ),
+                                Row(
+                                  children: [
+                                    Text(
+
+                                      'Username: ',
+
+                                      'Payment Method : ',
+
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Text(
+
+                                      ' ${snapshot2.data.get("name")}',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Phone Number: ',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Text(
+                                      ' ${snapshot2.data.get('userId')}',
+
+                             
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
                                 Row(
                                   children: [
                                     Text(
@@ -520,6 +587,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                     ),
                                   ],
                                 ),
+
                               ],
                             );
                           }),

@@ -4,12 +4,14 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:vyam_vandor/Screens/Tabs/Insights/insights.dart';
 import 'package:vyam_vandor/Screens/Tabs/dashboard_tab.dart';
 import 'package:vyam_vandor/Screens/Tabs/home_tab.dart';
+import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
 import 'package:vyam_vandor/app_colors.dart';
 
 import '../Services/firebase_messaging_api.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  var email;
+  HomeScreen({Key? key,required this.email}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -71,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    gymId=widget.email;
     FirebaseMessagingApi().getDevicetoken();
     FirebaseMessagingApi().initialize(context);
     FirebaseMessagingApi().onbackgroundMessageClick(context);

@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:vyam_vandor/Screens/book_details_dashboard.dart';
 import 'package:vyam_vandor/Screens/login_screen.dart';
-import 'Screens/DatePickerScreen.dart';
+
+import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
+
 import 'Screens/home__screen.dart';
 
 void main() async {
@@ -25,11 +27,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    gymId=FirebaseAuth.instance.currentUser!.email;
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.purple,
           fontFamily: 'PoppinsRegular',
           appBarTheme: const AppBarTheme(
             elevation: 0.0,
@@ -45,7 +48,7 @@ class MyApp extends StatelessWidget {
           }
 
           if (snapshot.hasData) {
-            return const HomeScreen();
+            return  HomeScreen(email: gymId,);
           }
 
           return const LoginScreen();

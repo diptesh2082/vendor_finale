@@ -114,8 +114,12 @@ class _BookingScreenState extends State<BookingScreen> {
                                       child: CircularProgressIndicator());
                                 }
                                 // print(snapshot3.data);
+
                                 print(
                                     snapshot.data!.get('gym_details')["image"]);
+
+                                  print(snapshot.data!.get('gym_details')["image"]);
+
                                 return FittedBox(
                                   child: Container(
                                     height: 112,
@@ -125,6 +129,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+
                                         SizedBox(
                                           child: CachedNetworkImage(
                                             progressIndicatorBuilder: (context,
@@ -142,7 +147,20 @@ class _BookingScreenState extends State<BookingScreen> {
                                             height: 100,
                                             imageUrl: snapshot.data!
                                                 .get('gym_details')["image"],
+//                                         ClipRRect(
+//                                           child: Stack(
+//                                             children: [
+//                                               CachedNetworkImage(
+//                                                 progressIndicatorBuilder: (context, url, downloadProgress) =>
+//                                                     Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+//                                                 errorWidget: (context, url, error) => const Icon(Icons.error),
+//                                                 fit: BoxFit.cover,
+//                                                 height: 100, imageUrl: snapshot.data!.get('gym_details')["image"],
+//                                               ),
+                                            ],
+
                                           ),
+                                          borderRadius: BorderRadius.circular(15),
                                         ),
                                         const SizedBox(
                                           width: 9.0,
@@ -154,7 +172,11 @@ class _BookingScreenState extends State<BookingScreen> {
                                               MainAxisAlignment.start,
                                           children: [
                                             Text(
+
                                               '${snapshot.data!.get('gym_details')["name"] ?? ""}',
+
+                                          
+
                                               style: GoogleFonts.poppins(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w600,
@@ -626,7 +648,11 @@ class _BookingScreenState extends State<BookingScreen> {
             color: Colors.grey[300],
             borderRadius: BorderRadius.circular(12),
           ),
-          height: 50,
+
+      
+
+          height: 53,
+
           width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
@@ -647,14 +673,19 @@ class _BookingScreenState extends State<BookingScreen> {
                 ),
               ),
               // const Spacer(),
-              Positioned(
+
                 right: 3,
+
+          
+
                 bottom: 4,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: SizedBox(
+
                     height: 42,
                     width: 81,
+
                     child: FloatingActionButton.extended(
                       backgroundColor: Colors.green,
                       elevation: 8,
@@ -670,12 +701,14 @@ class _BookingScreenState extends State<BookingScreen> {
                               userID: widget.userID,
                               bookingID: widget.bookingID,
                             ),
+
                           );
                           await FirebaseFirestoreAPi()
                               .acceptandUpdatebookingStatus(
                             widget.bookingID,
                             widget.userID,
                           );
+
                           await FirebaseFirestore.instance
                               .collection('bookings')
                               .doc(widget.userID)
@@ -719,6 +752,7 @@ class _BookingScreenState extends State<BookingScreen> {
     );
   }
 }
+
 
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/material.dart';
@@ -1274,3 +1308,80 @@ class _BookingScreenState extends State<BookingScreen> {
 //     );
 //   }
 // }
+=======
+//Container For TextField
+// Container(
+//   height: 45,
+//   decoration: BoxDecoration(
+//       color: Colors.white,
+//       borderRadius: BorderRadius.circular(8.0)),
+//   child: Stack(
+//     children: [
+//       TextFormField(
+//         controller: _controller,
+//         decoration: InputDecoration(
+//           border: InputBorder.none,
+//           contentPadding:
+//               const EdgeInsets.symmetric(horizontal: 10),
+//           hintText: 'Enter OTP',
+//           hintStyle: GoogleFonts.poppins(
+//             fontWeight: FontWeight.w600,
+//             fontSize: 14,
+//             color: const Color(0xffC9C9C9),
+//           ),
+//         ),
+//       ),
+//       Positioned(
+//         right: 20,
+//         child: ElevatedButton(
+//           onPressed: () async {
+//             //Function for Verifying OTP
+//
+//             if (int.parse(_controller!.text) == widget.otp) {
+//               print("The otp is Verified");
+//               Get.off(
+//                 OrderDetails(
+//                   userID: widget.userID,
+//                   bookingID: widget.bookingID,
+//                 ),
+//               );
+//               await FirebaseFirestoreAPi()
+//                   .acceptandUpdatebookingStatus(
+//                 widget.bookingID,
+//                 widget.userID,
+//               );
+//               await FirebaseFirestore.instance
+//                   .collection('bookings')
+//                   .doc(widget.userID)
+//                   .collection('user_booking')
+//                   .doc(widget.bookingID)
+//               .update({
+//                 "booking_accepted": true,
+//               });
+//             } else {
+//               print("Invalid OTP");
+//               Get.showSnackbar(const GetSnackBar(
+//                 title: "Invalid OTP",
+//                 message: "Try it again",
+//                 isDismissible: true,
+//                 backgroundColor: Colors.black,
+//               ));
+//             }
+//           },
+//           child:  Text(
+//             'Verify',
+//             style: GoogleFonts.poppins(
+//               fontWeight: FontWeight.bold,
+//               fontSize: 14
+//             ),
+//           ),
+//           style: ButtonStyle(
+//             backgroundColor: MaterialStateProperty.all(
+//                 AppColors.bottomNaVBarTextColor),
+//           ),
+//         ),
+//       )
+//     ],
+//   ),
+// ),
+

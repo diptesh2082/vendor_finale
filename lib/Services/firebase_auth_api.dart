@@ -39,7 +39,7 @@ class FirebaseAuthApi {
         Navigator.pushAndRemoveUntil(
           context!,
           MaterialPageRoute(
-            builder: ((context) => const HomeScreen()),
+            builder: ((context) =>  HomeScreen(email: this.email,)),
           ),
           (route) => false,
         );
