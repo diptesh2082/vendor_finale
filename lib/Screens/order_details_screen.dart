@@ -44,7 +44,7 @@ class _OrderDetailsState extends State<OrderDetails> {
         ),
         leading: IconButton(
           onPressed: () {
-            Get.to(const HomeScreen());
+            Get.back();
           },
           icon: const Icon(
             Icons.arrow_back,
@@ -119,7 +119,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              '${snapshot.data!.get('gym_name')}',
+                                              '${snapshot.data!.get('gym_details')["name"]}',
                                               style: GoogleFonts.poppins(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w600,

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -6,8 +7,8 @@ import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
 import 'package:vyam_vandor/app_colors.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:intl/intl.dart';
+// import com.tekartik.sqflite.SqflitePlugin;
 
 class BookingScreen extends StatefulWidget {
   const BookingScreen({
@@ -15,14 +16,14 @@ class BookingScreen extends StatefulWidget {
     this.otp,
     this.bookingID = "Def booking Id",
     this.userID = "def user iD",
-    this.imageUrl = "Assets/Images/rect.png",
+    // this.imageUrl = "Assets/Images/rect.png",
   }) : super(key: key);
 
   final int? otp;
 
   final String? userID;
   final String? bookingID;
-  final String? imageUrl;
+  // final String? imageUrl;
 
   @override
   _BookingScreenState createState() => _BookingScreenState();
@@ -113,7 +114,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                       child: CircularProgressIndicator());
                                 }
                                 // print(snapshot3.data);
-
+                                  print(snapshot.data!.get('gym_details')["image"]);
                                 return FittedBox(
                                   child: Container(
                                     height: 112,
@@ -123,12 +124,19 @@ class _BookingScreenState extends State<BookingScreen> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        SizedBox(
-                                          child: Image.asset(
-                                            widget.imageUrl!,
-                                            fit: BoxFit.cover,
-                                            height: 100,
+                                        ClipRRect(
+                                          child: Stack(
+                                            children: [
+                                              CachedNetworkImage(
+                                                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                                                    Center(child: CircularProgressIndicator(value: downloadProgress.progress)),
+                                                errorWidget: (context, url, error) => const Icon(Icons.error),
+                                                fit: BoxFit.cover,
+                                                height: 100, imageUrl: snapshot.data!.get('gym_details')["image"],
+                                              ),
+                                            ],
                                           ),
+                                          borderRadius: BorderRadius.circular(15),
                                         ),
                                         const SizedBox(
                                           width: 9.0,
@@ -140,7 +148,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                               MainAxisAlignment.start,
                                           children: [
                                             Text(
-                                              '${snapshot.data!.get('gym_name')}',
+                                              '${snapshot.data!.get('gym_details')["name"]??""}',
                                               style: GoogleFonts.poppins(
                                                 fontSize: 14,
                                                 fontWeight: FontWeight.w600,
@@ -612,7 +620,7 @@ class _BookingScreenState extends State<BookingScreen> {
             color: Colors.grey[300],
             borderRadius: BorderRadius.circular(12),
           ),
-          height: 50,
+          height: 53,
           width: MediaQuery.of(context).size.width,
           child: Stack(
             children: [
@@ -634,13 +642,13 @@ class _BookingScreenState extends State<BookingScreen> {
               ),
               // const Spacer(),
               Positioned(
-                right: 3,
+                right: 0,
                 bottom: 4,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: SizedBox(
-                    height: 42,
-                    width: 81,
+                    height: 46,
+                    width: 90,
                     child: FloatingActionButton.extended(
                       backgroundColor: Colors.green,
                       elevation: 8,

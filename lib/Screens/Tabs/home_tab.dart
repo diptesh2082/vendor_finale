@@ -1,6 +1,9 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vyam_vandor/Screens/home__screen.dart';
 import 'package:vyam_vandor/Screens/login_screen.dart';
+import 'package:vyam_vandor/Screens/order_details_screen.dart';
 import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vyam_vandor/app_colors.dart';
@@ -23,25 +26,45 @@ class HomeTab extends StatefulWidget {
 class _HomeTabState extends State<HomeTab> {
   var status = true;
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
-
   bool showBranches = false;
   final _auth=FirebaseAuth.instance;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  Future getDevicetoken() async {
+    try {
+      setState(()async {
+        device_token = await _firebaseMessaging.getToken();
+      });
+
+      print( "this is the token $device_token");
+      return device_token;
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   void initState() {
+    print("device token ${device_token}");
+  getDevicetoken();
+    print("device token ${device_token}");
     super.initState();
   }
 
   bool isHeightTobeIncreased = false;
 
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: FutureBuilder(
-          future: FirebaseFirestore.instance
+      child: StreamBuilder(
+          stream: FirebaseFirestore.instance
               .collection("product_details")
-              .doc("mahtab5752@gmail.com")
-              .get(),
+            // .where(field)
+
+          // .where(field)
+              .doc(_auth.currentUser!.email.toString())
+              .snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
               return const Center(
@@ -93,6 +116,7 @@ class _HomeTabState extends State<HomeTab> {
                                 StreamBuilder(
                                   stream: FirebaseFirestore.instance
                                       .collectionGroup('user_booking')
+                                  // .where("vendorId",isEqualTo: gymId)
                                       .snapshots(),
                                   builder: (BuildContext context,
                                       AsyncSnapshot snap) {
@@ -104,25 +128,33 @@ class _HomeTabState extends State<HomeTab> {
                                     }
 
                                     if (snap.data == null) {
-                                      return const Text("No Active Bookings");
+                                      return const Text("No Upcoming Bookings");
                                     }
 
                                     var doc = snap.data.docs;
-                                    doc = doc.where((element) {
-                                      return element
-                                          .get('vendorId')
-                                          .toString()
-                                      // .toLowerCase()
-                                          .contains(_auth.currentUser!.email.toString());
-                                    }).toList();
-
+                                    // doc = doc.where((element) {
+                                    //   return element
+                                    //       .get('vendorId')
+                                    //       .toString()
+                                    //       .toLowerCase()
+                                    //       .contains(_auth.currentUser!.email.toString().toLowerCase());
+                                    // }).toList();
+                                    print(doc);
                                     return ListView.builder(
                                       physics: const NeverScrollableScrollPhysics(),
                                       shrinkWrap: true,
                                       itemCount: doc.length,
                                       itemBuilder: (context, index) {
+                                        // print("device token ${device_token}");
+                                        print("gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
+                                        print("gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
+                                        print("gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
                                         if (doc[index]['booking_status'] ==
-                                            'upcoming') {
+                                            'upcoming'
+                                            // && doc[index]["vendorId"]==gymId
+                                        )
+                                        // if(doc[index][])
+                                        {
                                           return BookingCard(
                                             userID: doc[index]['userId'] ?? "",
                                             userName:
@@ -181,39 +213,50 @@ class _HomeTabState extends State<HomeTab> {
                                         if (doc[index]['booking_status'] ==
                                                 'active' &&
                                             doc[index]['booking_accepted'] ==
-                                                true) {
-                                          return ActiveBookingCard(
-                                            userID: doc[index]['userId'] ?? "",
-                                            userName:
-                                                doc[index]['user_name'] ?? "",
-                                            bookingID:
-                                                doc[index]['booking_id'] ?? "",
-                                            bookingPlan: doc[index]
-                                                    ['booking_plan'] ??
-                                                "",
-                                            bookingPrice: double.parse(doc[index]['booking_price'].toString()),
-                                            bookingdate: DateFormat(
-                                                    DateFormat.YEAR_MONTH_DAY)
-                                                .format(
-                                              doc[index]['booking_date']
-                                                  .toDate(),
-                                            ),
-                                            tempYear:
-                                                DateFormat(DateFormat.YEAR)
-                                                    .format(
-                                              doc[index]['booking_date']
-                                                  .toDate(),
-                                            ),
-                                            tempDay: DateFormat(DateFormat.DAY)
-                                                .format(
-                                              doc[index]['booking_date']
-                                                  .toDate(),
-                                            ),
-                                            tempMonth:
-                                                DateFormat(DateFormat.NUM_MONTH)
-                                                    .format(
-                                              doc[index]['booking_date']
-                                                  .toDate(),
+                                                true  && doc[index]["vendorId"]==_auth.currentUser!.email) {
+                                          return GestureDetector(
+                                            onTap:()async{
+                                              // print("wewe");
+                                              await OrderDetails(
+                                                userID: doc[index]['userId'],
+                                                bookingID:  doc[index]['booking_id'],
+                                                imageUrl: doc[index]["gym_details"]["images"],
+                                              );
+                                            },
+
+                                            child: ActiveBookingCard(
+                                              userID: doc[index]['userId'] ?? "",
+                                              userName:
+                                                  doc[index]['user_name'] ?? "",
+                                              bookingID:
+                                                  doc[index]['booking_id'] ?? "",
+                                              bookingPlan: doc[index]
+                                                      ['booking_plan'] ??
+                                                  "",
+                                              bookingPrice: double.parse(doc[index]['booking_price'].toString()),
+                                              bookingdate: DateFormat(
+                                                      DateFormat.YEAR_MONTH_DAY)
+                                                  .format(
+                                                doc[index]['booking_date']
+                                                    .toDate(),
+                                              ),
+                                              tempYear:
+                                                  DateFormat(DateFormat.YEAR)
+                                                      .format(
+                                                doc[index]['booking_date']
+                                                    .toDate(),
+                                              ),
+                                              tempDay: DateFormat(DateFormat.DAY)
+                                                  .format(
+                                                doc[index]['booking_date']
+                                                    .toDate(),
+                                              ),
+                                              tempMonth:
+                                                  DateFormat(DateFormat.NUM_MONTH)
+                                                      .format(
+                                                doc[index]['booking_date']
+                                                    .toDate(),
+                                              ),
                                             ),
                                           );
                                         }
@@ -316,6 +359,7 @@ class _HomeTabState extends State<HomeTab> {
                                   )
                                   .snapshots(),
                               builder: (context, AsyncSnapshot snapshot) {
+                                print(device_token);
                                 if (snapshot.data == null) {
                                   return Container();
                                 }
@@ -342,6 +386,7 @@ class _HomeTabState extends State<HomeTab> {
                                     physics: const BouncingScrollPhysics(),
                                     itemBuilder: ((context, index) {
                                       if (index == snapshot.data.docs.length) {
+                                        print(device_token);
                                         return ListTile(
                                           trailing: const Icon(
                                             Icons.add,
@@ -361,11 +406,17 @@ class _HomeTabState extends State<HomeTab> {
                                         );
                                       }
                                       return ListTile(
-                                        onTap: () {
+                                        onTap: ()async {
+                                          print(snapshot.data.docs[index]["gym_id"]);
+                                          // setState(()async {
+                                            gymId = await snapshot.data.docs[index]["gym_id"];
 
-                                          Get.to(
-                                            const LoginScreen(),
-                                          );
+
+                                          // });
+
+                                          Navigator.pushReplacement((context), MaterialPageRoute(builder:(context)=>HomeScreen(email: gymId)));
+                                          // Navigator.pop(context);
+
                                         },
                                         title: Text(
                                           snapshot.data.docs[index]['name'],
@@ -459,18 +510,7 @@ class _HomeTabState extends State<HomeTab> {
               const SizedBox(
                 height: 15,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    prefixIcon: Image.asset("Assets/Images/Search.png"),
-                    hintText: 'Search',
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Colors.white,
-                  ),
-                ),
-              ),
+              Search(context)
             ],
           ),
         ),
@@ -540,7 +580,9 @@ class _HomeTabState extends State<HomeTab> {
             bottom: 150,
             left: 120,
             child: ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                _auth.signOut();
+              },
               child: const Text(
                 'Logout',
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -564,6 +606,63 @@ class _HomeTabState extends State<HomeTab> {
             ),
           )
         ],
+      ),
+    );
+  }
+  Padding Search(BuildContext context) {
+
+    return Padding(
+      padding: const EdgeInsets.only(left: 5.0,right: 5,bottom: 3),
+      child: Align(
+        alignment: Alignment.center,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(15),
+          child: SizedBox(
+            height: 51,
+            width: MediaQuery.of(context).size.width*.9,
+            child: TextFormField(
+              onFieldSubmitted: (value)async{
+                FocusScope.of(context).unfocus();
+                // showCard=true;
+              },
+              onTap: (){
+                // Navigator.pop(context);
+              },
+              // controller:searchController,
+              // onTap: (){
+              //
+              // },
+              //
+              // onChanged: (value) {
+              //   // print(value.toString());
+              //   setState(() {
+              //
+              //     searchGymName = value.toString();
+              //     // value2=value.toString();
+              //   });
+              //   //
+              //   // print(searchGymName);
+              // },
+              // onEditingComplete: (){
+              //   setState(() {
+              //     // var value;
+              //     searchGymName=value2.toString();
+              //   });
+              // },
+              // onSubmitted: (value) {
+              //   // ignore: avoid_print
+              //   print('Submitted text: $value');
+              // },
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.search),
+                hintText: 'Search',
+                border: InputBorder.none,
+                filled: true,
+                fillColor: Colors.white,
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

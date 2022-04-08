@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:vyam_vandor/Screens/home__screen.dart';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -57,7 +58,7 @@ class FirebaseMessagingApi {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print("handler called app is opened");
       Map map = message.data;
-      Get.to(const HomeScreen());
+      Get.to( HomeScreen(email: gymId,));
       print(map['MovieID']);
     }, onError: (e) {
       print(e);

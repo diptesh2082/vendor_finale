@@ -34,6 +34,7 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailController!.text.trim(),
         password: _passwordController!.text,
         context: context,
+
       );
     } catch (e) {
       print(e.toString());
