@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    gymId=FirebaseAuth.instance.currentUser!.email;
+    gymId = FirebaseAuth.instance.currentUser!.email;
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -37,7 +37,6 @@ class MyApp extends StatelessWidget {
           appBarTheme: const AppBarTheme(
             elevation: 0.0,
           )),
-      // home: DatePickerScreen(),
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -46,11 +45,11 @@ class MyApp extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-
           if (snapshot.hasData) {
-            return  HomeScreen(email: gymId,);
+            return HomeScreen(
+              email: gymId,
+            );
           }
-
           return const LoginScreen();
         },
       ),

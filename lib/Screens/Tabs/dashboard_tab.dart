@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -326,6 +325,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                             builder: (context,
                                                 AsyncSnapshot snapshot) {
                                               if (snapshot.data == null) {
+                                                print('no trainer');
                                                 return Container();
                                               }
                                               if (snapshot.connectionState ==
@@ -335,7 +335,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                                       CircularProgressIndicator(),
                                                 );
                                               }
-                                              var document = snapshot.data;
+                                              var document = snapshot.data.docs;
+
                                               print(document);
                                               return ListView.builder(
                                                   itemCount: trainers.length,
@@ -352,23 +353,17 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                                             Container(
                                                               height: 65,
                                                               width: 65,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                      shape: BoxShape
-                                                                          .circle,
-                                                                      //border: Border.all(width: 1),
-                                                                      image: DecorationImage(
-                                                                          image: AssetImage(trainers[
+                                                              decoration: BoxDecoration(
+                                                                  shape: BoxShape
+                                                                      .circle,
+                                                                  image: DecorationImage(
+                                                                      image: AssetImage(
+                                                                          trainers[
                                                                               index]),
-                                                                          fit: BoxFit
-                                                                              .cover)),
+                                                                      fit: BoxFit
+                                                                          .cover)),
                                                             ),
                                                             SizedBox(
-                                                              // height:
-                                                              //     MediaQuery.of(context)
-                                                              //             .size
-                                                              //             .height *
-                                                              //         0.05,
                                                               width: MediaQuery.of(
                                                                           context)
                                                                       .size
@@ -471,10 +466,11 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
-  Widget buildFile(BuildContext context, FirebaseFile file) => CachedNetworkImage(
-
+  Widget buildFile(BuildContext context, FirebaseFile file) =>
+      CachedNetworkImage(
         height: 128,
-        width: 127, imageUrl: file.url,
+        width: 127,
+        imageUrl: file.url,
       );
 
   Widget amenities(int index) => Padding(
