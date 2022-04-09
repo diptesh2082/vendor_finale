@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 
 import '../widgets/active_booking.dart';
 
+var gymId;
 var device_token;
 class FirebaseFirestoreAPi {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -40,7 +41,7 @@ class FirebaseFirestoreAPi {
       //TODO: Change docID to logged in user ID
       _firestore
           .collection('product_details')
-          .doc("mahtab5752@gmail.com")
+          .doc(_firebaseAuth.currentUser!.email)
           .update({
         "gym_status": isGymOpened!,
       });

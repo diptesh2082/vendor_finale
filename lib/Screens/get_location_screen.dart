@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vyam_vandor/Screens/home__screen.dart';
 import 'package:vyam_vandor/Services/check_permission.dart';
+import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
 import 'package:vyam_vandor/Services/location_service.dart';
 import 'package:vyam_vandor/app_colors.dart';
 
@@ -20,7 +21,7 @@ class _GetLocationScreenState extends State<GetLocationScreen> {
       await LocationApi().getLocation().then(
             (value) => Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (_) => const HomeScreen()),
+                MaterialPageRoute(builder: (_) =>  HomeScreen(email: gymId,)),
                 (route) => false),
           );
       setState(() {
