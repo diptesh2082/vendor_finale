@@ -51,6 +51,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     final top = coverheight - profileheight / 2;
     return Scaffold(
       body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
         child: Container(
           color: Colors.grey[100],
           child: Padding(
@@ -200,6 +201,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               child: SizedBox(
                                 height: 200,
                                 child: GridView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
                                     shrinkWrap: true,
                                     gridDelegate:
                                         const SliverGridDelegateWithFixedCrossAxisCount(

@@ -21,7 +21,7 @@ class _GetLocationScreenState extends State<GetLocationScreen> {
       await LocationApi().getLocation().then(
             (value) => Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (_) =>  HomeScreen(email: gymId,)),
+                MaterialPageRoute(builder: (_) =>  HomeScreen()),
                 (route) => false),
           );
       setState(() {

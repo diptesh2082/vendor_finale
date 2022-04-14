@@ -244,9 +244,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-
-  flutter_launcher_icons:
-
   flutter_blurhash:
     dependency: transitive
     description:
@@ -261,8 +258,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.3.0"
-  flutter_lints:
-
+  flutter_launcher_icons:
     dependency: "direct dev"
     description:
       name: flutter_launcher_icons
@@ -711,20 +707,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  syncfusion_flutter_core:
-    dependency: transitive
-    description:
-      name: syncfusion_flutter_core
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "20.1.47"
-  syncfusion_flutter_datepicker:
-    dependency: "direct main"
-    description:
-      name: syncfusion_flutter_datepicker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "20.1.47"
   synchronized:
     dependency: transitive
     description:

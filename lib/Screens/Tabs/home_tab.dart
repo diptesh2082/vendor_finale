@@ -44,9 +44,9 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   void initState() {
-    print("device token ${device_token}");
+    print("device gym id ${gymId}");
     getDevicetoken();
-    print("device token ${device_token}");
+    // print("device token ${device_token}");
     super.initState();
   }
 
@@ -54,6 +54,7 @@ class _HomeTabState extends State<HomeTab> {
 
   @override
   Widget build(BuildContext context) {
+    print("hi this is my gym  $gymId");
     return SafeArea(
       child: StreamBuilder(
           stream: FirebaseFirestore.instance
@@ -61,7 +62,7 @@ class _HomeTabState extends State<HomeTab> {
               // .where(field)
 
               // .where(field)
-              .doc(_auth.currentUser!.email.toString())
+              .doc(gymId.toString())
               .snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
@@ -74,6 +75,9 @@ class _HomeTabState extends State<HomeTab> {
                 child: CircularProgressIndicator(),
               );
             }
+            print(snapshot.data);
+            print(snapshot.data.get("branch"));
+            print(snapshot.data.get("gym_status"));
             return Stack(
               children: [
                 Scaffold(
@@ -130,6 +134,13 @@ class _HomeTabState extends State<HomeTab> {
                                     }
 
                                     var doc = snap.data.docs;
+                                    doc = doc.where((element) {
+                                      return element
+                                          .get('vendorId')
+                                          .toString()
+                                          // .toLowerCase()
+                                          .contains(gymId.toString());
+                                    }).toList();
                                     // doc = doc.where((element) {
                                     //   return element
                                     //       .get('vendorId')
@@ -153,7 +164,7 @@ class _HomeTabState extends State<HomeTab> {
                                             "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
                                         if (doc[index]['booking_status'] ==
                                                 'upcoming'
-                                            // && doc[index]["vendorId"]==gymId
+                                            // && doc[index]["vendorId"]==gymId.toString()
                                             )
                                         // if(doc[index][])
                                         {
@@ -214,11 +225,15 @@ class _HomeTabState extends State<HomeTab> {
                                       itemCount: doc.length,
                                       itemBuilder: (context, index) {
                                         if (doc[index]['booking_status'] ==
-                                                'active' &&
-                                            doc[index]['booking_accepted'] ==
-                                                true &&
+                                                'active'
+                                        // &&
+                                            // doc[index]['booking_accepted'] ==
+                                            //     true
+                                            &&
                                             doc[index]["vendorId"] ==
-                                                _auth.currentUser!.email) {
+                                               gymId.toString()
+                                        )
+                                        {
                                           return GestureDetector(
                                             onTap: () async {
                                               // print("wewe");
@@ -311,9 +326,12 @@ class _HomeTabState extends State<HomeTab> {
                                       itemCount: doc.length,
                                       itemBuilder: (context, index) {
                                         if (doc[index]['booking_status'] ==
-                                                'completed' &&
-                                            doc[index]['booking_accepted'] ==
-                                                true) {
+                                                'completed'
+                                        // &&
+                                            // doc[index]['booking_accepted'] ==
+                                            //     true
+                                            // && doc[index]["vendorId"]==gymId.toString()
+                                        ) {
                                           return PastBookingCard(
                                             userID: doc[index]['userId'] ?? "",
                                             userName:
@@ -418,18 +436,21 @@ class _HomeTabState extends State<HomeTab> {
                                         onTap: () async {
                                           print(snapshot.data.docs[index]
                                               ["gym_id"]);
-                                          // setState(()async {
-                                          gymId = await snapshot
+                                          var id=await snapshot
                                               .data.docs[index]["gym_id"];
+                                          print(id);
+                                          if(mounted)
+                                           setState(() {
+                                          gymId =  id;
 
-                                          // });
+                                          });
+                                          await  Get.offAll(()=>HomeScreen());
 
-                                          Navigator.pushReplacement(
-                                              (context),
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      HomeScreen(
-                                                          email: gymId)));
+                                          // Navigator.pushReplacement(
+                                          //     (context),
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             HomeScreen()));
                                           // Navigator.pop(context);
                                         },
                                         title: Text(
@@ -595,7 +616,9 @@ class _HomeTabState extends State<HomeTab> {
             left: 120,
             child: ElevatedButton(
               onPressed: () {
+                Get.offAll(()=>LoginScreen());
                 _auth.signOut();
+
               },
               child: const Text(
                 'Logout',

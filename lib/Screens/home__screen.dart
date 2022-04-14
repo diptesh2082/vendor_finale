@@ -10,8 +10,8 @@ import 'package:vyam_vandor/app_colors.dart';
 import '../Services/firebase_messaging_api.dart';
 
 class HomeScreen extends StatefulWidget {
-  var email;
-  HomeScreen({Key? key,required this.email}) : super(key: key);
+  // var email;
+  // HomeScreen({Key? key,required this.email}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    gymId=widget.email;
+    // gymId=widget.email;
     FirebaseMessagingApi().getDevicetoken();
     FirebaseMessagingApi().initialize(context);
     FirebaseMessagingApi().onbackgroundMessageClick(context);

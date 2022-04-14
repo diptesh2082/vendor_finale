@@ -35,11 +35,12 @@ class FirebaseAuthApi {
           await FirebaseFirestoreAPi().checkIslocationAlreadyUpdated();
 
       if (isLocationAvailable) {
+        gymId=userCredential.user!.email;
         FirebaseFirestoreAPi().updateTokenToFirebase();
         Navigator.pushAndRemoveUntil(
           context!,
           MaterialPageRoute(
-            builder: ((context) =>  HomeScreen(email: this.email,)),
+            builder: ((context) =>  HomeScreen()),
           ),
           (route) => false,
         );

@@ -18,7 +18,7 @@ class FirebaseFirestoreAPi {
       print("///////////");
       DocumentSnapshot res = await _firestore
           .collection('product_details')
-          .doc(_firebaseAuth.currentUser!.email)
+          .doc(gymId)
           .get();
       GeoPoint location = await res.get("location");
       print(location.latitude);
@@ -59,7 +59,7 @@ class FirebaseFirestoreAPi {
       print("The id Of Booking is : $id");
       await _firestore
           .collection('bookings')
-          .doc('U4LcvYoV7dVi7wB5tt0o')
+          .doc(gymId)
           .update(
         {
           'booking_status': 'a',

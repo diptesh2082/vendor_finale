@@ -13,6 +13,7 @@ import 'Screens/home__screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  gymId=FirebaseAuth.instance.currentUser!.email;
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
         statusBarColor: Color(0xffF4F4F4),
@@ -27,7 +28,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    gymId = FirebaseAuth.instance.currentUser!.email;
+    // if (FirebaseAuth.instance.currentUser!.email != null)
+    // gymId = FirebaseAuth.instance.currentUser!.email;
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
           }
           if (snapshot.hasData) {
             return HomeScreen(
-              email: gymId,
+              // email: gymId,
             );
           }
           return const LoginScreen();

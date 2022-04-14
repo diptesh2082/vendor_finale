@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
 import 'package:vyam_vandor/sales/sales_main_page.dart';
 
 import '../payment_history.dart';
@@ -33,7 +34,7 @@ class AllTimeState extends State<AllTime> {
       body: StreamBuilder<DocumentSnapshot>(
         stream: FirebaseFirestore.instance
             .collection('product_details')
-            .doc(_auth.currentUser!.email.toString())
+            .doc(gymId.toString())
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.data == null) {
