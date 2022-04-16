@@ -73,7 +73,7 @@ class _SalesState extends State<Sales> {
                 child: SizedBox(
                   width: double.maxFinite,
                   height: MediaQuery.of(context).size.height-160,
-                  child: const TabBarView(
+                  child:  TabBarView(
                     children: [
                       AllTimeSales(),
                       DaysSales(),

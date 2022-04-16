@@ -1,5 +1,6 @@
 import 'dart:io';
 
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -8,6 +9,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({Key? key}) : super(key: key);
@@ -20,9 +22,9 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   final double coverheight = 150;
   final double profileheight = 80;
   List trainers = [
-    "Assets/Images/trainer1.png",
-    "Assets/Images/trainer2.png",
-    "Assets/Images/trainer3.png",
+    // "Assets/Images/trainer1.png",
+    // "Assets/Images/trainer2.png",
+    // "Assets/Images/trainer3.png",
   ];
 
   List<IconData> icons = [
@@ -55,12 +57,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final top = coverheight - profileheight / 2;
+    final top = coverheight - profileheight / 1.5;
     return Scaffold(
       body: StreamBuilder<DocumentSnapshot>(
           stream: FirebaseFirestore.instance
               .collection('product_details')
-              .doc(_auth.currentUser!.email.toString())
+              .doc(gymId.toString())
               .snapshots(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.data == null) {
@@ -82,7 +84,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       ProfileTile(
                           coverheight: coverheight,
                           top: top,
-                          profileheight: profileheight),
+                          profileheight: profileheight,
+                      imageUrl: snapshot.data.get('display_picture'),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 12.0, top: 50),
                         child: Text(
@@ -119,6 +126,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         ),
                         onTap: () {},
                       ),
+
                       Padding(
                         padding: const EdgeInsets.only(
                             top: 8.0, left: 8.0, right: 8.0),
@@ -205,10 +213,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                       child: GridView.builder(
                                           shrinkWrap: true,
                                           gridDelegate:
-                                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 3,
-                                                  crossAxisSpacing: 0,
-                                                  mainAxisSpacing: 12.0),
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 3,
+                                              crossAxisSpacing: 0,
+                                              mainAxisSpacing: 12.0),
                                           itemCount: files.length,
                                           itemBuilder: (context, index) {
                                             final file = files[index];
@@ -233,7 +241,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 children: [
                                   const Padding(
                                     padding:
-                                        EdgeInsets.only(left: 8.0, top: 8.0),
+                                    EdgeInsets.only(left: 8.0, top: 8.0),
                                     child: Text('Rules',
                                         style: TextStyle(
                                           fontFamily: 'Poppins',
@@ -246,7 +254,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         left: 12.0, top: 12.0),
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       children: const [
                                         Text(
                                           "•  Bring your towel and use it.",
@@ -290,119 +298,128 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               )),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            left: 8.0, right: 8.0, top: 8.0),
-                        child: SizedBox(
-                          height: 135,
-                          // width: double.infinity,
-                          child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Padding(
-                                    padding:
-                                        EdgeInsets.only(left: 8.0, top: 8.0),
-                                    child: Text('Trainers',
-                                        style: TextStyle(
-                                          fontFamily: 'Poppins',
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w700,
-                                        )),
-                                  ),
-                                  Column(
+                      SizedBox(
+                          height: 145, //MediaQuery.of(context).size.height / 4.7,
+                          child: GestureDetector(
+                            // onTap: () {
+                            //   Get.to(() => Trainer(), arguments: {
+                            //     "gym_id": doc["id"],
+                            //     "image": docs["display_picture"]
+                            //   });
+                            // },
+                            child: Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0)),
+                                child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      SizedBox(
-                                        height: 90,
-                                        child: StreamBuilder<QuerySnapshot>(
-                                            stream: FirebaseFirestore.instance
-                                                .collection('product_details')
-                                                .doc('mahtab5752@gmail.com')
-                                                .collection('trainers')
-                                                .snapshots(),
-                                            builder: (context,
-                                                AsyncSnapshot snapshot) {
-                                              if (snapshot.data == null) {
-                                                print('no trainer');
-                                                return Container();
-                                              }
-                                              if (snapshot.connectionState ==
-                                                  ConnectionState.waiting) {
-                                                return const Center(
-                                                  child:
-                                                      CircularProgressIndicator(),
-                                                );
-                                              }
-                                              var document = snapshot.data.docs;
-
-                                              print(document);
-                                              return ListView.builder(
-                                                  itemCount: trainers.length,
-                                                  physics:
-                                                      const PageScrollPhysics(),
-                                                  scrollDirection:
-                                                      Axis.horizontal,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return Row(
-                                                      children: [
-                                                        Column(
-                                                          children: [
-                                                            Container(
-                                                              height: 65,
-                                                              width: 65,
-                                                              decoration: BoxDecoration(
-                                                                  shape: BoxShape
-                                                                      .circle,
-                                                                  image: DecorationImage(
-                                                                      image: AssetImage(
-                                                                          trainers[
-                                                                              index]),
-                                                                      fit: BoxFit
-                                                                          .cover)),
-                                                            ),
-                                                            SizedBox(
-                                                              width: MediaQuery.of(
-                                                                          context)
-                                                                      .size
-                                                                      .width *
-                                                                  0.05,
-                                                            ),
-                                                            Text(
-                                                              document[index]
-                                                                  ['name'],
-                                                              style:
-                                                                  const TextStyle(
-                                                                fontFamily:
-                                                                    'Poppins',
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w500,
-                                                                fontSize: 12,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        SizedBox(
-                                                          width: MediaQuery.of(
-                                                                      context)
-                                                                  .size
-                                                                  .width *
-                                                              0.06,
-                                                        ),
-                                                      ],
-                                                    );
-                                                  });
-                                            }),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Row(
+                                          children: const [
+                                            Text('Trainers',
+                                                style: TextStyle(
+                                                  fontFamily: 'poppins',
+                                                  fontSize: 13,
+                                                  fontWeight: FontWeight.w600,
+                                                )),
+                                            Spacer(),
+                                            Icon(
+                                              Icons.arrow_forward_ios_outlined,
+                                              size: 18,
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              )),
-                        ),
-                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(left: 8.0),
+                                        child: SizedBox(
+                                          height: 100,
+                                          //MediaQuery.of(context).size.height /
+                                          //  9,
+                                          child: StreamBuilder(
+                                              stream: FirebaseFirestore.instance
+                                                  .collection("product_details")
+                                                  .doc("${gymId}")
+                                                  .collection("trainers")
+                                                  .snapshots(),
+                                              builder: (context,
+                                                  AsyncSnapshot snapshot) {
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return const Center(
+                                                    child:
+                                                    CircularProgressIndicator(
+                                                      color: Colors.amberAccent,
+                                                    ),
+                                                  );
+                                                }
+                                                if (snapshot.hasError) {
+                                                  return const Center(
+                                                    child:
+                                                    Text("Theres no trainers"),
+                                                  );
+                                                }
+                                                var trainerdoc =
+                                                    snapshot.data!.docs;
+                                                return ListView.builder(
+                                                    shrinkWrap: true,
+                                                    itemCount: trainerdoc.length,
+                                                    physics:
+                                                    const PageScrollPhysics(),
+                                                    scrollDirection:
+                                                    Axis.horizontal,
+                                                    itemBuilder: (context, index) {
+                                                      return Column(
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                            children: [
+                                                              Column(
+                                                                children: [
+                                                                  Container(
+                                                                    height: 65,
+                                                                    width: 65,
+                                                                    decoration:
+                                                                    BoxDecoration(
+                                                                        shape: BoxShape
+                                                                            .circle,
+                                                                        //border: Border.all(width: 1),
+                                                                        image: DecorationImage(
+                                                                            image:
+                                                                            CachedNetworkImageProvider(trainerdoc[index]['images']),
+                                                                            fit: BoxFit.cover)),
+                                                                  ),
+                                                                  Text(
+                                                                    trainerdoc[
+                                                                    index]
+                                                                    ['name'],
+                                                                    style:
+                                                                    const TextStyle(
+                                                                      fontFamily:
+                                                                      'Poppins',
+                                                                      fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                      fontSize: 12,
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              const SizedBox(
+                                                                  width: 15),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      );
+                                                    });
+                                              }),
+                                        ),
+                                      ),
+                                    ])),
+                          )),
                       // Amenities//
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.1,
@@ -443,7 +460,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 children: const [
                                   Padding(
                                     padding:
-                                        EdgeInsets.only(left: 8.0, top: 14.0),
+                                    EdgeInsets.only(left: 8.0, top: 14.0),
                                     child: Text(
                                       'Bus stand, Barakar, near pratham lodge',
                                       style: TextStyle(
@@ -466,38 +483,37 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
-  Widget buildFile(BuildContext context, FirebaseFile file) =>
-      CachedNetworkImage(
-        height: 128,
-        width: 127,
-        imageUrl: file.url,
-      );
+  Widget buildFile(BuildContext context, FirebaseFile file) => CachedNetworkImage(
+
+    height: 128,
+    width: 127, imageUrl: file.url,
+  );
 
   Widget amenities(int index) => Padding(
-        padding: const EdgeInsets.only(left: 8.0, top: 6.0),
-        child: FittedBox(
-          child: Column(
-            children: [
-              CircleAvatar(
-                child: Icon(
-                  icons[index], // Icon list
-                  size: 60,
-                  color: Colors.black,
-                ),
-                backgroundColor: Colors.amber.shade400,
-                radius: 80,
-              ),
-              Text(
-                amenities_name[index], // icon name list
-                style: const TextStyle(
-                    fontFamily: 'PoppinsRegular',
-                    fontWeight: FontWeight.w400,
-                    fontSize: 40),
-              ),
-            ],
+    padding: const EdgeInsets.only(left: 8.0, top: 6.0),
+    child: FittedBox(
+      child: Column(
+        children: [
+          CircleAvatar(
+            child: Icon(
+              icons[index], // Icon list
+              size: 60,
+              color: Colors.black,
+            ),
+            backgroundColor: Colors.amber.shade400,
+            radius: 80,
           ),
-        ),
-      );
+          Text(
+            amenities_name[index], // icon name list
+            style: const TextStyle(
+                fontFamily: 'PoppinsRegular',
+                fontWeight: FontWeight.w400,
+                fontSize: 40),
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 class ProfileTile extends StatelessWidget {
@@ -505,12 +521,13 @@ class ProfileTile extends StatelessWidget {
     Key? key,
     required this.coverheight,
     required this.top,
-    required this.profileheight,
+    required this.profileheight, this.imageUrl,
   }) : super(key: key);
 
   final double coverheight;
   final double top;
   final double profileheight;
+  final imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -528,11 +545,11 @@ class ProfileTile extends StatelessWidget {
           ),
           Positioned(
             top: top,
-            left: 15,
+            left: 16,
             child: CircleAvatar(
-              radius: profileheight / 2,
+              radius: 55,
               backgroundColor: Colors.white,
-              // backgroundImage: AssetImage("assets/rectangle_14.png"),
+              backgroundImage: CachedNetworkImageProvider(imageUrl),
             ),
           )
         ]);
@@ -577,10 +594,10 @@ class StorageDatabase {
     return urls
         .asMap()
         .map((index, url) {
-          final ref = result.items[index];
-          final file = FirebaseFile(ref: ref, url: url);
-          return MapEntry(index, file);
-        })
+      final ref = result.items[index];
+      final file = FirebaseFile(ref: ref, url: url);
+      return MapEntry(index, file);
+    })
         .values
         .toList();
   }

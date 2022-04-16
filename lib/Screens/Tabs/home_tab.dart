@@ -8,6 +8,7 @@ import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vyam_vandor/app_colors.dart';
 import 'package:get/get.dart';
+import '../../Services/profileicon_icons.dart';
 import '../../widgets/active_booking.dart';
 import '../../widgets/booking_card.dart';
 import '../../widgets/drawer_tile.dart';
@@ -113,6 +114,7 @@ class _HomeTabState extends State<HomeTab> {
                             ),
                             //Upcoming Bookings Cards
                             ExpansionTile(
+                              initiallyExpanded: true,
                               title: const Text('Upcoming Bookings'),
                               children: [
                                 StreamBuilder(
@@ -156,12 +158,12 @@ class _HomeTabState extends State<HomeTab> {
                                       itemCount: doc.length,
                                       itemBuilder: (context, index) {
                                         // print("device token ${device_token}");
-                                        print(
-                                            "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
-                                        print(
-                                            "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
-                                        print(
-                                            "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
+                                        // print(
+                                        //     "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
+                                        // print(
+                                        //     "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
+                                        // print(
+                                        //     "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
                                         if (doc[index]['booking_status'] ==
                                                 'upcoming'
                                             // && doc[index]["vendorId"]==gymId.toString()
@@ -545,7 +547,9 @@ class _HomeTabState extends State<HomeTab> {
               const SizedBox(
                 height: 15,
               ),
-              Search(context)
+              Align(
+                  alignment: Alignment.center,
+                  child: Search(context))
             ],
           ),
         ),
@@ -647,63 +651,47 @@ class _HomeTabState extends State<HomeTab> {
     );
   }
 
-  Padding Search(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 5.0, right: 5, bottom: 3),
-      child: Align(
-        alignment: Alignment.center,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(15),
-          child: SizedBox(
-            height: 51,
-            width: MediaQuery.of(context).size.width * .9,
-            child: TextFormField(
-              onFieldSubmitted: (value) async {
-                FocusScope.of(context).unfocus();
-                // showCard=true;
-              },
-              onTap: () {
-                // Navigator.pop(context);
-              },
-              // controller:searchController,
-              // onTap: (){
-              //
-              // },
-              //
-              // onChanged: (value) {
-              //   // print(value.toString());
-              //   setState(() {
-              //
-              //     searchGymName = value.toString();
-              //     // value2=value.toString();
-              //   });
-              //   //
-              //   // print(searchGymName);
-              // },
-              // onEditingComplete: (){
-              //   setState(() {
-              //     // var value;
-              //     searchGymName=value2.toString();
-              //   });
-              // },
-              // onSubmitted: (value) {
-              //   // ignore: avoid_print
-              //   print('Submitted text: $value');
-              // },
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.search),
-                hintText: 'Search',
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.white,
-              ),
-            ),
+  Container Search(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * .92,
+      height: 51,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(14),
+        color: Colors.white,
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        child: TextField(
+          autofocus: false,
+          textAlignVertical: TextAlignVertical.bottom,
+          onSubmitted: (value) async {
+            FocusScope.of(context).unfocus();
+
+          },
+
+          // onChanged: (value) {
+          //   if (value.length==0){
+          //     FocusScope.of(context).unfocus();
+          //   }
+          //   if(mounted) {
+          //     setState(() {
+          //       searchGymName = value.toString();
+          //
+          //     });
+          //   }
+          // },
+
+          decoration: const InputDecoration(
+            prefixIcon: Icon(Profileicon.search),
+            hintText: 'Search',
+            border: InputBorder.none,
+            filled: true,
+            fillColor: Colors.white,
           ),
         ),
       ),
     );
   }
-
   ListTile buildDrawerListItem(
       {required String? title, String? iconData = 'lock'}) {
     return ListTile(
