@@ -47,6 +47,7 @@ class _HomeTabState extends State<HomeTab> {
   void initState() {
     print("device gym id ${gymId}");
     getDevicetoken();
+    gymId= FirebaseAuth.instance.currentUser!.email;
     // print("device token ${device_token}");
     super.initState();
   }
@@ -406,8 +407,22 @@ class _HomeTabState extends State<HomeTab> {
                                 print(FirebaseAuth.instance.currentUser!.email);
                                 List temp = snapshot.data.docs.toList();
                                 if (temp.isEmpty) {
-                                  return const Center(
-                                    child: Text("No branches to show"),
+                                  return  ListTile(
+                                    trailing: const Icon(
+                                      Icons.add,
+                                      color: Colors.black54,
+                                    ),
+                                    title: const Text(
+                                      'Add another Account',
+                                      style:
+                                      TextStyle(color: Colors.black),
+                                    ),
+                                    onTap: () {
+                                      print("Add another Login Session");
+                                      Get.to(
+                                        const LoginScreen(),
+                                      );
+                                    },
                                   );
                                 } else {
                                   return ListView.separated(

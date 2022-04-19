@@ -65,25 +65,30 @@ class _GetLocationScreenState extends State<GetLocationScreen> {
           ),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.location_on,
-              color: Colors.green,
-              size: 80,
-            ),
-            const Text(
-              'Our app needs to access your Current location.',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            showLoader
-                ? const CircularProgressIndicator(
-                    color: Colors.green,
-                  )
-                : Container(),
-          ],
+      body: GestureDetector(
+        onTap: (){
+          startLocationExtraction();
+        },
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(
+                Icons.location_on,
+                color: Colors.green,
+                size: 80,
+              ),
+              const Text(
+                'Our app needs to access your Current location.',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+              showLoader
+                  ? const CircularProgressIndicator(
+                      color: Colors.green,
+                    )
+                  : Container(),
+            ],
+          ),
         ),
       ),
     );

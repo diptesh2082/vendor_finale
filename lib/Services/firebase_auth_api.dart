@@ -35,7 +35,8 @@ class FirebaseAuthApi {
           await FirebaseFirestoreAPi().checkIslocationAlreadyUpdated();
 
       if (isLocationAvailable) {
-        gymId=userCredential.user!.email;
+        gymId= await userCredential.user!.email;
+        // gymId= await FirebaseAuth.instance.currentUser!.email;
         FirebaseFirestoreAPi().updateTokenToFirebase();
         Navigator.pushAndRemoveUntil(
           context!,

@@ -13,7 +13,12 @@ import 'Screens/home__screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  gymId=FirebaseAuth.instance.currentUser!.email;
+  try{
+    gymId=await FirebaseAuth.instance.currentUser!.email;
+  }catch(e){
+    gymId=null;
+  }
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
         statusBarColor: Color(0xffF4F4F4),
