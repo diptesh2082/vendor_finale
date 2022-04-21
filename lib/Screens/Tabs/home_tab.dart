@@ -43,11 +43,12 @@ class _HomeTabState extends State<HomeTab> {
     }
   }
 
+
   @override
   void initState() {
     print("device gym id ${gymId}");
     getDevicetoken();
-    gymId= FirebaseAuth.instance.currentUser!.email;
+
     // print("device token ${device_token}");
     super.initState();
   }
@@ -80,6 +81,7 @@ class _HomeTabState extends State<HomeTab> {
             print(snapshot.data);
             print(snapshot.data.get("branch"));
             print(snapshot.data.get("gym_status"));
+            print(gymId.toString());
             return Stack(
               children: [
                 Scaffold(
@@ -137,6 +139,7 @@ class _HomeTabState extends State<HomeTab> {
                                     }
 
                                     var doc = snap.data.docs;
+                                    print(gymId.toString());
                                     doc = doc.where((element) {
                                       return element
                                           .get('vendorId')
@@ -151,7 +154,7 @@ class _HomeTabState extends State<HomeTab> {
                                     //       .toLowerCase()
                                     //       .contains(_auth.currentUser!.email.toString().toLowerCase());
                                     // }).toList();
-                                    print(doc);
+                                    // print(doc);
                                     return ListView.builder(
                                       physics:
                                           const NeverScrollableScrollPhysics(),
@@ -511,14 +514,14 @@ class _HomeTabState extends State<HomeTab> {
       iconTheme: const IconThemeData(color: Colors.black),
       titleSpacing: 0,
       elevation: 0,
-      // leading: IconButton(
-      //     onPressed: () {
-      //       leadingCallback!();
-      //     },
-      //     icon: const Icon(
-      //       Icons.menu,
-      //       color: Colors.black,
-      //     )),
+      leading: IconButton(
+          onPressed: () {
+            leadingCallback!();
+          },
+          icon: const Icon(
+            Icons.menu,
+            color: Colors.black,
+          )),
       title: Text(
         gymname!,
         style: const TextStyle(
