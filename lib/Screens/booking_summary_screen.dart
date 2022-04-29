@@ -71,8 +71,6 @@ class _BookingScreenState extends State<BookingScreen> {
           child: StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection('bookings')
-                  .doc(widget.userID)
-                  .collection('user_booking')
                   .doc(widget.bookingID)
                   .snapshots(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {

@@ -122,8 +122,10 @@ class _HomeTabState extends State<HomeTab> {
                               children: [
                                 StreamBuilder(
                                   stream: FirebaseFirestore.instance
-                                      .collectionGroup('user_booking')
-                                      // .where("vendorId",isEqualTo: gymId)
+                                      .collection('bookings')
+                                      .where("vendorId",isEqualTo: gymId)
+                                      .where('booking_status', isEqualTo: 'upcoming')
+                                  .orderBy("order_date",descending: true)
                                       .snapshots(),
                                   builder: (BuildContext context,
                                       AsyncSnapshot snap) {
@@ -139,14 +141,14 @@ class _HomeTabState extends State<HomeTab> {
                                     }
 
                                     var doc = snap.data.docs;
-                                    print(gymId.toString());
-                                    doc = doc.where((element) {
-                                      return element
-                                          .get('vendorId')
-                                          .toString()
-                                          // .toLowerCase()
-                                          .contains(gymId.toString());
-                                    }).toList();
+                                    // print(gymId.toString());
+                                    // doc = doc.where((element) {
+                                    //   return element
+                                    //       .get('vendorId')
+                                    //       .toString()
+                                    //       // .toLowerCase()
+                                    //       .contains(gymId.toString());
+                                    // }).toList();
                                     // doc = doc.where((element) {
                                     //   return element
                                     //       .get('vendorId')
@@ -210,7 +212,10 @@ class _HomeTabState extends State<HomeTab> {
                               children: [
                                 StreamBuilder(
                                   stream: FirebaseFirestore.instance
-                                      .collectionGroup('user_booking')
+                                      .collection('bookings')
+                                      .where("vendorId",isEqualTo: gymId)
+                                      .where('booking_status', isEqualTo: 'active')
+                                      .orderBy("order_date",descending: true)
                                       .snapshots(),
                                   builder: (BuildContext context,
                                       AsyncSnapshot snap) {
@@ -235,9 +240,7 @@ class _HomeTabState extends State<HomeTab> {
                                         // &&
                                             // doc[index]['booking_accepted'] ==
                                             //     true
-                                            &&
-                                            doc[index]["vendorId"] ==
-                                               gymId.toString()
+
                                         )
                                         {
                                           return GestureDetector(
@@ -308,7 +311,10 @@ class _HomeTabState extends State<HomeTab> {
                               children: [
                                 StreamBuilder(
                                   stream: FirebaseFirestore.instance
-                                      .collectionGroup('user_booking')
+                                      .collection('bookings')
+                                      .where("vendorId",isEqualTo: gymId)
+                                      .where('booking_status', isEqualTo: 'completed')
+                                      .orderBy("order_date",descending: true)
                                       .snapshots(),
                                   builder: (BuildContext context,
                                       AsyncSnapshot snap) {
@@ -331,11 +337,10 @@ class _HomeTabState extends State<HomeTab> {
                                       shrinkWrap: true,
                                       itemCount: doc.length,
                                       itemBuilder: (context, index) {
-                                        if (doc[index]['booking_status'] ==
-                                                'completed'
+                                        if (
                                         // &&
-                                            // doc[index]['booking_accepted'] ==
-                                            //     true
+                                            doc[index]['booking_accepted'] ==
+                                                true
                                             // && doc[index]["vendorId"]==gymId.toString()
                                         ) {
                                           return PastBookingCard(
