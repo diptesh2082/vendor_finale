@@ -118,8 +118,6 @@ class FirebaseFirestoreAPi {
     try {
       _firestore
           .collection('bookings')
-          .doc(userID!)
-          .collection('user_booking')
           .doc(bookingID!)
           .update({
         "booking_status": "active",

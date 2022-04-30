@@ -63,8 +63,7 @@ class _OrderDetailsState extends State<OrderDetails> {
             child: StreamBuilder(
                 stream: FirebaseFirestore.instance
                     .collection('bookings')
-                    .doc(widget.userID)
-                    .collection('user_booking')
+                    // .where("userId",isEqualTo: widget.userID)
                     .doc(widget.bookingID)
                     .snapshots(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {

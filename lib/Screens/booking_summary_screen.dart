@@ -682,8 +682,6 @@ class _BookingScreenState extends State<BookingScreen> {
                           );
                           await FirebaseFirestore.instance
                               .collection('bookings')
-                              .doc(widget.userID)
-                              .collection('user_booking')
                               .doc(widget.bookingID)
                               .update({
                             "booking_accepted": true,
