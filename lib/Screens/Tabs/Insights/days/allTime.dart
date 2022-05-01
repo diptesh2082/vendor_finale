@@ -19,11 +19,19 @@ class AllTime extends StatefulWidget {
 
 class AllTimeState extends State<AllTime> {
   final _auth = FirebaseAuth.instance;
+  String totalBooking = '';
+  getDocumentsLength() async {
+    QuerySnapshot docStream =
+        await FirebaseFirestore.instance.collection('bookings').get();
+    totalBooking = docStream.docs.length.toString();
+    print(totalBooking);
+  }
 
   @override
   void initState() {
     print(_auth.currentUser!.email.toString());
     super.initState();
+    getDocumentsLength();
   }
 
   @override
@@ -184,8 +192,7 @@ class AllTimeState extends State<AllTime> {
                                             height: 24,
                                           ),
                                           Text(
-                                            snapshot.data.get(
-                                                'total_booking'), //DATABASE CALLING FOR TOTAL BOOKING VALUE
+                                            totalBooking, //DATABASE CALLING FOR TOTAL BOOKING VALUE
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 35,
