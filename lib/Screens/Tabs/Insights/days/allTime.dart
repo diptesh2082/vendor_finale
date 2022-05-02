@@ -21,9 +21,15 @@ class AllTimeState extends State<AllTime> {
   final _auth = FirebaseAuth.instance;
   String totalBooking = '';
   getDocumentsLength() async {
-    QuerySnapshot docStream =
-        await FirebaseFirestore.instance.collection('bookings').get();
-    totalBooking = docStream.docs.length.toString();
+    QuerySnapshot docStream = await FirebaseFirestore.instance
+        .collection('bookings')
+        .where('vendorId', isEqualTo: gymId.toString())
+        .where('booking_status',
+            whereIn: ['upcoming', 'active', 'completed']).get();
+    setState(() {
+      totalBooking = docStream.docs.length.toString();
+    });
+
     print(totalBooking);
   }
 

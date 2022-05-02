@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -82,10 +81,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ProfileTile(
-                          coverheight: coverheight,
-                          top: top,
-                          profileheight: profileheight,
-                      imageUrl: snapshot.data.get('display_picture'),
+                        coverheight: coverheight,
+                        top: top,
+                        profileheight: profileheight,
+                        imageUrl: snapshot.data.get('display_picture'),
                       ),
                       SizedBox(
                         height: 15,
@@ -111,21 +110,21 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                               fontWeight: FontWeight.w600),
                         ),
                       ),
-                      InkWell(
-                        child: const Padding(
-                          padding: EdgeInsets.only(left: 12.0, top: 8.0),
-                          child: Text(
-                            'Switch Branch',
-                            style: TextStyle(
-                                color: Colors.black,
-                                decoration: TextDecoration.underline,
-                                fontFamily: 'Poppins',
-                                fontSize: 12,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        onTap: () {},
-                      ),
+                      // InkWell(
+                      //   child: const Padding(
+                      //     padding: EdgeInsets.only(left: 12.0, top: 8.0),
+                      //     child: Text(
+                      //       'Switch Branch',
+                      //       style: TextStyle(
+                      //           color: Colors.black,
+                      //           decoration: TextDecoration.underline,
+                      //           fontFamily: 'Poppins',
+                      //           fontSize: 12,
+                      //           fontWeight: FontWeight.w600),
+                      //     ),
+                      //   ),
+                      //   onTap: () {},
+                      // ),
 
                       Padding(
                         padding: const EdgeInsets.only(
@@ -213,10 +212,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                       child: GridView.builder(
                                           shrinkWrap: true,
                                           gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
-                                              crossAxisCount: 3,
-                                              crossAxisSpacing: 0,
-                                              mainAxisSpacing: 12.0),
+                                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                                  crossAxisCount: 3,
+                                                  crossAxisSpacing: 0,
+                                                  mainAxisSpacing: 12.0),
                                           itemCount: files.length,
                                           itemBuilder: (context, index) {
                                             final file = files[index];
@@ -241,7 +240,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 children: [
                                   const Padding(
                                     padding:
-                                    EdgeInsets.only(left: 8.0, top: 8.0),
+                                        EdgeInsets.only(left: 8.0, top: 8.0),
                                     child: Text('Rules',
                                         style: TextStyle(
                                           fontFamily: 'Poppins',
@@ -254,7 +253,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         left: 12.0, top: 12.0),
                                     child: Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: const [
                                         Text(
                                           "•  Bring your towel and use it.",
@@ -299,7 +298,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         ),
                       ),
                       SizedBox(
-                          height: 145, //MediaQuery.of(context).size.height / 4.7,
+                          height:
+                              145, //MediaQuery.of(context).size.height / 4.7,
                           child: GestureDetector(
                             // onTap: () {
                             //   Get.to(() => Trainer(), arguments: {
@@ -311,7 +311,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12.0)),
                                 child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -332,7 +333,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.only(left: 8.0),
+                                        padding:
+                                            const EdgeInsets.only(left: 8.0),
                                         child: SizedBox(
                                           height: 100,
                                           //MediaQuery.of(context).size.height /
@@ -349,61 +351,60 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                                     ConnectionState.waiting) {
                                                   return const Center(
                                                     child:
-                                                    CircularProgressIndicator(
+                                                        CircularProgressIndicator(
                                                       color: Colors.amberAccent,
                                                     ),
                                                   );
                                                 }
                                                 if (snapshot.hasError) {
                                                   return const Center(
-                                                    child:
-                                                    Text("Theres no trainers"),
+                                                    child: Text(
+                                                        "Theres no trainers"),
                                                   );
                                                 }
                                                 var trainerdoc =
                                                     snapshot.data!.docs;
                                                 return ListView.builder(
                                                     shrinkWrap: true,
-                                                    itemCount: trainerdoc.length,
+                                                    itemCount:
+                                                        trainerdoc.length,
                                                     physics:
-                                                    const PageScrollPhysics(),
+                                                        const PageScrollPhysics(),
                                                     scrollDirection:
-                                                    Axis.horizontal,
-                                                    itemBuilder: (context, index) {
+                                                        Axis.horizontal,
+                                                    itemBuilder:
+                                                        (context, index) {
                                                       return Column(
                                                         children: [
                                                           Row(
                                                             mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
                                                             children: [
                                                               Column(
                                                                 children: [
                                                                   Container(
                                                                     height: 65,
                                                                     width: 65,
-                                                                    decoration:
-                                                                    BoxDecoration(
-                                                                        shape: BoxShape
-                                                                            .circle,
+                                                                    decoration: BoxDecoration(
+                                                                        shape: BoxShape.circle,
                                                                         //border: Border.all(width: 1),
-                                                                        image: DecorationImage(
-                                                                            image:
-                                                                            CachedNetworkImageProvider(trainerdoc[index]['images']),
-                                                                            fit: BoxFit.cover)),
+                                                                        image: DecorationImage(image: CachedNetworkImageProvider(trainerdoc[index]['images']), fit: BoxFit.cover)),
                                                                   ),
                                                                   Text(
                                                                     trainerdoc[
-                                                                    index]
-                                                                    ['name'],
+                                                                            index]
+                                                                        [
+                                                                        'name'],
                                                                     style:
-                                                                    const TextStyle(
+                                                                        const TextStyle(
                                                                       fontFamily:
-                                                                      'Poppins',
+                                                                          'Poppins',
                                                                       fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                      fontSize: 12,
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      fontSize:
+                                                                          12,
                                                                     ),
                                                                   ),
                                                                 ],
@@ -460,7 +461,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                 children: const [
                                   Padding(
                                     padding:
-                                    EdgeInsets.only(left: 8.0, top: 14.0),
+                                        EdgeInsets.only(left: 8.0, top: 14.0),
                                     child: Text(
                                       'Bus stand, Barakar, near pratham lodge',
                                       style: TextStyle(
@@ -483,37 +484,38 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
-  Widget buildFile(BuildContext context, FirebaseFile file) => CachedNetworkImage(
-
-    height: 128,
-    width: 127, imageUrl: file.url,
-  );
+  Widget buildFile(BuildContext context, FirebaseFile file) =>
+      CachedNetworkImage(
+        height: 128,
+        width: 127,
+        imageUrl: file.url,
+      );
 
   Widget amenities(int index) => Padding(
-    padding: const EdgeInsets.only(left: 8.0, top: 6.0),
-    child: FittedBox(
-      child: Column(
-        children: [
-          CircleAvatar(
-            child: Icon(
-              icons[index], // Icon list
-              size: 60,
-              color: Colors.black,
-            ),
-            backgroundColor: Colors.amber.shade400,
-            radius: 80,
+        padding: const EdgeInsets.only(left: 8.0, top: 6.0),
+        child: FittedBox(
+          child: Column(
+            children: [
+              CircleAvatar(
+                child: Icon(
+                  icons[index], // Icon list
+                  size: 60,
+                  color: Colors.black,
+                ),
+                backgroundColor: Colors.amber.shade400,
+                radius: 80,
+              ),
+              Text(
+                amenities_name[index], // icon name list
+                style: const TextStyle(
+                    fontFamily: 'PoppinsRegular',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 40),
+              ),
+            ],
           ),
-          Text(
-            amenities_name[index], // icon name list
-            style: const TextStyle(
-                fontFamily: 'PoppinsRegular',
-                fontWeight: FontWeight.w400,
-                fontSize: 40),
-          ),
-        ],
-      ),
-    ),
-  );
+        ),
+      );
 }
 
 class ProfileTile extends StatelessWidget {
@@ -521,7 +523,8 @@ class ProfileTile extends StatelessWidget {
     Key? key,
     required this.coverheight,
     required this.top,
-    required this.profileheight, this.imageUrl,
+    required this.profileheight,
+    this.imageUrl,
   }) : super(key: key);
 
   final double coverheight;
@@ -594,10 +597,10 @@ class StorageDatabase {
     return urls
         .asMap()
         .map((index, url) {
-      final ref = result.items[index];
-      final file = FirebaseFile(ref: ref, url: url);
-      return MapEntry(index, file);
-    })
+          final ref = result.items[index];
+          final file = FirebaseFile(ref: ref, url: url);
+          return MapEntry(index, file);
+        })
         .values
         .toList();
   }
