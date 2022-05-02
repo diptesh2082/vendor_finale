@@ -44,14 +44,33 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   final trainername = ['Jake Paul', 'Jim Harry', 'Kim Jhonas'];
   List<String> multiimages = [];
-  late Future<List<FirebaseFile>> futurefiles;
+  // late Future<List<FirebaseFile>> futurefiles;
+  var gym_images=[];
+  // getGymImages()async{
+  //   try{
+  //     await FirebaseFirestore.instance.collection("product_details").doc(gymId).snapshots().listen((snapshot) {
+  //       if (snapshot.exists){
+  //         setState(() {
+  //           gym_images=snapshot.data!["images"];
+  //         });
+  //         print("//////////!!!!!!!!!!!!!!!!!!!!!!!!");
+  //        print(gym_images);
+  //       }
+  //     });
+  //   }catch(e){
+  //     print(e);
+  //   }
+  // }
 
   final _auth = FirebaseAuth.instance;
-
+  var futurefiles;
   @override
   void initState() {
+    // getGymImages();
+    print("//////////!!!!!!!!!!!!!!!!!!!!!!!!");
+    print(gym_images);
     super.initState();
-    futurefiles = StorageDatabase.listAll('TransformerGymImage/');
+     futurefiles = StorageDatabase.listAll('TransformerGymImage/');
   }
 
   @override
@@ -72,6 +91,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 child: CircularProgressIndicator(),
               );
             }
+            gym_images=snapshot.data["images"];
+            // print(gym_images);
             return SingleChildScrollView(
               child: Container(
                 color: Colors.grey[100],
@@ -190,21 +211,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           ],
                         ),
                       ),
-                      FutureBuilder<List<FirebaseFile>>(
-                          future: futurefiles,
-                          builder: (context, snapshot) {
-                            switch (snapshot.connectionState) {
-                              case ConnectionState.waiting:
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              default:
-                                if (snapshot.hasError) {
-                                  return const Center(
-                                      child: Text(" Some error occured!!"));
-                                } else {
-                                  final files = snapshot.data!;
-
-                                  return Padding(
+                    Padding(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 8.0),
                                     child: SizedBox(
@@ -212,20 +219,19 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                       child: GridView.builder(
                                           shrinkWrap: true,
                                           gridDelegate:
-                                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                                  crossAxisCount: 3,
-                                                  crossAxisSpacing: 0,
-                                                  mainAxisSpacing: 12.0),
-                                          itemCount: files.length,
+
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                              crossAxisCount: 3,
+                                              crossAxisSpacing: 5,
+                                              mainAxisSpacing: 12.0),
+                                          itemCount: gym_images.length,
                                           itemBuilder: (context, index) {
-                                            final file = files[index];
+                                            final file = gym_images[index];
                                             return buildFile(context, file);
                                           }),
                                     ),
-                                  );
-                                }
-                            }
-                          }),
+                                  ),
+
                       Padding(
                         padding: const EdgeInsets.only(
                             left: 8.0, right: 8.0, top: 8.0),
@@ -484,12 +490,18 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
-  Widget buildFile(BuildContext context, FirebaseFile file) =>
-      CachedNetworkImage(
-        height: 128,
-        width: 127,
-        imageUrl: file.url,
-      );
+
+  Widget buildFile(BuildContext context, String file) => ClipRRect(
+    borderRadius: BorderRadius.circular(10),
+    child: CachedNetworkImage(
+
+      height: 128,
+      width: 127,
+      imageUrl: file,
+      fit: BoxFit.cover,
+    ),
+  );
+
 
   Widget amenities(int index) => Padding(
         padding: const EdgeInsets.only(left: 8.0, top: 6.0),
