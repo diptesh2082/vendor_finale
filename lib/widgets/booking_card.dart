@@ -12,7 +12,8 @@ class BookingCard extends StatefulWidget {
       this.bookingPrice = 0.0,
       this.userID = "",
       this.bookings,
-        this .docs,
+      this.docs,
+      this.id,
       required this.otp})
       : super(key: key);
 
@@ -25,6 +26,7 @@ class BookingCard extends StatefulWidget {
   final int? otp;
   final Map? bookings;
   final Map? docs;
+  final String? id;
 
   @override
   State<BookingCard> createState() => _BookingCardState();
@@ -47,7 +49,7 @@ class _BookingCardState extends State<BookingCard> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Text(
-                'Booking ID - ${widget.bookingID}',
+                'Booking ID - ${widget.id}',
                 style:
                     const TextStyle(fontWeight: FontWeight.w400, fontSize: 10),
               ),
@@ -89,15 +91,14 @@ class _BookingCardState extends State<BookingCard> {
                   print(widget.bookingdate);
 
                   Get.to(
-                    () => BookingScreen(
-                      otp: widget.otp,
-                      bookingID: widget.bookingID,
-                      userID: widget.userID,
-                    ),
-                    arguments: {
-                      "booking_id":widget.bookingID,
-                    }
-                  );
+                      () => BookingScreen(
+                            otp: widget.otp,
+                            bookingID: widget.bookingID,
+                            userID: widget.userID,
+                          ),
+                      arguments: {
+                        "booking_id": widget.bookingID,
+                      });
                 },
                 child: const Text(
                   'Accept',

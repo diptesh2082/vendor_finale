@@ -43,7 +43,6 @@ class _HomeTabState extends State<HomeTab> {
     }
   }
 
-
   @override
   void initState() {
     print("device gym id ${gymId}");
@@ -123,9 +122,10 @@ class _HomeTabState extends State<HomeTab> {
                                 StreamBuilder(
                                   stream: FirebaseFirestore.instance
                                       .collection('bookings')
-                                      .where("vendorId",isEqualTo: gymId)
-                                      .where('booking_status', isEqualTo: 'upcoming')
-                                  .orderBy("order_date",descending: true)
+                                      .where("vendorId", isEqualTo: gymId)
+                                      .where('booking_status',
+                                          isEqualTo: 'upcoming')
+                                      .orderBy("order_date", descending: true)
                                       .snapshots(),
                                   builder: (BuildContext context,
                                       AsyncSnapshot snap) {
@@ -170,6 +170,7 @@ class _HomeTabState extends State<HomeTab> {
                                         //     "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
                                         // print(
                                         //     "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
+                                        /// UPCOMING BOOKING CARD
                                         if (doc[index]['booking_status'] ==
                                                 'upcoming'
                                             // && doc[index]["vendorId"]==gymId.toString()
@@ -196,6 +197,7 @@ class _HomeTabState extends State<HomeTab> {
                                                     .toDate()),
                                             otp: int.parse(
                                                 doc[index]['otp_pass']),
+                                            id: doc[index]['id'] ?? "",
                                           );
                                         }
                                         return Container();
@@ -213,9 +215,10 @@ class _HomeTabState extends State<HomeTab> {
                                 StreamBuilder(
                                   stream: FirebaseFirestore.instance
                                       .collection('bookings')
-                                      .where("vendorId",isEqualTo: gymId)
-                                      .where('booking_status', isEqualTo: 'active')
-                                      .orderBy("order_date",descending: true)
+                                      .where("vendorId", isEqualTo: gymId)
+                                      .where('booking_status',
+                                          isEqualTo: 'active')
+                                      .orderBy("order_date", descending: true)
                                       .snapshots(),
                                   builder: (BuildContext context,
                                       AsyncSnapshot snap) {
@@ -229,6 +232,7 @@ class _HomeTabState extends State<HomeTab> {
                                       return const Text("No Active Bookings");
                                     }
                                     var doc = snap.data.docs;
+
                                     return ListView.builder(
                                       physics:
                                           const NeverScrollableScrollPhysics(),
@@ -237,12 +241,11 @@ class _HomeTabState extends State<HomeTab> {
                                       itemBuilder: (context, index) {
                                         if (doc[index]['booking_status'] ==
                                                 'active'
-                                        // &&
+                                            // &&
                                             // doc[index]['booking_accepted'] ==
                                             //     true
 
-                                        )
-                                        {
+                                            ) {
                                           return GestureDetector(
                                             onTap: () async {
                                               // print("wewe");
@@ -292,6 +295,7 @@ class _HomeTabState extends State<HomeTab> {
                                                 doc[index]['booking_date']
                                                     .toDate(),
                                               ),
+                                              id: doc[index]['id'],
                                             ),
                                           );
                                         }
@@ -312,9 +316,10 @@ class _HomeTabState extends State<HomeTab> {
                                 StreamBuilder(
                                   stream: FirebaseFirestore.instance
                                       .collection('bookings')
-                                      .where("vendorId",isEqualTo: gymId)
-                                      .where('booking_status', isEqualTo: 'completed')
-                                      .orderBy("order_date",descending: true)
+                                      .where("vendorId", isEqualTo: gymId)
+                                      .where('booking_status',
+                                          isEqualTo: 'completed')
+                                      .orderBy("order_date", descending: true)
                                       .snapshots(),
                                   builder: (BuildContext context,
                                       AsyncSnapshot snap) {
@@ -338,11 +343,11 @@ class _HomeTabState extends State<HomeTab> {
                                       itemCount: doc.length,
                                       itemBuilder: (context, index) {
                                         if (
-                                        // &&
+                                            // &&
                                             doc[index]['booking_accepted'] ==
                                                 true
                                             // && doc[index]["vendorId"]==gymId.toString()
-                                        ) {
+                                            ) {
                                           return PastBookingCard(
                                             userID: doc[index]['userId'] ?? "",
                                             userName:
@@ -415,15 +420,14 @@ class _HomeTabState extends State<HomeTab> {
                                 print(FirebaseAuth.instance.currentUser!.email);
                                 List temp = snapshot.data.docs.toList();
                                 if (temp.isEmpty) {
-                                  return  ListTile(
+                                  return ListTile(
                                     trailing: const Icon(
                                       Icons.add,
                                       color: Colors.black54,
                                     ),
                                     title: const Text(
                                       'Add another Account',
-                                      style:
-                                      TextStyle(color: Colors.black),
+                                      style: TextStyle(color: Colors.black),
                                     ),
                                     onTap: () {
                                       print("Add another Login Session");
@@ -461,15 +465,14 @@ class _HomeTabState extends State<HomeTab> {
                                         onTap: () async {
                                           print(snapshot.data.docs[index]
                                               ["gym_id"]);
-                                          var id=await snapshot
+                                          var id = await snapshot
                                               .data.docs[index]["gym_id"];
                                           print(id);
-                                          if(mounted)
-                                           setState(() {
-                                          gymId =  id;
-
-                                          });
-                                          await  Get.offAll(()=>HomeScreen());
+                                          if (mounted)
+                                            setState(() {
+                                              gymId = id;
+                                            });
+                                          await Get.offAll(() => HomeScreen());
 
                                           // Navigator.pushReplacement(
                                           //     (context),
@@ -570,9 +573,7 @@ class _HomeTabState extends State<HomeTab> {
               const SizedBox(
                 height: 15,
               ),
-              Align(
-                  alignment: Alignment.center,
-                  child: Search(context))
+              Align(alignment: Alignment.center, child: Search(context))
             ],
           ),
         ),
@@ -643,9 +644,8 @@ class _HomeTabState extends State<HomeTab> {
             left: 120,
             child: ElevatedButton(
               onPressed: () {
-                Get.offAll(()=>LoginScreen());
+                Get.offAll(() => LoginScreen());
                 _auth.signOut();
-
               },
               child: const Text(
                 'Logout',
@@ -689,7 +689,6 @@ class _HomeTabState extends State<HomeTab> {
           textAlignVertical: TextAlignVertical.bottom,
           onSubmitted: (value) async {
             FocusScope.of(context).unfocus();
-
           },
 
           // onChanged: (value) {
@@ -715,6 +714,7 @@ class _HomeTabState extends State<HomeTab> {
       ),
     );
   }
+
   ListTile buildDrawerListItem(
       {required String? title, String? iconData = 'lock'}) {
     return ListTile(
