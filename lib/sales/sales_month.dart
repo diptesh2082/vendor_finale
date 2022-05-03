@@ -288,6 +288,7 @@ class _MonthSalesState extends State<MonthSales> {
                             itemBuilder: (context, index) {
                               if (doc[index]['booking_status'] ==
                                   'active' || doc[index]['booking_status'] =='completed'
+                                  || doc[index]['booking_status'] =='upcoming'
                                   // &&
                                   // doc[index]['booking_accepted'] ==
                                   //     true

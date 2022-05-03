@@ -313,7 +313,7 @@ class _HomeTabState extends State<HomeTab> {
                                   stream: FirebaseFirestore.instance
                                       .collection('bookings')
                                       .where("vendorId",isEqualTo: gymId)
-                                      .where('booking_status', isEqualTo: 'completed')
+                                      // .where('booking_status', isEqualTo: 'completed')
                                       .orderBy("order_date",descending: true)
                                       .snapshots(),
                                   builder: (BuildContext context,
@@ -355,8 +355,8 @@ class _HomeTabState extends State<HomeTab> {
                                             bookingPrice: doc[index]
                                                     ['booking_price'] ??
                                                 "",
-                                            bookingdate: doc[index]
-                                                    ['booking_date'] ??
+                                            bookingdate:DateFormat("dd,MMM,yyyy").format(doc[index]
+                                            ['booking_date'].toDate()) ??
                                                 "",
                                           );
                                         }

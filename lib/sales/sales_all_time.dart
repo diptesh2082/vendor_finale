@@ -297,6 +297,7 @@ class _AllTimeSalesState extends State<AllTimeSales> {
 
                                   if (doc[index]['booking_status'] ==
                                       'active' || doc[index]['booking_status'] =='completed'
+                                      || doc[index]['booking_status'] =='upcoming'
                                       // &&
                                       // doc[index]['booking_accepted'] ==
                                       //     true

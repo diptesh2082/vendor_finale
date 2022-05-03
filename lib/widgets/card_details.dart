@@ -113,7 +113,7 @@ class _CardDetailsState extends State<CardDetails> {
                   children:  [
                     CircleAvatar(
                       radius: 3,
-                      backgroundColor: widget.booking_status.toString()=="completed" ?Colors.amber:Colors.green,
+                      backgroundColor: widget.booking_status.toString()=="active" ?Colors.green:Colors.amber,
                     ),
                     SizedBox(
                       width: 3.5,
