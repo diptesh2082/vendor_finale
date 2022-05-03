@@ -1,6 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+import 'package:vyam_vandor/Screens/Tabs/support_page.dart';
 import 'package:vyam_vandor/Screens/home__screen.dart';
 import 'package:vyam_vandor/Screens/login_screen.dart';
 import 'package:vyam_vandor/Screens/order_details_screen.dart';
@@ -14,8 +16,10 @@ import '../../widgets/booking_card.dart';
 import '../../widgets/drawer_tile.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/past_booking.dart';
+import 'notifications.dart';
 
 class HomeTab extends StatefulWidget {
   const HomeTab({Key? key}) : super(key: key);
@@ -25,6 +29,8 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
+  final String _playStoreUrl =
+      "https://play.google.com/store/apps/details?id=com.findnearestfitness.vyamserviceprovider";
   var status = true;
   final GlobalKey<ScaffoldState> _drawerkey = GlobalKey();
   bool showBranches = false;
@@ -625,17 +631,39 @@ class _HomeTabState extends State<HomeTab> {
                 title: 'Change Password',
                 iconData: 'lock',
               ),
-              buildDrawerListItem(
-                title: 'Notifications',
+              InkWell(
+                  child: buildDrawerListItem(
+                    title: 'Notifications',
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => NotificationDetails(),
+                        ));
+                  }),
+              InkWell(
+                child: buildDrawerListItem(
+                  title: 'Rate us',
+                  iconData: 'star',
+                ),
+                onTap: () async {
+                  launchUrlString(_playStoreUrl);
+                  //launch(_playStoreUrl);
+                },
               ),
-              buildDrawerListItem(
-                title: 'Rate us',
-                iconData: 'star',
-              ),
-              buildDrawerListItem(
-                title: 'Support',
-                iconData: 'message-question',
-              ),
+              InkWell(
+                  child: buildDrawerListItem(
+                    title: 'Support',
+                    iconData: 'message-question',
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ContactUs(),
+                        ));
+                  }),
             ],
           ),
           Positioned(
