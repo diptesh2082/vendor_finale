@@ -361,8 +361,7 @@ class _HomeTabState extends State<HomeTab> {
                                                     ['booking_price'] ??
                                                 "",
                                             bookingdate:DateFormat("dd,MMM,yyyy").format(doc[index]
-                                       ['booking_date'].toDate()) ??
-                                                "",
+                                       ['booking_date'].toDate()),
                                           );
                                         }
                                         return Container();

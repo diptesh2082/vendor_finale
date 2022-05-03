@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vyam_vandor/Screens/booking_summary_screen.dart';
 import 'package:vyam_vandor/Screens/order_details_screen.dart';
 
@@ -45,87 +46,85 @@ class _ActiveBookingCardState extends State<ActiveBookingCard> {
 
   @override
   Widget build(BuildContext context) {
-    return FittedBox(
-      child: GestureDetector(
-        onTap: () {
-          Get.to(
-              () => OrderDetails(
-                    // otp: widget.otp,
-                    bookingID: widget.bookingID,
-                    userID: widget.userID,
+    return GestureDetector(
+      onTap: () {
+        Get.to(
+            () => OrderDetails(
+                  // otp: widget.otp,
+                  bookingID: widget.bookingID,
+                  userID: widget.userID,
+                ),
+            arguments: {
+              "booking_id": widget.bookingID,
+            });
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
+        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+        height: 150,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(15.0)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  'Booking ID - ${widget.id}',
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w400, fontSize: 10),
+                ),
+                Text(
+                  widget.userName!,
+                  style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w700, fontSize: 15),
+                ),
+                Text(
+                  widget.bookingdate!,
+                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+                ),
+                Text(
+                  widget.bookingPlan!,
+                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+                ),
+              ],
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top: 18.0),
+                  child: Text(
+                    '\$${widget.bookingPrice}',
+                    style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w600, fontSize: 18),
                   ),
-              arguments: {
-                "booking_id": widget.bookingID,
-              });
-        },
-        child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15),
-          margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-          height: 150,
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(15.0)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Booking ID - ${widget.id}',
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w400, fontSize: 10),
-                  ),
-                  Text(
-                    widget.userName!,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.w700, fontSize: 15),
-                  ),
-                  Text(
-                    widget.bookingdate!,
-                    style: const TextStyle(fontWeight: FontWeight.w500),
-                  ),
-                  Text(
-                    widget.bookingPlan!,
-                    style: const TextStyle(fontWeight: FontWeight.w500),
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 18.0),
-                    child: Text(
-                      '\$${widget.bookingPrice}',
-                      style: const TextStyle(
-                          fontWeight: FontWeight.w600, fontSize: 18),
+                ),
+                Text(
+                  '${DateTime.now().difference(DateTime(int.parse(widget.tempYear), int.parse(widget.tempMonth), int.parse(widget.tempDay))).inDays} days remaining',
+                  style:GoogleFonts.poppins(fontWeight: FontWeight.w500),
+                ),
+                Row(
+                  children:  [
+                    CircleAvatar(
+                      radius: 3,
+                      backgroundColor: Colors.green,
                     ),
-                  ),
-                  Text(
-                    '${DateTime.now().difference(DateTime(int.parse(widget.tempYear), int.parse(widget.tempMonth), int.parse(widget.tempDay))).inDays} days remaining',
-                    style: const TextStyle(fontWeight: FontWeight.w500),
-                  ),
-                  Row(
-                    children: const [
-                      CircleAvatar(
-                        radius: 3,
-                        backgroundColor: Colors.green,
-                      ),
-                      SizedBox(
-                        width: 3.5,
-                      ),
-                      Text(
-                        'Active',
-                        style: TextStyle(fontWeight: FontWeight.w500),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
+                    SizedBox(
+                      width: 3.5,
+                    ),
+                    Text(
+                      'Active',
+                      style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
