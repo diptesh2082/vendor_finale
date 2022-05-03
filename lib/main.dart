@@ -13,10 +13,10 @@ import 'Screens/home__screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  try{
-    gymId=await FirebaseAuth.instance.currentUser!.email;
-  }catch(e){
-    gymId=null;
+  try {
+    gymId = await FirebaseAuth.instance.currentUser!.email;
+  } catch (e) {
+    gymId = null;
   }
 
   SystemChrome.setSystemUIOverlayStyle(
@@ -54,8 +54,8 @@ class MyApp extends StatelessWidget {
           }
           if (snapshot.hasData) {
             return HomeScreen(
-              // email: gymId,
-            );
+                // email: gymId,
+                );
           }
           return const LoginScreen();
         },

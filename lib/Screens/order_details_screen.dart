@@ -88,7 +88,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                             StreamBuilder(
                                 stream: FirebaseFirestore.instance
                                     .collection('product_details')
-                                    .doc(FirebaseAuth.instance.currentUser!.email)
+                                    .doc(FirebaseAuth
+                                        .instance.currentUser!.email)
                                     .snapshots(),
                                 builder: (BuildContext context,
                                     AsyncSnapshot snapshot3) {
@@ -108,15 +109,17 @@ class _OrderDetailsState extends State<OrderDetails> {
                                       child: Row(
                                         children: [
                                           Container(
-                                            height:169,
+                                            height: 169,
                                             width: 187,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(15)
-                                            ),
+                                                borderRadius:
+                                                    BorderRadius.circular(15)),
                                             child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(15),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
                                               child: CachedNetworkImage(
-                                                imageUrl: snapshot.data!.get('gym_details')["image"],
+                                                imageUrl: snapshot.data!.get(
+                                                    'gym_details')["image"],
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
@@ -136,14 +139,16 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                     'Booking ID:- ',
                                                     style: GoogleFonts.poppins(
                                                       fontSize: 10,
-                                                      fontWeight: FontWeight.w500,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
                                                   Text(
                                                     '${snapshot.data!.get('id')}',
                                                     style: GoogleFonts.poppins(
                                                       fontSize: 10,
-                                                      fontWeight: FontWeight.w500,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
                                                 ],
@@ -169,7 +174,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                     //     .get('gym_details')["branch"],
                                                     style: GoogleFonts.poppins(
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.w500,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
                                                   // Image.asset(
@@ -178,18 +184,22 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                   //   width: 1.0,
                                                   // ),
                                                   Text(
-                                                    snapshot.data!.get('gym_details')["branch"],
+                                                    snapshot.data!
+                                                            .get('gym_details')[
+                                                        "branch"],
                                                     // snapshot3.data
                                                     //     .get('gym_details')["branch"],
                                                     style: GoogleFonts.poppins(
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.w500,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
                                                 ],
                                               ),
                                               Text(
-                                                snapshot.data!.get('booking_plan'),
+                                                snapshot.data!
+                                                    .get('booking_plan'),
                                                 // snapshot3.data
                                                 //     .get('gym_details')["branch"],
                                                 style: GoogleFonts.poppins(
@@ -201,7 +211,10 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                 height: 3.0,
                                               ),
                                               Text(
-                                                DateFormat("dd,MMMM,yyyy").format(snapshot.data!.get('booking_date').toDate()),
+                                                DateFormat("dd,MMMM,yyyy")
+                                                    .format(snapshot.data!
+                                                        .get('booking_date')
+                                                        .toDate()),
                                                 // snapshot.data!.get('booking_date').toString(),
                                                 // snapshot3.data
                                                 //     .get('gym_details')["branch"],
@@ -211,20 +224,23 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                 ),
                                               ),
                                               SingleChildScrollView(
-                                                scrollDirection: Axis.horizontal,
+                                                scrollDirection:
+                                                    Axis.horizontal,
                                                 child: SizedBox(
                                                   width: MediaQuery.of(context)
                                                           .size
                                                           .width *
                                                       0.5,
                                                   child: Text(
-                                                    snapshot3.data.get('address'),
+                                                    snapshot3.data
+                                                        .get('address'),
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     maxLines: 2,
                                                     style: GoogleFonts.poppins(
                                                       fontSize: 12,
-                                                      fontWeight: FontWeight.w500,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                     ),
                                                   ),
                                                 ),
@@ -233,16 +249,18 @@ class _OrderDetailsState extends State<OrderDetails> {
                                                 children: [
                                                   CircleAvatar(
                                                     radius: 5,
-                                                    backgroundColor: Colors.green,
+                                                    backgroundColor:
+                                                        Colors.green,
                                                   ),
                                                   SizedBox(
                                                     width: 5,
-                                                  )
-,                                                  Text(
+                                                  ),
+                                                  Text(
                                                     'Active',
                                                     style: GoogleFonts.poppins(
                                                       fontSize: 14,
-                                                      fontWeight: FontWeight.w600,
+                                                      fontWeight:
+                                                          FontWeight.w600,
                                                     ),
                                                   ),
                                                 ],
@@ -267,10 +285,12 @@ class _OrderDetailsState extends State<OrderDetails> {
                             Container(
                               padding: const EdgeInsets.all(16),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         'Workout',
@@ -328,7 +348,7 @@ class _OrderDetailsState extends State<OrderDetails> {
                                         height: 10.0,
                                       ),
                                       Text(
-                                      '${snapshot.data.get('booking_plan')}',
+                                        '${snapshot.data.get('booking_plan')}',
                                         style: GoogleFonts.poppins(
                                           fontSize: 16,
                                           fontWeight: FontWeight.w500,
@@ -540,8 +560,8 @@ class _OrderDetailsState extends State<OrderDetails> {
                                 .collection('user_details')
                                 .doc(widget.userID)
                                 .snapshots(),
-                            builder:
-                                (BuildContext context, AsyncSnapshot snapshot2) {
+                            builder: (BuildContext context,
+                                AsyncSnapshot snapshot2) {
                               if (snapshot2.data == null) {
                                 return Container();
                               }
