@@ -654,16 +654,17 @@ class _HomeTabState extends State<HomeTab> {
                 },
               ),
               InkWell(
-                child: buildDrawerListItem(
-                  title: 'Support',
-                  iconData: 'message-question',
-                ),
-                onTap: () {
-                  MaterialPageRoute(
-                    builder: (context) => ContactUs(),
-                  ); //launch(playStoreUrl);
-                },
-              ),
+                  child: buildDrawerListItem(
+                    title: 'Support',
+                    iconData: 'message-question',
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ContactUs(),
+                        ));
+                  }),
             ],
           ),
           Positioned(
