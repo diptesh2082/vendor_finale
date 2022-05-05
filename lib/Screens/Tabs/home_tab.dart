@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:vyam_vandor/Screens/Tabs/support_page.dart';
 import 'package:vyam_vandor/Screens/home__screen.dart';
@@ -10,6 +11,7 @@ import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:vyam_vandor/app_colors.dart';
 import 'package:get/get.dart';
+import 'package:vyam_vandor/widgets/search_function.dart';
 import '../../Services/profileicon_icons.dart';
 import '../../widgets/active_booking.dart';
 import '../../widgets/booking_card.dart';
@@ -114,270 +116,279 @@ class _HomeTabState extends State<HomeTab> {
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     child: ListView(
                       children: [
-                        Column(
-                          //mainAxisAlignment: MainAxisAlignment.center,
+                        Stack(
                           children: [
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            //Upcoming Bookings Cards
-                            ExpansionTile(
-                              initiallyExpanded: true,
-                              title: const Text('Upcoming Bookings'),
+                            Column(
+                              //mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                StreamBuilder(
-                                  stream: FirebaseFirestore.instance
-                                      .collection('bookings')
-                                      .where("vendorId", isEqualTo: gymId)
-                                      .where('booking_status',
-                                          isEqualTo: 'upcoming')
-                                      .orderBy("order_date", descending: true)
-                                      .snapshots(),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot snap) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    }
-
-                                    if (snap.data == null) {
-                                      return const Text("No Upcoming Bookings");
-                                    }
-
-                                    var doc = snap.data.docs;
-                                    // print(gymId.toString());
-                                    // doc = doc.where((element) {
-                                    //   return element
-                                    //       .get('vendorId')
-                                    //       .toString()
-                                    //       // .toLowerCase()
-                                    //       .contains(gymId.toString());
-                                    // }).toList();
-                                    // doc = doc.where((element) {
-                                    //   return element
-                                    //       .get('vendorId')
-                                    //       .toString()
-                                    //       .toLowerCase()
-                                    //       .contains(_auth.currentUser!.email.toString().toLowerCase());
-                                    // }).toList();
-                                    // print(doc);
-                                    return ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: doc.length,
-                                      itemBuilder: (context, index) {
-                                        // print("device token ${device_token}");
-                                        // print(
-                                        //     "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
-                                        // print(
-                                        //     "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
-                                        // print(
-                                        //     "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
-                                        /// UPCOMING BOOKING CARD
-                                        if (doc[index]['booking_status'] ==
-                                                'upcoming'
-                                            // && doc[index]["vendorId"]==gymId.toString()
-                                            )
-                                        // if(doc[index][])
-                                        {
-                                          return BookingCard(
-                                            userID: doc[index]['userId'] ?? "",
-                                            userName:
-                                                doc[index]['user_name'] ?? "",
-                                            bookingID:
-                                                doc[index]['booking_id'] ?? "",
-                                            bookingPlan: doc[index]
-                                                    ['booking_plan'] ??
-                                                "",
-                                            bookingPrice: doc[index]
-                                                    ['booking_price'] ??
-                                                "",
-                                            // docs: doc[index],
-                                            bookingdate: DateFormat(
-                                                    DateFormat.YEAR_MONTH_DAY)
-                                                .format(doc[index]
-                                                        ['booking_date']
-                                                    .toDate()),
-                                            otp: int.parse(
-                                                doc[index]['otp_pass']),
-                                            id: doc[index]['id'] ?? "",
+                                const SizedBox(
+                                  height: 80,
+                                ),
+                                //Upcoming Bookings Cards
+                                ExpansionTile(
+                                  initiallyExpanded: true,
+                                  title: const Text('Upcoming Bookings'),
+                                  children: [
+                                    StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('bookings')
+                                          .where("vendorId", isEqualTo: gymId)
+                                          .where('booking_status',
+                                              isEqualTo: 'upcoming')
+                                          .orderBy("order_date", descending: true)
+                                          .snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot snap) {
+                                        if (snap.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
                                           );
                                         }
-                                        return Container();
-                                      },
-                                    );
-                                  },
-                                )
-                              ],
-                            ),
 
-                            ///Active Booking Cards
-                            ExpansionTile(
-                              title: const Text('Active Bookings'),
-                              children: [
-                                StreamBuilder(
-                                  stream: FirebaseFirestore.instance
-                                      .collection('bookings')
-                                      .where("vendorId", isEqualTo: gymId)
-                                      .where('booking_status',
-                                          isEqualTo: 'active')
-                                      .orderBy("order_date", descending: true)
-                                      .snapshots(),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot snap) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    }
-                                    if (snap.data == null) {
-                                      return const Text("No Active Bookings");
-                                    }
-                                    var doc = snap.data.docs;
+                                        if (snap.data == null) {
+                                          return const Text("No Upcoming Bookings");
+                                        }
 
-                                    return ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: doc.length,
-                                      itemBuilder: (context, index) {
-                                        if (doc[index]['booking_status'] ==
-                                                'active'
-                                            // &&
-                                            // doc[index]['booking_accepted'] ==
-                                            //     true
-
-                                            ) {
-                                          return GestureDetector(
-                                            onTap: () async {
-                                              // print("wewe");
-                                              await OrderDetails(
-                                                userID: doc[index]['userId'],
-                                                bookingID: doc[index]
-                                                    ['booking_id'],
-                                                imageUrl: doc[index]
-                                                    ["gym_details"]["images"],
+                                        var doc = snap.data.docs;
+                                        // print(gymId.toString());
+                                        // doc = doc.where((element) {
+                                        //   return element
+                                        //       .get('vendorId')
+                                        //       .toString()
+                                        //       // .toLowerCase()
+                                        //       .contains(gymId.toString());
+                                        // }).toList();
+                                        // doc = doc.where((element) {
+                                        //   return element
+                                        //       .get('vendorId')
+                                        //       .toString()
+                                        //       .toLowerCase()
+                                        //       .contains(_auth.currentUser!.email.toString().toLowerCase());
+                                        // }).toList();
+                                        // print(doc);
+                                        return ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: doc.length,
+                                          itemBuilder: (context, index) {
+                                            // print("device token ${device_token}");
+                                            // print(
+                                            //     "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
+                                            // print(
+                                            //     "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
+                                            // print(
+                                            //     "gfhfhgjfdkdyuuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuyuy ${gymId}");
+                                            /// UPCOMING BOOKING CARD
+                                            if (doc[index]['booking_status'] ==
+                                                    'upcoming'
+                                                // && doc[index]["vendorId"]==gymId.toString()
+                                                )
+                                            // if(doc[index][])
+                                            {
+                                              return BookingCard(
+                                                userID: doc[index]['userId'] ?? "",
+                                                userName:
+                                                    doc[index]['user_name'] ?? "",
+                                                bookingID:
+                                                    doc[index]['booking_id'] ?? "",
+                                                bookingPlan: doc[index]
+                                                        ['booking_plan'] ??
+                                                    "",
+                                                bookingPrice: doc[index]
+                                                        ['booking_price'] ??
+                                                    "",
+                                                // docs: doc[index],
+                                                bookingdate: DateFormat(
+                                                        DateFormat.YEAR_MONTH_DAY)
+                                                    .format(doc[index]
+                                                            ['booking_date']
+                                                        .toDate()),
+                                                otp: int.parse(
+                                                    doc[index]['otp_pass']),
+                                                id: doc[index]['id'] ?? "",
                                               );
-                                            },
-                                            child: ActiveBookingCard(
-                                              userID:
-                                                  doc[index]['userId'] ?? "",
-                                              userName:
-                                                  doc[index]['user_name'] ?? "",
-                                              bookingID: doc[index]
-                                                      ['booking_id'] ??
-                                                  "",
-                                              bookingPlan: doc[index]
-                                                      ['booking_plan'] ??
-                                                  "",
-                                              bookingPrice: double.parse(
-                                                  doc[index]['booking_price']
-                                                      .toString()),
-                                              bookingdate: DateFormat(
-                                                      DateFormat.YEAR_MONTH_DAY)
-                                                  .format(
-                                                doc[index]['booking_date']
-                                                    .toDate(),
-                                              ),
-                                              tempYear:
-                                                  DateFormat(DateFormat.YEAR)
-                                                      .format(
-                                                doc[index]['booking_date']
-                                                    .toDate(),
-                                              ),
-                                              tempDay:
-                                                  DateFormat(DateFormat.DAY)
-                                                      .format(
-                                                doc[index]['booking_date']
-                                                    .toDate(),
-                                              ),
-                                              tempMonth: DateFormat(
-                                                      DateFormat.NUM_MONTH)
-                                                  .format(
-                                                doc[index]['booking_date']
-                                                    .toDate(),
-                                              ),
-                                              id: doc[index]['id'],
-                                            ),
+                                            }
+                                            return Container();
+                                          },
+                                        );
+                                      },
+                                    )
+                                  ],
+                                ),
+
+                                ///Active Booking Cards
+                                ExpansionTile(
+                                  title: const Text('Active Bookings'),
+                                  children: [
+                                    StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('bookings')
+                                          .where("vendorId", isEqualTo: gymId)
+                                          .where('booking_status',
+                                              isEqualTo: 'active')
+                                          .orderBy("order_date", descending: true)
+                                          .snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot snap) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
                                           );
                                         }
-                                        return Container();
+                                        if (snap.data == null) {
+                                          return const Text("No Active Bookings");
+                                        }
+                                        var doc = snap.data.docs;
+
+                                        return ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: doc.length,
+                                          itemBuilder: (context, index) {
+                                            if (doc[index]['booking_status'] ==
+                                                    'active'
+                                                // &&
+                                                // doc[index]['booking_accepted'] ==
+                                                //     true
+
+                                                ) {
+                                              return GestureDetector(
+                                                onTap: () async {
+                                                  // print("wewe");
+                                                  await OrderDetails(
+                                                    userID: doc[index]['userId'],
+                                                    bookingID: doc[index]
+                                                        ['booking_id'],
+                                                    imageUrl: doc[index]
+                                                        ["gym_details"]["images"],
+                                                  );
+                                                },
+                                                child: ActiveBookingCard(
+                                                  userID:
+                                                      doc[index]['userId'] ?? "",
+                                                  userName:
+                                                      doc[index]['user_name'] ?? "",
+                                                  bookingID: doc[index]
+                                                          ['booking_id'] ??
+                                                      "",
+                                                  bookingPlan: doc[index]
+                                                          ['booking_plan'] ??
+                                                      "",
+                                                  bookingPrice: double.parse(
+                                                      doc[index]['booking_price']
+                                                          .toString()),
+                                                  bookingdate: DateFormat(
+                                                          DateFormat.YEAR_MONTH_DAY)
+                                                      .format(
+                                                    doc[index]['booking_date']
+                                                        .toDate(),
+                                                  ),
+                                                  tempYear:
+                                                      DateFormat(DateFormat.YEAR)
+                                                          .format(
+                                                    doc[index]['booking_date']
+                                                        .toDate(),
+                                                  ),
+                                                  tempDay:
+                                                      DateFormat(DateFormat.DAY)
+                                                          .format(
+                                                    doc[index]['booking_date']
+                                                        .toDate(),
+                                                  ),
+                                                  tempMonth: DateFormat(
+                                                          DateFormat.NUM_MONTH)
+                                                      .format(
+                                                    doc[index]['booking_date']
+                                                        .toDate(),
+                                                  ),
+                                                  id: doc[index]['id'],
+                                                ),
+                                              );
+                                            }
+                                            return Container();
+                                          },
+                                        );
                                       },
-                                    );
-                                  },
-                                )
-                              ],
-                            ),
-                            ////
-                            ///
-                            ///
-                            ///Past Bookings Cards
-                            ExpansionTile(
-                              title: const Text('Past Bookings'),
-                              children: [
-                                StreamBuilder(
-                                  stream: FirebaseFirestore.instance
-                                      .collection('bookings')
-                                      .where("vendorId", isEqualTo: gymId)
-                                      .where('booking_status',
-                                          isEqualTo: 'completed')
-                                      .orderBy("order_date", descending: true)
-                                      .snapshots(),
-                                  builder: (BuildContext context,
-                                      AsyncSnapshot snap) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const Center(
-                                        child: CircularProgressIndicator(),
-                                      );
-                                    }
-
-                                    if (snap.data == null) {
-                                      return const Text("No Past Bookings");
-                                    }
-
-                                    var doc = snap.data.docs;
-
-                                    return ListView.builder(
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      shrinkWrap: true,
-                                      itemCount: doc.length,
-                                      itemBuilder: (context, index) {
-                                        if (
-                                            // &&
-                                            doc[index]['booking_accepted'] ==
-                                                true
-                                            // && doc[index]["vendorId"]==gymId.toString()
-                                            ) {
-                                          return PastBookingCard(
-                                            userID: doc[index]['userId'] ?? "",
-                                            userName:
-                                                doc[index]['user_name'] ?? "",
-                                            bookingID:
-                                                doc[index]['booking_id'] ?? "",
-                                            bookingPlan: doc[index]
-                                                    ['booking_plan'] ??
-                                                "",
-                                            bookingPrice: doc[index]
-                                                    ['booking_price'] ??
-                                                "",
-                                            bookingdate:DateFormat("dd,MMM,yyyy").format(doc[index]
-                                       ['booking_date'].toDate()),
+                                    )
+                                  ],
+                                ),
+                                ////
+                                ///
+                                ///
+                                ///Past Bookings Cards
+                                ExpansionTile(
+                                  title: const Text('Past Bookings'),
+                                  children: [
+                                    StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('bookings')
+                                          .where("vendorId", isEqualTo: gymId)
+                                          .where('booking_status',
+                                              isEqualTo: 'completed')
+                                          .orderBy("order_date", descending: true)
+                                          .snapshots(),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot snap) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
                                           );
                                         }
-                                        return Container();
+
+                                        if (snap.data == null) {
+                                          return const Text("No Past Bookings");
+                                        }
+
+                                        var doc = snap.data.docs;
+
+                                        return ListView.builder(
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          shrinkWrap: true,
+                                          itemCount: doc.length,
+                                          itemBuilder: (context, index) {
+                                            if (
+                                                // &&
+                                                doc[index]['booking_accepted'] ==
+                                                    true
+                                                // && doc[index]["vendorId"]==gymId.toString()
+                                                ) {
+                                              return PastBookingCard(
+                                                userID: doc[index]['userId'] ?? "",
+                                                userName:
+                                                    doc[index]['user_name'] ?? "",
+                                                bookingID:
+                                                    doc[index]['booking_id'] ?? "",
+                                                bookingPlan: doc[index]
+                                                        ['booking_plan'] ??
+                                                    "",
+                                                bookingPrice: doc[index]
+                                                        ['booking_price'] ??
+                                                    "",
+                                                bookingdate:DateFormat("dd,MMM,yyyy").format(doc[index]
+                                           ['booking_date'].toDate()),
+                                              );
+                                            }
+                                            return Container();
+                                          },
+                                        );
                                       },
-                                    );
-                                  },
-                                )
+                                    )
+                                  ],
+                                ),
                               ],
                             ),
+                            Positioned(
+                                top: 16,
+                                child: SearchIt())
                           ],
+                          alignment: Alignment.center,
+
                         ),
                       ],
                     ),
@@ -508,8 +519,10 @@ class _HomeTabState extends State<HomeTab> {
                                 }
                               }),
                         ),
-                      )
+                      ),
+
               ],
+              alignment: Alignment.center,
             );
           }),
     );
@@ -521,7 +534,7 @@ class _HomeTabState extends State<HomeTab> {
       required String? gymLocation,
       Function? leadingCallback}) {
     return AppBar(
-      toolbarHeight: kToolbarHeight + 80,
+      toolbarHeight: kToolbarHeight +10,
       backgroundColor: Colors.transparent,
       primary: true,
       iconTheme: const IconThemeData(color: Colors.black),
@@ -535,55 +548,58 @@ class _HomeTabState extends State<HomeTab> {
             Icons.menu,
             color: Colors.black,
           )),
-      title: Text(
-        gymname!,
-        style: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.w600,
-          fontSize: 16,
-          letterSpacing: 1,
-        ),
-      ),
-      bottom: PreferredSize(
-        child: GestureDetector(
-          onTap: () {
-            print("Open that Alert dialogue Box");
-            setState(() {
-              showBranches = !showBranches;
-            });
-          },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 57.0),
-                    child: Text(
-                      gymLocation!,
-                      style: const TextStyle(
-                        color: Color(0xffBDBDBD),
-                      ),
+      title: InkWell(
+        onTap: () {
+          print("Open that Alert dialogue Box");
+          setState(() {
+            showBranches = !showBranches;
+          });
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            SizedBox(
+              height: 15,
+            ),
+            Text(
+              gymname!,
+              style: const TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                letterSpacing: 1,
+              ),
+            ),
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left:0),
+                  child: Text(
+                    gymLocation!,
+                    style: GoogleFonts.poppins(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Color(0xffBDBDBD),
                     ),
                   ),
-                  Icon(
-                    !showBranches
-                        ? Icons.keyboard_arrow_down
-                        : Icons.keyboard_arrow_up,
-                    color: const Color(0xff130F26),
-                    size: 20,
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Align(alignment: Alignment.center, child: Search(context))
-            ],
-          ),
+                ),
+                Icon(
+                  !showBranches
+                      ? Icons.keyboard_arrow_down
+                      : Icons.keyboard_arrow_up,
+                  color: const Color(0xff130F26),
+                  size: 20,
+                )
+              ],
+            ),
+          ],
         ),
-        preferredSize: const Size.fromHeight(0),
       ),
+      // bottom: PreferredSize(
+      //   child: Align(alignment: Alignment.center, child: SearchIt()),
+      //   preferredSize: const Size.fromHeight(0),
+      // ),
       actions: [
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
@@ -741,9 +757,11 @@ class _HomeTabState extends State<HomeTab> {
       ),
     );
   }
+  //
 
   ListTile buildDrawerListItem(
-      {required String? title, String? iconData = 'lock'}) {
+      {
+        required String? title, String? iconData = 'lock'}) {
     return ListTile(
       minLeadingWidth: 0,
       leading: Image.asset("Assets/Images/$iconData.png"),
