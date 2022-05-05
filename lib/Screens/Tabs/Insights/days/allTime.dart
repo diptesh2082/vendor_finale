@@ -19,18 +19,43 @@ class AllTime extends StatefulWidget {
 
 class AllTimeState extends State<AllTime> {
   final _auth = FirebaseAuth.instance;
-  String totalBooking = '';
+  String totalBooking = '0';
   getDocumentsLength() async {
-    QuerySnapshot docStream = await FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('bookings')
-        .where('vendorId', isEqualTo: gymId.toString())
-        .where('booking_status',
-            whereIn: ['upcoming', 'active', 'completed']).get();
-    setState(() {
-      totalBooking = docStream.docs.length.toString();
+         .where('vendorId', isEqualTo: gymId.toString())
+         .where('booking_status',
+        whereIn: ['upcoming', 'active', 'completed'])
+        .snapshots().listen((snapshot) {
+      if (snapshot.docs.isNotEmpty) {
+        setState(() {
+          totalBooking = snapshot.docs.length.toString();
+        });
+      }
+      else if (snapshot.docs.isEmpty) {
+        setState(() {
+          totalBooking = 0.toString();
+        });
+      }
     });
+   // await FirebaseFirestore.instance
+   //      .collection('bookings')
+   //      .where('vendorId', isEqualTo: gymId.toString())
+   //      .where('booking_status',
+   //     whereIn: ['upcoming', 'active', 'completed']).snapshots()
+   //  .listen((snapshot) {
+   //    if(snapshot.exists){
+   //
+   //    }
+   //   setState(() {
+   //     totalBooking = snapshot.docs.length.toString();
+   //   }
+   //  });
 
-    print(totalBooking);
+
+    // );
+    //
+    // print(totalBooking);
   }
 
   @override
