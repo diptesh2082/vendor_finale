@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:vyam_vandor/sales/sales_7days.dart';
+import 'package:vyam_vandor/sales/sales_all_time.dart';
 
+import '../../../sales/sales_month.dart';
 import 'days/allTime.dart';
 import 'days/days15.dart';
 import 'days/days30.dart';
@@ -163,10 +166,15 @@ class _InsightsTabState extends State<InsightsTab> {
                 fontWeight: FontWeight.w600),
           ),
         ),
-        body: const TabBarView(
+        body:  TabBarView(
             physics: NeverScrollableScrollPhysics(),
-            children: [AllTime(), Days_7(), Days_15(), Days_30()]),
+            children: [AllTime(), AllTimeSales(),DaysSales(),MonthSales(),]),
       ),
     );
   }
 }
+
+
+
+
+// Days_7(), Days_15(), Days_30()

@@ -87,6 +87,9 @@ class _AllTimeSalesState extends State<AllTimeSales> {
                       padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
                       child: Column(
                         children: [
+                          SizedBox(
+                            height: 15,
+                          ),
                           Row(
                             children: [
                               Material(

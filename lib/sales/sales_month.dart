@@ -77,6 +77,9 @@ class _MonthSalesState extends State<MonthSales> {
                   padding: EdgeInsets.symmetric(horizontal: kDefaultPadding),
                   child: Column(
                     children: [
+                      SizedBox(
+                        height: 16,
+                      ),
                       Row(
                         children: [
                           Material(

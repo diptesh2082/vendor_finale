@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Color kScaffoldBackgroundColor = const Color(0xFFE5E5E5);
+final kScaffoldBackgroundColor =  Colors.grey[100];
 Color kAppbarBackgroundColor = const Color(0xFFE5E5E5);
 Color kAppBarIconColor = const Color(0xFF3A3A3A);
 Color kReviewTextColor = const Color(0xFF3A3A3A);
