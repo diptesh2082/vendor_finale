@@ -7,8 +7,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
+import 'package:vyam_vandor/widgets/amenites.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({Key? key}) : super(key: key);
@@ -428,18 +430,18 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     ])),
                           )),
                       // Amenities//
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.1,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: ((context, index) {
-                            return amenities(index);
-                          }),
-                          separatorBuilder: (context, _) => SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.03,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          "Amenites",
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700
                           ),
-                          itemCount: amenities_name.length,
                         ),
+                      ),
+                      SizedBox(
+                          child: Amenites(amenites: gymId,)
                       ),
                       //Address//
                       const Padding(
@@ -503,7 +505,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
   );
 
 
-  Widget amenities(int index) => Padding(
+  Widget amenities(int index,DocumentSnapshot doc) => Padding(
         padding: const EdgeInsets.only(left: 8.0, top: 6.0),
         child: FittedBox(
           child: Column(
