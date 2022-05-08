@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
+import 'package:vyam_vandor/controllers/gym_controller.dart';
 import 'package:vyam_vandor/sales/sales_main_page.dart';
 
 import '../payment_history.dart';
@@ -20,6 +21,7 @@ class AllTime extends StatefulWidget {
 class AllTimeState extends State<AllTime> {
   final _auth = FirebaseAuth.instance;
   String totalBooking = '0';
+  BookingController bookingController = Get.put(BookingController());
   getDocumentsLength() async {
     await FirebaseFirestore.instance
         .collection('bookings')
@@ -28,9 +30,10 @@ class AllTimeState extends State<AllTime> {
         whereIn: ['upcoming', 'active', 'completed'])
         .snapshots().listen((snapshot) {
       if (snapshot.docs.isNotEmpty) {
-        setState(() {
-          totalBooking = snapshot.docs.length.toString();
-        });
+        bookingController.booking.value=snapshot.docs.length;
+        // setState(() {
+        //   totalBooking = snapshot.docs.length.toString();
+        // });
       }
       else if (snapshot.docs.isEmpty) {
         setState(() {
@@ -222,11 +225,13 @@ class AllTimeState extends State<AllTime> {
                                           const SizedBox(
                                             height: 24,
                                           ),
-                                          Text(
-                                            totalBooking, //DATABASE CALLING FOR TOTAL BOOKING VALUE
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 35,
+                                          Obx(
+                                              ()=> Text(
+                                              bookingController.booking.value.toString(), //DATABASE CALLING FOR TOTAL BOOKING VALUE
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 35,
+                                              ),
                                             ),
                                           ),
                                         ],

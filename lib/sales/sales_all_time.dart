@@ -23,11 +23,11 @@ class AllTimeSales extends StatefulWidget {
 }
 
 class _AllTimeSalesState extends State<AllTimeSales> {
-  BookingController bookingController = Get.put(BookingController());
+
   @override
   void dispose() {
     // TODO: implement dispose
-    bookingController.dispose();
+    // bookingController.dispose();
     super.dispose();
   }
   @override
@@ -154,12 +154,14 @@ class _AllTimeSalesState extends State<AllTimeSales> {
                                           ),
                                         ),
                                       ),
-                                      Center(
-                                        child: Text(
-                                          "${document.get("total_booking")}",
-                                          style: GoogleFonts.poppins(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 20
+                                      Obx(
+                                          ()=> Center(
+                                          child: Text(
+                                            "${Get.find<BookingController>().booking.value}",
+                                            style: GoogleFonts.poppins(
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 20
+                                            ),
                                           ),
                                         ),
                                       )

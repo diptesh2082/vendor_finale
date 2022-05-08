@@ -232,7 +232,7 @@ class _HomeTabState extends State<HomeTab> {
                                           .snapshots(),
                                       builder: (BuildContext context,
                                           AsyncSnapshot snap) {
-                                        if (snapshot.connectionState ==
+                                        if (snap.connectionState ==
                                             ConnectionState.waiting) {
                                           return const Center(
                                             child: CircularProgressIndicator(),
@@ -334,7 +334,7 @@ class _HomeTabState extends State<HomeTab> {
                                           .snapshots(),
                                       builder: (BuildContext context,
                                           AsyncSnapshot snap) {
-                                        if (snapshot.connectionState ==
+                                        if (snap.connectionState ==
                                             ConnectionState.waiting) {
                                           return const Center(
                                             child: CircularProgressIndicator(),

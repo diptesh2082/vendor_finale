@@ -7,10 +7,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
 import 'package:vyam_vandor/widgets/amenites.dart';
+import 'package:vyam_vandor/widgets/know_trainer.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({Key? key}) : super(key: key);
@@ -74,6 +76,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     super.initState();
      futurefiles = StorageDatabase.listAll('TransformerGymImage/');
   }
+  var gym_details;
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +97,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
               );
             }
             gym_images=snapshot.data["images"];
+            gym_details=snapshot.data;
             // print(gym_images);
             return SingleChildScrollView(
               child: Container(
@@ -287,7 +291,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                               fontSize: 12,
                                               fontFamily: 'PoppinsRegular',
                                               fontWeight: FontWeight.w400,
-                                            )),
+                                            )
+                                        ),
                                         SizedBox(
                                           height: 8,
                                         ),
@@ -308,13 +313,13 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       SizedBox(
                           height:
                               145, //MediaQuery.of(context).size.height / 4.7,
-                          child: GestureDetector(
-                            // onTap: () {
-                            //   Get.to(() => Trainer(), arguments: {
-                            //     "gym_id": doc["id"],
-                            //     "image": docs["display_picture"]
-                            //   });
-                            // },
+                          child: InkWell(
+                            onTap: () {
+                              Get.to(() => Trainer(), arguments: {
+                                "gym_id": gym_details["gym_id"],
+                                "image": gym_details["display_picture"]
+                              });
+                            },
                             child: Card(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12.0)),
