@@ -32,6 +32,7 @@ class BookingScreen extends StatefulWidget {
 
 class _BookingScreenState extends State<BookingScreen> {
   String amount="";
+  bool online=false;
   @override
   void initState() {
     print("The otp in booking screen is : ${widget.otp}");
@@ -115,6 +116,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                 }
                                 // print(snapshot3.data);
                                 amount=snapshot.data.get('grand_total').toString();
+                                online=snapshot.data.get('payment_done');
                                 print(
                                     snapshot.data!.get('gym_details')["image"]);
                                 return FittedBox(
@@ -628,7 +630,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         if (int.parse(_controller!.text) == widget.otp) {
 //               print("The otp is Verified");
                         print(widget.bookingID);
-                        Navigator.push(context, MaterialPageRoute(builder:(context)=>CollectCashPage(userID: widget.userID, bookingID: widget.bookingID, amount: amount,)));
+                        Navigator.push(context, MaterialPageRoute(builder:(context)=>CollectCashPage(userID: widget.userID, bookingID: widget.bookingID, amount: amount, online: online,)));
                           // Get.off(
                           //   OrderDetails(
                           //     userID: widget.userID,

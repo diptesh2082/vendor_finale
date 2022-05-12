@@ -8,10 +8,11 @@ import '../Services/firebase_firestore_api.dart';
 import 'order_details_screen.dart';
 
 class CollectCashPage extends StatelessWidget {
-  const CollectCashPage({Key? key,required this.userID, required this.bookingID,required this.amount}) : super(key: key);
+  const CollectCashPage({Key? key,required this.userID, required this.bookingID,required this.amount,required this.online}) : super(key: key);
   final userID;
   final bookingID;
   final amount;
+  final bool online;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +35,32 @@ class CollectCashPage extends StatelessWidget {
               ),
               // padding: EdgeInsets.fromLTRB(61.0, 122.0, 63.0, 126.0),
               child: SizedBox(
-                child: Column(
+                child: online?
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Amount Collected",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 30.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    Text(
+                      "Online",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 30.0,
+                      ),
+                    ),
+                  ],
+                ):Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
