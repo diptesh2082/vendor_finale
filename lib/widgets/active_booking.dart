@@ -71,10 +71,49 @@ class _ActiveBookingCardState extends State<ActiveBookingCard> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text(
-                  'Booking ID - ${widget.id}',
-                  style: GoogleFonts.poppins(
-                      fontWeight: FontWeight.w400, fontSize: 10),
+                Material(
+                  // color: Colors.yellowAccent,
+                  borderRadius: BorderRadius.circular(5),
+                  elevation: 5,
+                  // color: Colors.yellow,
+                  // decoration: BoxDecoration(
+                  //   color: Colors.yellowAccent,
+                  //   borderRadius: BorderRadius.circular(5)
+                  // ),
+                  child:Padding(
+                    padding: const EdgeInsets.only(left: 3,right: 2,top: 1,bottom: 1),
+                    child: RichText(
+                        text: TextSpan(
+                            style: GoogleFonts.poppins(
+                              // fontFamily: "Poppins",
+                                fontWeight: FontWeight.w500,
+                                fontSize: 12,
+                                color: Colors.grey),
+                            children:  <TextSpan>[
+                              TextSpan(
+                                  text: 'Booking ID - '
+                              ),
+                              TextSpan(
+                                  text: '${widget.id}',
+                                  style:GoogleFonts.poppins(
+                                    // fontFamily: "Poppins",
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 12,
+                                      color: Colors.amber
+                                  )
+                              ),
+                            ]
+
+                        )),
+                  ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(2.0),
+                  //   child: Text(
+                  //     '${widget.id}',
+                  //     style:
+                  //     GoogleFonts.poppins(fontWeight: FontWeight.w500, fontSize: 10),
+                  //   ),
+                  // ),
                 ),
                 Text(
                   widget.userName!,
@@ -98,9 +137,11 @@ class _ActiveBookingCardState extends State<ActiveBookingCard> {
                 Padding(
                   padding: const EdgeInsets.only(top: 18.0),
                   child: Text(
-                    '\$${widget.bookingPrice}',
+                    '\₹${widget.bookingPrice}',
                     style: GoogleFonts.poppins(
-                        fontWeight: FontWeight.w600, fontSize: 18),
+                        fontWeight: FontWeight.w600, fontSize: 18,
+                        color: Colors.amber
+                    ),
                   ),
                 ),
                 Text(
