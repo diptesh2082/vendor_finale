@@ -21,7 +21,7 @@ class AllTime extends StatefulWidget {
 class AllTimeState extends State<AllTime> {
   final _auth = FirebaseAuth.instance;
   String totalBooking = '0';
-  BookingController bookingController = Get.put(BookingController());
+  BookingController bookingController = Get.find<BookingController>();
   getDocumentsLength() async {
     await FirebaseFirestore.instance
         .collection('bookings')

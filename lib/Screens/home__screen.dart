@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:vyam_vandor/Screens/Tabs/Insights/insights.dart';
 import 'package:vyam_vandor/Screens/Tabs/dashboard_tab.dart';
 import 'package:vyam_vandor/Screens/Tabs/home_tab.dart';
 import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
 import 'package:vyam_vandor/app_colors.dart';
+import 'package:vyam_vandor/controllers/gym_controller.dart';
 
 import '../Services/firebase_messaging_api.dart';
 
@@ -82,6 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Get.lazyPut(() => BookingController(),fenix: true);
     return SafeArea(
       child: Scaffold(
         backgroundColor: const Color(0xffF4F4F4),
