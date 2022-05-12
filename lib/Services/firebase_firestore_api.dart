@@ -41,7 +41,7 @@ class FirebaseFirestoreAPi {
       //TODO: Change docID to logged in user ID
       _firestore
           .collection('product_details')
-          .doc(_firebaseAuth.currentUser!.email)
+          .doc(gymId)
           .update({
         "gym_status": isGymOpened!,
       });

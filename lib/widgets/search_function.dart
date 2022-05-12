@@ -142,31 +142,29 @@ class _SearchItState extends State<SearchIt> {
             }
 
             var doc = snap.data.docs;
-            // print(gymId.toString());
-            // doc = doc.where((element) {
-            //   return element
-            //       .get('vendorId')
-            //       .toString()
-            //       // .toLowerCase()
-            //       .contains(gymId.toString());
-            // }).toList();
-            // doc = doc.where((element) {
-            //   return element
-            //       .get('vendorId')
-            //       .toString()
-            //       .toLowerCase()
-            //       .contains(_auth.currentUser!.email.toString().toLowerCase());
-            // }).toList();
-            // print(doc);
+
             if (searchGymName.length > 0) {
               doc = doc.where((element) {
                 return element
                     .get('user_name')
                     .toString()
                     .toLowerCase()
+                    .contains(searchGymName.toString()) || element
+                    .get('id')
+                    .toString()
+                    .toLowerCase()
                     .contains(searchGymName.toString());
               }).toList();
             }
+            // if (searchGymName.length > 0) {
+            //   doc = doc.where((element) {
+            //     return element
+            //         .get('id')
+            //         .toString()
+            //         .toLowerCase()
+            //         .contains(searchGymName.toString());
+            //   }).toList();
+            // }
             return ListView.builder(
               physics:
               const NeverScrollableScrollPhysics(),
