@@ -135,7 +135,7 @@ class _HomeTabState extends State<HomeTab> {
                                           .where("vendorId", isEqualTo: gymId)
                                           .where('booking_status',
                                               isEqualTo: 'upcoming')
-                                          .orderBy("order_date", descending: true)
+                                          .orderBy("booking_date", descending: true)
                                           .snapshots(),
                                       builder: (BuildContext context,
                                           AsyncSnapshot snap) {
@@ -228,7 +228,7 @@ class _HomeTabState extends State<HomeTab> {
                                           .where("vendorId", isEqualTo: gymId)
                                           .where('booking_status',
                                               isEqualTo: 'active')
-                                          .orderBy("order_date", descending: true)
+                                          .orderBy("booking_date", descending: true)
                                           .snapshots(),
                                       builder: (BuildContext context,
                                           AsyncSnapshot snap) {
@@ -330,7 +330,7 @@ class _HomeTabState extends State<HomeTab> {
                                           .where("vendorId", isEqualTo: gymId)
                                           .where('booking_status',
                                               isEqualTo: 'completed')
-                                          .orderBy("order_date", descending: true)
+                                          .orderBy("booking_date", descending: true)
                                           .snapshots(),
                                       builder: (BuildContext context,
                                           AsyncSnapshot snap) {

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:vyam_vandor/Screens/collect_cash.dart';
 import 'package:vyam_vandor/Screens/order_details_screen.dart';
 import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
 import 'package:vyam_vandor/app_colors.dart';
@@ -30,6 +31,7 @@ class BookingScreen extends StatefulWidget {
 }
 
 class _BookingScreenState extends State<BookingScreen> {
+  String amount="";
   @override
   void initState() {
     print("The otp in booking screen is : ${widget.otp}");
@@ -99,7 +101,7 @@ class _BookingScreenState extends State<BookingScreen> {
                           StreamBuilder(
                               stream: FirebaseFirestore.instance
                                   .collection('product_details')
-                                  .doc(FirebaseAuth.instance.currentUser!.email)
+                                  .doc(gymId)
                                   .snapshots(),
                               builder: (BuildContext context,
                                   AsyncSnapshot snapshot3) {
@@ -112,11 +114,12 @@ class _BookingScreenState extends State<BookingScreen> {
                                       child: CircularProgressIndicator());
                                 }
                                 // print(snapshot3.data);
+                                amount=snapshot.data.get('grand_total').toString();
                                 print(
                                     snapshot.data!.get('gym_details')["image"]);
                                 return FittedBox(
                                   child: Container(
-                                    height: 112,
+                                    height: 130,
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 0.0),
                                     child: Row(
@@ -139,7 +142,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                                     (context, url, error) =>
                                                         const Icon(Icons.error),
                                                 fit: BoxFit.cover,
-                                                height: 100,
+                                                height: 130,
                                                 imageUrl: snapshot.data!.get(
                                                     'gym_details')["image"],
                                               ),
@@ -155,7 +158,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                              MainAxisAlignment.center,
                                           children: [
                                             Text(
                                               '${snapshot.data!.get('gym_details')["name"] ?? ""}',
@@ -341,81 +344,7 @@ class _BookingScreenState extends State<BookingScreen> {
                     const SizedBox(
                       height: 7.0,
                     ),
-                    //Container For TextField
-                    // Container(
-                    //   height: 45,
-                    //   decoration: BoxDecoration(
-                    //       color: Colors.white,
-                    //       borderRadius: BorderRadius.circular(8.0)),
-                    //   child: Stack(
-                    //     children: [
-                    //       TextFormField(
-                    //         controller: _controller,
-                    //         decoration: InputDecoration(
-                    //           border: InputBorder.none,
-                    //           contentPadding:
-                    //               const EdgeInsets.symmetric(horizontal: 10),
-                    //           hintText: 'Enter OTP',
-                    //           hintStyle: GoogleFonts.poppins(
-                    //             fontWeight: FontWeight.w600,
-                    //             fontSize: 14,
-                    //             color: const Color(0xffC9C9C9),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       Positioned(
-                    //         right: 20,
-                    //         child: ElevatedButton(
-                    //           onPressed: () async {
-                    //             //Function for Verifying OTP
-                    //
-                    //             if (int.parse(_controller!.text) == widget.otp) {
-                    //               print("The otp is Verified");
-                    //               Get.off(
-                    //                 OrderDetails(
-                    //                   userID: widget.userID,
-                    //                   bookingID: widget.bookingID,
-                    //                 ),
-                    //               );
-                    //               await FirebaseFirestoreAPi()
-                    //                   .acceptandUpdatebookingStatus(
-                    //                 widget.bookingID,
-                    //                 widget.userID,
-                    //               );
-                    //               await FirebaseFirestore.instance
-                    //                   .collection('bookings')
-                    //                   .doc(widget.userID)
-                    //                   .collection('user_booking')
-                    //                   .doc(widget.bookingID)
-                    //               .update({
-                    //                 "booking_accepted": true,
-                    //               });
-                    //             } else {
-                    //               print("Invalid OTP");
-                    //               Get.showSnackbar(const GetSnackBar(
-                    //                 title: "Invalid OTP",
-                    //                 message: "Try it again",
-                    //                 isDismissible: true,
-                    //                 backgroundColor: Colors.black,
-                    //               ));
-                    //             }
-                    //           },
-                    //           child:  Text(
-                    //             'Verify',
-                    //             style: GoogleFonts.poppins(
-                    //               fontWeight: FontWeight.bold,
-                    //               fontSize: 14
-                    //             ),
-                    //           ),
-                    //           style: ButtonStyle(
-                    //             backgroundColor: MaterialStateProperty.all(
-                    //                 AppColors.bottomNaVBarTextColor),
-                    //           ),
-                    //         ),
-                    //       )
-                    //     ],
-                    //   ),
-                    // ), //Container For payment
+
                     const SizedBox(
                       height: 6.0,
                     ),
@@ -562,8 +491,8 @@ class _BookingScreenState extends State<BookingScreen> {
                           left: 9, right: 9, top: 6, bottom: 6),
                       child: StreamBuilder(
                           stream: FirebaseFirestore.instance
-                              .collection('user_details')
-                              .doc(widget.userID)
+                              .collection('bookings')
+                              .doc(widget.bookingID)
                               .snapshots(),
                           builder:
                               (BuildContext context, AsyncSnapshot snapshot2) {
@@ -590,12 +519,15 @@ class _BookingScreenState extends State<BookingScreen> {
                                   height: 10.0,
                                 ),
                                 Text(
-                                  'Username: ${snapshot2.data.get("name")}',
+                                  'Username: ${snapshot2.data.get("user_name")}',
                                   style: GoogleFonts.poppins(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black,
                                   ),
+                                ),
+                                SizedBox(
+                                  height: 3,
                                 ),
                                 Text(
                                   'Phone Number: ${snapshot2.data.get('userId')}',
@@ -605,13 +537,39 @@ class _BookingScreenState extends State<BookingScreen> {
                                     color: Colors.black,
                                   ),
                                 ),
-                                Text(
-                                  'Payment Method : Online',
-                                  style: GoogleFonts.poppins(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black,
-                                  ),
+                                SizedBox(
+                                  height: 3,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      'Payment Method :  ',
+                                      style: GoogleFonts.poppins(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    Material(
+                                      color: Colors.green,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 5.0,right: 5),
+                                        child: Text(
+                                          snapshot2.data.get('payment_done')?"Online":"Cash",
+                                          style: GoogleFonts.poppins(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      elevation: 5,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 3,
                                 ),
                               ],
                             );
@@ -669,23 +627,15 @@ class _BookingScreenState extends State<BookingScreen> {
                         FocusScope.of(context).unfocus();
                         if (int.parse(_controller!.text) == widget.otp) {
 //               print("The otp is Verified");
-                          Get.off(
-                            OrderDetails(
-                              userID: widget.userID,
-                              bookingID: widget.bookingID,
-                            ),
-                          );
-                          await FirebaseFirestoreAPi()
-                              .acceptandUpdatebookingStatus(
-                            widget.bookingID,
-                            widget.userID,
-                          );
-                          await FirebaseFirestore.instance
-                              .collection('bookings')
-                              .doc(widget.bookingID)
-                              .update({
-                            "booking_accepted": true,
-                          });
+                        print(widget.bookingID);
+                        Navigator.push(context, MaterialPageRoute(builder:(context)=>CollectCashPage(userID: widget.userID, bookingID: widget.bookingID, amount: amount,)));
+                          // Get.off(
+                          //   OrderDetails(
+                          //     userID: widget.userID,
+                          //     bookingID: widget.bookingID,
+                          //   ),
+                          // );
+
                         } else {
                           // print("Invalid OTP");
                           Get.showSnackbar(const GetSnackBar(
