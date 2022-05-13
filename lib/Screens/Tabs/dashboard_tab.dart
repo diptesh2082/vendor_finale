@@ -160,8 +160,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           elevation: 3,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(12.0)),
-                          child: Obx(
-                                ()=> ListTile(
+                          child: ListTile(
                               title: const Text(
                                 'Total Visit by customer',
                                 style: TextStyle(
@@ -171,7 +170,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     fontWeight: FontWeight.w600),
                               ),
                               trailing: Text(
-                                "${Get.find<BookingController>().booking.value}",
+                                "${gym_details["view_count"]}",
                                 style: const TextStyle(
                                     color: Colors.black,
                                     fontFamily: 'PoppinsSemiBold',
@@ -179,7 +178,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     fontWeight: FontWeight.w600),
                               ),
                             ),
-                          ),
                         ),
                       ),
 

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:vyam_vandor/Screens/review.dart';
 import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
 import 'package:vyam_vandor/controllers/gym_controller.dart';
 import 'package:vyam_vandor/sales/sales_main_page.dart';
@@ -185,56 +186,61 @@ class AllTimeState extends State<AllTime> {
                             // ),
                             Column(
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: HexColor("292F3D"),
-                                  ),
-                                  width: size.width * 0.45,
-                                  height: 135,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ClipRRect(
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              const Text(
-                                                "Total bookings",
+                                InkWell(
+                                  onTap: (){
+                                    Get.to( ()=>const Sales());
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: HexColor("292F3D"),
+                                    ),
+                                    width: size.width * 0.45,
+                                    height: 135,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ClipRRect(
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                const Text(
+                                                  "Total bookings",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                                const Spacer(),
+                                                // const SizedBox(
+                                                //   width: 220,
+                                                // ),
+                                                Image.asset(
+                                                    "Assets/trend-up.png"),
+                                                const SizedBox(
+                                                  width: 2,
+                                                ),
+                                                const Text(
+                                                  "8",
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            const SizedBox(
+                                              height: 24,
+                                            ),
+                                            Obx(
+                                                ()=> Text(
+                                                bookingController.booking.value.toString(), //DATABASE CALLING FOR TOTAL BOOKING VALUE
                                                 style: TextStyle(
                                                   color: Colors.white,
+                                                  fontSize: 35,
                                                 ),
-                                              ),
-                                              const Spacer(),
-                                              // const SizedBox(
-                                              //   width: 220,
-                                              // ),
-                                              Image.asset(
-                                                  "Assets/trend-up.png"),
-                                              const SizedBox(
-                                                width: 2,
-                                              ),
-                                              const Text(
-                                                "8",
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 24,
-                                          ),
-                                          Obx(
-                                              ()=> Text(
-                                              bookingController.booking.value.toString(), //DATABASE CALLING FOR TOTAL BOOKING VALUE
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: 35,
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -242,38 +248,43 @@ class AllTimeState extends State<AllTime> {
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
-                                    color: HexColor("292F3D"),
-                                  ),
-                                  width: size.width * 0.45,
-                                  height: 135,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: ClipRRect(
-                                      child: Column(
-                                        children: const [
-                                          Align(
-                                            alignment: Alignment.topLeft,
-                                            child: Text(
-                                              "Reviews",
-                                              style: TextStyle(
-                                                color: Colors.white,
+                                InkWell(
+                                  onTap: (){
+                                    Get.to(()=>Review());
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: HexColor("292F3D"),
+                                    ),
+                                    width: size.width * 0.45,
+                                    height: 135,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: ClipRRect(
+                                        child: Column(
+                                          children: const [
+                                            Align(
+                                              alignment: Alignment.topLeft,
+                                              child: Text(
+                                                "Reviews",
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: 21,
-                                          ),
-                                          Text(
-                                            "144",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 35,
+                                            SizedBox(
+                                              height: 21,
                                             ),
-                                          ),
-                                        ],
+                                            Text(
+                                              "144",
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 35,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),

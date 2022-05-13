@@ -22,6 +22,13 @@ class MonthSales extends StatefulWidget {
 }
 
 class _MonthSalesState extends State<MonthSales> {
+  // bool isLoading=true;
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     String salesTotal = '\$260';
@@ -39,6 +46,7 @@ class _MonthSalesState extends State<MonthSales> {
 
     // return stream;
     // }
+
     int sum = 0;
     return Scaffold(
       backgroundColor: kScaffoldBackgroundColor,
@@ -70,6 +78,7 @@ class _MonthSalesState extends State<MonthSales> {
               // }).toList();
               // print("yooo yooo $document");
               // print("//////////////////////////");
+
               return
                 // document!.exists
                 //   ?
@@ -158,115 +167,21 @@ class _MonthSalesState extends State<MonthSales> {
                             ),
                           ),
 
-                          // Container(
-                          //   decoration: BoxDecoration(
-                          //     color: kContainerColor,
-                          //     borderRadius: BorderRadius.circular(
-                          //         kContainerBorderRadius),
-                          //   ),
-                          //   child: Padding(
-                          //     padding: EdgeInsets.all(kDefaultPadding),
-                          //     child: Column(
-                          //       children: [
-                          //         Row(
-                          //           children: [
-                          //             Text(
-                          //               'Sales',
-                          //               style: TextStyle(
-                          //                 fontFamily: kFontFamily,
-                          //                 fontWeight: FontWeight.w400,
-                          //                 fontSize: 12,
-                          //               ),
-                          //             ),
-                          //             const Spacer(),
-                          //             Text(
-                          //               salesStatus,
-                          //               style: TextStyle(
-                          //                 fontFamily: kFontFamily,
-                          //                 fontWeight: FontWeight.w400,
-                          //                 fontSize: 12,
-                          //                 color: kStatuscolor,
-                          //               ),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //         Padding(
-                          //           padding: const EdgeInsets.only(
-                          //               top: 6, bottom: 22),
-                          //           child: Text(
-                          //             salesTotal,
-                          //             style: TextStyle(
-                          //                 fontFamily: kFontFamily,
-                          //                 fontWeight: FontWeight.w700,
-                          //                 fontSize: 20),
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
-                          // const SizedBox(
-                          //   width: 16,
-                          // ),
-                          // Container(
-                          //   decoration: BoxDecoration(
-                          //     color: kContainerColor,
-                          //     borderRadius: BorderRadius.circular(
-                          //         kContainerBorderRadius),
-                          //   ),
-                          //   child: Padding(
-                          //     padding: EdgeInsets.all(kDefaultPadding),
-                          //     child: Column(
-                          //       children: [
-                          //         Row(
-                          //           children: [
-                          //             Text(
-                          //               'Bookings',
-                          //               style: TextStyle(
-                          //                 fontFamily: kFontFamily,
-                          //                 fontWeight: FontWeight.w400,
-                          //                 fontSize: 12,
-                          //               ),
-                          //             ),
-                          //             const Spacer(),
-                          //             Text(
-                          //               bookingsStatus,
-                          //               style: TextStyle(
-                          //                 fontFamily: kFontFamily,
-                          //                 fontWeight: FontWeight.w400,
-                          //                 fontSize: 12,
-                          //                 color: kStatuscolor,
-                          //               ),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //         Padding(
-                          //           padding: const EdgeInsets.only(
-                          //               top: 6, bottom: 22),
-                          //           child: Text(
-                          //             bookingsTotal,
-                          //             style: TextStyle(
-                          //                 fontFamily: kFontFamily,
-                          //                 fontWeight: FontWeight.w700,
-                          //                 fontSize: 20),
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
                         ],
                       ),
                       SizedBox(
                         height: 10,
                       ),
+
                       StreamBuilder(
                         stream: FirebaseFirestore.instance
                             .collection('bookings')
                             .where("vendorId",isEqualTo: gymId)
+                          .orderBy("booking_date",descending: true)
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot snap) {
+
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return const Center(
@@ -277,6 +192,10 @@ class _MonthSalesState extends State<MonthSales> {
                             return const Text("No Active Bookings");
                           }
                           var doc = snap.data.docs;
+                          // if (snapshot.data!.exists){
+                          //
+                          // }
+
                           // doc = doc.where((element) {
                           //   print(element.get("order_date").toDate().difference(DateTime.now()).inDays > -2);
                           //   // return element.get("order_date").toDate().difference(DateTime.now()).inDays > -2;
@@ -289,6 +208,7 @@ class _MonthSalesState extends State<MonthSales> {
                             shrinkWrap: true,
                             itemCount: doc.length,
                             itemBuilder: (context, index) {
+
                               if (doc[index]['booking_status'] ==
                                   'active' || doc[index]['booking_status'] =='completed'
                                   || doc[index]['booking_status'] =='upcoming'
@@ -361,147 +281,6 @@ class _MonthSalesState extends State<MonthSales> {
                           );
                         },
                       )
-                      // const SizedBox(
-                      //   height: 15,
-                      // ),
-                      // ListView.separated(
-                      //   // physics:  const NeverScrollableScrollPhysics(),
-                      //   shrinkWrap: true,
-                      //   itemCount: document.length,
-                      //   itemBuilder: (context, index) {
-                      //     DateTime booking_date = document[index]["booking_date"]!= null?DateTime.parse(
-                      //         document[index]['booking_date']
-                      //             .toDate()
-                      //             .toString()):DateTime.now();
-                      //
-                      //     print(booking_date);
-                      //     // DateTime startingDate = DateTime(
-                      //     //     booking_date.year, booking_date.month, booking_date.day);
-                      //
-                      //     DateTime startingDate = DateTime(booking_date.year,
-                      //         booking_date.month, booking_date.day);
-                      //
-                      //     DateTime planEndDuration = document[index]['plan_end_duration']!= null ?DateTime.parse(
-                      //         document[index]['plan_end_duration']
-                      //             .toDate()
-                      //             .toString()):DateTime.now();
-                      //     DateTime endingDate = DateTime(planEndDuration.year,
-                      //         planEndDuration.month, planEndDuration.day);
-                      //     //sum+=int.parse(document[index]['booking_price']);
-                      //     return Container(
-                      //       decoration: BoxDecoration(
-                      //         color: kContainerColor,
-                      //         borderRadius: BorderRadius.circular(
-                      //             kContainerBorderRadius),
-                      //       ),
-                      //       child: Padding(
-                      //         padding: EdgeInsets.all(kDefaultPadding - 1),
-                      //         child: Row(
-                      //           children: [
-                      //             Column(
-                      //               crossAxisAlignment:
-                      //                   CrossAxisAlignment.start,
-                      //               children: [
-                      //                 Padding(
-                      //                   padding: const EdgeInsets.symmetric(
-                      //                       horizontal: 1),
-                      //                   child: Text(
-                      //                     document[index]['user_name']??"",
-                      //                     style: TextStyle(
-                      //                       fontFamily: kFontFamily,
-                      //                       fontSize: 14,
-                      //                       fontWeight: FontWeight.w600,
-                      //                     ),
-                      //                   ),
-                      //                 ),
-                      //                 const SizedBox(
-                      //                   height: 8,
-                      //                 ),
-                      //                 Text(
-                      //                   '${months[startingDate.month - 1]} ${startingDate.day} - ${months[endingDate.month - 1]} ${endingDate.day}',
-                      //                   style: TextStyle(
-                      //                     fontFamily: kFontFamily,
-                      //                     fontSize: 12,
-                      //                     fontWeight: FontWeight.w500,
-                      //                   ),
-                      //                 ),
-                      //                 Text(
-                      //                   document!=null?document[index]['booking_plan']:"",
-                      //                   style: TextStyle(
-                      //                     fontFamily: kFontFamily,
-                      //                     fontSize: 10,
-                      //                     fontWeight: FontWeight.w400,
-                      //                     color: kDurationColor,
-                      //                   ),
-                      //                 ),
-                      //               ],
-                      //             ),
-                      //             const Spacer(),
-                      //             Column(
-                      //               crossAxisAlignment:
-                      //                   CrossAxisAlignment.end,
-                      //               children: [
-                      //                 Text(
-                      //             document[index]!=null?      document[index]['booking_price']
-                      //                       .toString():"",
-                      //                   style: TextStyle(
-                      //                     fontFamily: kFontFamily,
-                      //                     fontSize: 14,
-                      //                     fontWeight: FontWeight.w600,
-                      //                   ),
-                      //                 ),
-                      //                 const Divider(
-                      //                   color: Colors.white,
-                      //                   height: 31,
-                      //                 ),
-                      //                 Row(
-                      //                   children: [
-                      //                     Container(
-                      //                       height: 9,
-                      //                       width: 9,
-                      //                       decoration: BoxDecoration(
-                      //                         shape: BoxShape.circle,
-                      //                         color: document[index][
-                      //                         'booking_status']!=null? document[index][
-                      //                                     'booking_status'] ==
-                      //                                 'active'
-                      //                             ? kActiveCircleColor
-                      //                             : kCompletedCircleColor:kCompletedCircleColor,
-                      //                       ),
-                      //                     ),
-                      //                     const SizedBox(
-                      //                       width: 4,
-                      //                     ),
-                      //                     Text(
-                      //                       document[index]
-                      //                                   ['booking_status'] ==
-                      //                               'active'
-                      //                           ? 'Active'
-                      //                           : 'Completed',
-                      //                       style: TextStyle(
-                      //                         fontFamily: kFontFamily,
-                      //                         fontSize: 10,
-                      //                         fontWeight: FontWeight.w400,
-                      //                         color: kDurationColor,
-                      //                       ),
-                      //                     ),
-                      //                   ],
-                      //                 )
-                      //               ],
-                      //             ),
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     );
-                      //   },
-                      //   separatorBuilder: (context, index) => Divider(
-                      //     height: kDividerHeight,
-                      //     color: kDividerColor,
-                      //   ),
-                      // ),
-                      // SizedBox(
-                      //   height: 10,
-                      // )
                     ],
                   ),
                 );

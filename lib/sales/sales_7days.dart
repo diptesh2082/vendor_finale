@@ -159,103 +159,7 @@ class _DaysSalesState extends State<DaysSales> {
                             ),
                           ),
 
-                          // Container(
-                          //   decoration: BoxDecoration(
-                          //     color: kContainerColor,
-                          //     borderRadius: BorderRadius.circular(
-                          //         kContainerBorderRadius),
-                          //   ),
-                          //   child: Padding(
-                          //     padding: EdgeInsets.all(kDefaultPadding),
-                          //     child: Column(
-                          //       children: [
-                          //         Row(
-                          //           children: [
-                          //             Text(
-                          //               'Sales',
-                          //               style: TextStyle(
-                          //                 fontFamily: kFontFamily,
-                          //                 fontWeight: FontWeight.w400,
-                          //                 fontSize: 12,
-                          //               ),
-                          //             ),
-                          //             const Spacer(),
-                          //             Text(
-                          //               salesStatus,
-                          //               style: TextStyle(
-                          //                 fontFamily: kFontFamily,
-                          //                 fontWeight: FontWeight.w400,
-                          //                 fontSize: 12,
-                          //                 color: kStatuscolor,
-                          //               ),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //         Padding(
-                          //           padding: const EdgeInsets.only(
-                          //               top: 6, bottom: 22),
-                          //           child: Text(
-                          //             salesTotal,
-                          //             style: TextStyle(
-                          //                 fontFamily: kFontFamily,
-                          //                 fontWeight: FontWeight.w700,
-                          //                 fontSize: 20),
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
-                          // const SizedBox(
-                          //   width: 16,
-                          // ),
-                          // Container(
-                          //   decoration: BoxDecoration(
-                          //     color: kContainerColor,
-                          //     borderRadius: BorderRadius.circular(
-                          //         kContainerBorderRadius),
-                          //   ),
-                          //   child: Padding(
-                          //     padding: EdgeInsets.all(kDefaultPadding),
-                          //     child: Column(
-                          //       children: [
-                          //         Row(
-                          //           children: [
-                          //             Text(
-                          //               'Bookings',
-                          //               style: TextStyle(
-                          //                 fontFamily: kFontFamily,
-                          //                 fontWeight: FontWeight.w400,
-                          //                 fontSize: 12,
-                          //               ),
-                          //             ),
-                          //             const Spacer(),
-                          //             Text(
-                          //               bookingsStatus,
-                          //               style: TextStyle(
-                          //                 fontFamily: kFontFamily,
-                          //                 fontWeight: FontWeight.w400,
-                          //                 fontSize: 12,
-                          //                 color: kStatuscolor,
-                          //               ),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //         Padding(
-                          //           padding: const EdgeInsets.only(
-                          //               top: 6, bottom: 22),
-                          //           child: Text(
-                          //             bookingsTotal,
-                          //             style: TextStyle(
-                          //                 fontFamily: kFontFamily,
-                          //                 fontWeight: FontWeight.w700,
-                          //                 fontSize: 20),
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
+
                         ],
                       ),
                       SizedBox(
@@ -265,6 +169,7 @@ class _DaysSalesState extends State<DaysSales> {
                         stream: FirebaseFirestore.instance
                             .collection('bookings')
                             .where("vendorId",isEqualTo: gymId)
+                          .orderBy("booking_date",descending: true)
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot snap) {
