@@ -1,5 +1,6 @@
 import 'package:buttons_tabbar/buttons_tabbar.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:vyam_vandor/constants.dart';
 import 'package:vyam_vandor/sales/sales_7days.dart';
 import 'package:vyam_vandor/sales/sales_all_time.dart';
@@ -18,7 +19,7 @@ class _SalesState extends State<Sales> {
     return Scaffold(
       backgroundColor: kScaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: kAppbarBackgroundColor,
+        backgroundColor: kScaffoldBackgroundColor,
         centerTitle: true,
         leading: GestureDetector(
           onTap: () => Navigator.pop(context),
@@ -28,7 +29,7 @@ class _SalesState extends State<Sales> {
           ),
         ),
         title: Text(
-          'Sales',
+          'Bookings',
           style: TextStyle(
             fontFamily: kFontFamily,
             fontSize: 18,
@@ -49,22 +50,22 @@ class _SalesState extends State<Sales> {
                   child: ButtonsTabBar(
                     backgroundColor: Colors.black,
                     unselectedBackgroundColor: Colors.white,
-                    labelStyle: const TextStyle(
+                    labelStyle:GoogleFonts.poppins(
                       color: Colors.white,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                     ),
                     contentPadding: EdgeInsets.symmetric(vertical: 11, horizontal: kDefaultPadding),
-                    unselectedLabelStyle: const TextStyle(
+                    unselectedLabelStyle:GoogleFonts.poppins(
                       color: Colors.black,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,
                     ),
                     radius: 8,
                     tabs: const [
-                      Tab(text: 'All time',),
-                      Tab(text: '7 days',),
-                      Tab(text: 'Month',),
+                      Tab(text: 'Upcoming',),
+                      Tab(text: 'Active',),
+                      Tab(text: 'Completed',),
                     ],
                   ),
                 ),
@@ -75,8 +76,8 @@ class _SalesState extends State<Sales> {
                   height: MediaQuery.of(context).size.height-160,
                   child:  TabBarView(
                     children: [
-                      AllTimeSales(),
-                      DaysSales(),
+                      UpcomingBookings(),
+                      ActivBookings(),
                       MonthSales(),
                     ],
                   ),

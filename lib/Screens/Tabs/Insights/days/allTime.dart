@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:vyam_vandor/Screens/review.dart';
 import 'package:vyam_vandor/Services/firebase_firestore_api.dart';
@@ -96,7 +97,7 @@ class AllTimeState extends State<AllTime> {
                   SizedBox(
                     width: size.width,
                     height: 500,
-                    child: Column(
+                    child: ListView(
                       children: [
                         Row(
                           children: [
@@ -120,9 +121,9 @@ class AllTimeState extends State<AllTime> {
                                       children: [
                                         Row(
                                           children: [
-                                            const Text(
+                                             Text(
                                               "Sales",
-                                              style: TextStyle(
+                                              style: GoogleFonts.poppins(
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -135,9 +136,9 @@ class AllTimeState extends State<AllTime> {
                                             const SizedBox(
                                               width: 2,
                                             ),
-                                            const Text(
+                                             Text(
                                               "₹ 100",
-                                              style: TextStyle(
+                                              style: GoogleFonts.poppins(
                                                 color: Colors.white,
                                               ),
                                             ),
@@ -146,11 +147,11 @@ class AllTimeState extends State<AllTime> {
                                         const SizedBox(
                                           height: 5,
                                         ),
-                                        const Align(
+                                         Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
                                             "Total sales",
-                                            style: TextStyle(
+                                            style: GoogleFonts.poppins(
                                               color: Colors.white,
                                             ),
                                           ),
@@ -161,7 +162,7 @@ class AllTimeState extends State<AllTime> {
                                         Text(
                                           snapshot.data.get(
                                               'total_sales'), // DATABASE CALLLING FOR TOTAL SALES VALUE
-                                          style: TextStyle(
+                                          style: GoogleFonts.poppins(
                                             color: Colors.white,
                                             fontSize: 35,
                                           ),
@@ -204,9 +205,9 @@ class AllTimeState extends State<AllTime> {
                                           children: [
                                             Row(
                                               children: [
-                                                const Text(
+                                                 Text(
                                                   "Total bookings",
-                                                  style: TextStyle(
+                                                  style: GoogleFonts.poppins(
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -219,9 +220,9 @@ class AllTimeState extends State<AllTime> {
                                                 const SizedBox(
                                                   width: 2,
                                                 ),
-                                                const Text(
+                                                 Text(
                                                   "8",
-                                                  style: TextStyle(
+                                                  style: GoogleFonts.poppins(
                                                     color: Colors.white,
                                                   ),
                                                 ),
@@ -233,7 +234,7 @@ class AllTimeState extends State<AllTime> {
                                             Obx(
                                                 ()=> Text(
                                                 bookingController.booking.value.toString(), //DATABASE CALLING FOR TOTAL BOOKING VALUE
-                                                style: TextStyle(
+                                                style: GoogleFonts.poppins(
                                                   color: Colors.white,
                                                   fontSize: 35,
                                                 ),
@@ -263,12 +264,12 @@ class AllTimeState extends State<AllTime> {
                                       padding: const EdgeInsets.all(8.0),
                                       child: ClipRRect(
                                         child: Column(
-                                          children: const [
+                                          children:  [
                                             Align(
                                               alignment: Alignment.topLeft,
                                               child: Text(
                                                 "Reviews",
-                                                style: TextStyle(
+                                                style: GoogleFonts.poppins(
                                                   color: Colors.white,
                                                 ),
                                               ),
@@ -278,7 +279,7 @@ class AllTimeState extends State<AllTime> {
                                             ),
                                             Text(
                                               "144",
-                                              style: TextStyle(
+                                              style: GoogleFonts.poppins(
                                                 color: Colors.white,
                                                 fontSize: 35,
                                               ),
@@ -294,7 +295,53 @@ class AllTimeState extends State<AllTime> {
                           ],
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 16,
+                        ),
+                        StreamBuilder<DocumentSnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('product_details')
+                              .doc(gymId.toString())
+                              .snapshots(),
+                          builder: (context,AsyncSnapshot snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            if (snapshot.data == null) {
+                              return Container();
+                            }
+                            // int viewCount=snapshot.data!.get("view_count");
+                            return Padding(
+                              padding: const EdgeInsets.only(
+                                  top: 8.0, left: 2.0, right: 2.0),
+                              child: Card(
+                                elevation: 3,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0)),
+                                child: ListTile(
+                                  title:  Text(
+                                    'Total Visit by customer',
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.black,
+                                        // fontFamily: 'PoppinsSemiBold',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  trailing: Text(
+                                    "${snapshot.data["view_count"]}",
+                                    style:GoogleFonts.poppins(
+                                        color: Colors.black,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                        ),
+                        const SizedBox(
+                          height: 16,
                         ),
                         SizedBox(
                           height: 63,

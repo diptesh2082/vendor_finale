@@ -153,33 +153,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                       //   ),
                       //   onTap: () {},
                       // ),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 8.0, left: 8.0, right: 8.0),
-                        child: Card(
-                          elevation: 3,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12.0)),
-                          child: ListTile(
-                              title: const Text(
-                                'Total Visit by customer',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'PoppinsSemiBold',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                              trailing: Text(
-                                "${gym_details["view_count"]}",
-                                style: const TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'PoppinsSemiBold',
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600),
-                              ),
-                            ),
-                        ),
-                      ),
+
 
                       Padding(
                         padding: const EdgeInsets.only(

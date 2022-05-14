@@ -118,9 +118,9 @@ flutter:
     - family: Profileicon
       fonts:
       - asset: Assets/Images/Profileicon.ttf
-    - family: PoppinsSemiBold
-      fonts:
-        - asset: Assets\Fonts\Poppins-SemiBold.ttf
+#    - family: PoppinsSemiBold
+#      fonts:
+#        - asset: Assets\Fonts\Poppins-SemiBold.ttf
 
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
