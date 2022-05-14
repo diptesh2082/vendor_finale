@@ -1,4 +1,5 @@
 // ignore: file_names
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -314,28 +315,32 @@ class AllTimeState extends State<AllTime> {
                             // int viewCount=snapshot.data!.get("view_count");
                             return Padding(
                               padding: const EdgeInsets.only(
-                                  top: 8.0, left: 2.0, right: 2.0),
+                                  top: 0.0, left: 2.0, right: 2.0),
                               child: Card(
                                 elevation: 3,
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.0)),
-                                child: ListTile(
-                                  title:  Text(
-                                    'Total Visit by customer',
-                                    style: GoogleFonts.poppins(
-                                        color: Colors.black,
-                                        // fontFamily: 'PoppinsSemiBold',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                child: SizedBox(
+                                  height: 63,
+                                  child: Center(
+                                    child: ListTile(
+                                      title:  Text(
+                                        '${snapshot.data.get("view_count")??""} Views',
+                                        style: GoogleFonts.poppins(
+                                            color: Colors.black,
+                                            // fontFamily: 'PoppinsSemiBold',
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                      trailing: ImageIcon(
+                                            AssetImage(
+                                              "Assets/Images/Show.png",
+                                          ),
+                                        size: 30,
+                                        )
+                                    ),
                                   ),
-                                  trailing: Text(
-                                    "${snapshot.data["view_count"]}",
-                                    style:GoogleFonts.poppins(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ),
+                                )
                               ),
                             );
                           }
@@ -352,7 +357,7 @@ class AllTimeState extends State<AllTime> {
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Padding(
-                                padding: const EdgeInsets.all(12.0),
+                                padding: const EdgeInsets.only(left: 8.0,right: 8),
                                 child: Row(
                                   children: const [
                                     Text(
